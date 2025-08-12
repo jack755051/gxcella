@@ -1,0 +1,12 @@
+<div
+    class="gx-container gx-breadcrumb-container"
+>
+    <div class="gx-breadcrumb">
+        @for(item of data;track item; let i = $index; let last = $last) {
+            <gx-breadcrumb-item></gx-breadcrumb-item>
+            @if(!last){
+                <span>{{ getSeparator() }}</span>
+            }
+        }
+    </div>
+</div>

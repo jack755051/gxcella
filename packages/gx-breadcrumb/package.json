@@ -1,0 +1,40 @@
+{
+  "name": "@sanring/gx-breadcrumb",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json"
+  },
+  "publishConfig": {
+    "directory": "dist",
+    "access": "public"
+  },
+  "dependencies": {
+    "lucide-angular": "^0.539.0",
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/common": "^20.1.0",
+    "@angular/core": "^20.1.0",
+    "tailwindcss": "^4.1.11"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "ng-packagr": "^20.1.0",
+    "typescript": "^5.9.2"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/fesm2022/sanring-gx-breadcrumb.mjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ]
+}
