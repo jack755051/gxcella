@@ -1,0 +1,49 @@
+name: Version & Publish
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write          # 讓 action 開 PR / 寫 release
+      pull-requests: write
+      id-token: write          # (可選) npm provenance 需此權限
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+          cache: 'yarn'        # 啟用 Yarn 快取
+
+      - name: Install deps
+        run: yarn install --frozen-lockfile
+
+      # 只在「發版那次」才會執行 publish 指令；
+      # 其他情況則會開/更新 "Version Packages" PR
+      - name: Create Release PR or Publish
+        uses: changesets/action@v1
+        with:
+          # 先 build（所有 workspaces），再 publish
+          publish: |
+            yarn build && \
+            yarn changeset publish --access public
+          # 自動建立 GitHub Release（可選，但很方便）
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # (可選) 若你要啟用 npm provenance
+      - name: Enable npm provenance
+        if: ${{ always() }}
+        run: npm config set provenance true
