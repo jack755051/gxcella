@@ -1,0 +1,21 @@
+{
+  "name": "gxcella",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run -ws build",
+    "build:styles": "npm --workspace @sanring/gx-styles run build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "publish-packages": "changeset publish"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@changesets/cli": "^2.29.5",
+    "@types/node": "^20"
+  }
+}
