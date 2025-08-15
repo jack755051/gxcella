@@ -1,1 +1,30 @@
-import {}
+@if (item.link && !item.disabled && !item.active) {
+    @if (isExternal(item.link)) {
+        <a class="gx-crumb inline-flex items-center gap-1"
+           [href]="item.link"
+           (click)="onClick($event)">
+            @if (showIcon && item.icon) {
+                <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+            }
+            <span class="gx-breadcrumb-item-label">{{ item.label }}</span>
+        </a>
+    } @else {
+        <a class="gx-crumb inline-flex items-center gap-1"
+           [routerLink]="item.link"
+           (click)="onClick($event)">
+            @if (showIcon && item.icon) {
+                <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+            }
+            <span class="gx-breadcrumb-item-label">{{ item.label }}</span>
+        </a>
+    }
+} @else {
+    <span class="gx-crumb inline-flex items-center gap-1"
+          [attr.aria-current]="item.active ? 'page' : null"
+          [class.gx-breadcrumb-disabled]="item.disabled">
+    @if (showIcon && item.icon) {
+        <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+    }
+        <span class="gx-breadcrumb-item-label gx-disable-label">{{ item.label }}</span>
+  </span>
+}

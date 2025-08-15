@@ -2,10 +2,15 @@
     class="gx-container gx-breadcrumb-container"
 >
     <div class="gx-breadcrumb">
-        @for(item of data;track item; let i = $index; let last = $last) {
-            <gx-breadcrumb-item></gx-breadcrumb-item>
+        @for(item of data;track trackByIndex; let i = $index; let last = $last) {
+            <gx-breadcrumb-item
+                    [item]="item"
+                    [showIcon]="showIcon"
+                    [variant]="variant"
+                    (itemClick)="itemClick.emit($event)"
+            ></gx-breadcrumb-item>
             @if(!last){
-                <span>{{ getSeparator() }}</span>
+                <span class="gx-breadcrumb-separator" aria-hidden="true">{{ getSeparator() }}</span>
             }
         }
     </div>
