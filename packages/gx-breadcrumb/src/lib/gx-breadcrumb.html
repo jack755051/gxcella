@@ -3,6 +3,7 @@
         @if (data?.length) {
             @for(item of data;track trackByIndex; let i = $index; let last = $last) {
                 <gx-breadcrumb-item
+                        class="gx-container gx-breadcrumb-item-container"
                         [item]="item"
                         [showIcon]="showIcon"
                         [variant]="variant"
@@ -16,6 +17,7 @@
             @if (svc.breadcrumbs$ | async; as auto) {
                 @for (item of auto; track trackByIndex; let last = $last) {
                     <gx-breadcrumb-item
+                            class="gx-container gx-breadcrumb-item-container"
                             [item]="item"
                             [showIcon]="showIcon"
                             [variant]="variant"

@@ -1,30 +1,37 @@
 @if (item.link && !item.disabled && !item.active) {
+
     @if (isExternal(item.link)) {
-        <a class="gx-crumb inline-flex items-center gap-1"
+        <a class="gx-container gx-breadcrumb-item gx-breadcrumb-item-available"
            [href]="item.link"
            (click)="onClick($event)">
-            @if (showIcon && item.icon) {
-                <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+            @if (showIcon) {
+                <lucide-icon *ngIf="item.iconImg" [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+                <span *ngIf="!item.iconImg && item.icon" class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
             }
             <span class="gx-breadcrumb-item-label">{{ item.label }}</span>
         </a>
     } @else {
-        <a class="gx-crumb inline-flex items-center gap-1"
+        <a class="gx-container gx-breadcrumb-item gx-breadcrumb-item-available"
            [routerLink]="item.link"
            (click)="onClick($event)">
-            @if (showIcon && item.icon) {
-                <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+            @if (showIcon) {
+                <lucide-icon *ngIf="item.iconImg" [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+                <span *ngIf="!item.iconImg && item.icon" class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
             }
             <span class="gx-breadcrumb-item-label">{{ item.label }}</span>
         </a>
     }
+
 } @else {
-    <span class="gx-crumb inline-flex items-center gap-1"
+
+    <span class="gx-container gx-breadcrumb-item gx-breadcrumb-item-disable"
           [attr.aria-current]="item.active ? 'page' : null"
           [class.gx-breadcrumb-disabled]="item.disabled">
-    @if (showIcon && item.icon) {
-        <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+    @if (showIcon) {
+        <lucide-icon *ngIf="item.iconImg" [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+        <span *ngIf="!item.iconImg && item.icon" class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
     }
         <span class="gx-breadcrumb-item-label gx-disable-label">{{ item.label }}</span>
   </span>
+
 }

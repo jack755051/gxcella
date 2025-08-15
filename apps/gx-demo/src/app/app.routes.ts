@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
-import {GxBreadcrumb,IGxBreadCrumb} from '@sanring/gx-breadcrumb';
+import {IGxBreadCrumb} from '@sanring/gx-breadcrumb';
+import { HouseIcon, Building2Icon, CctvIcon } from '../icons';
 
 const gxBreadcrumb = {
-  home:    { label: 'Home', link: '/home', icon: 'home' },
-  about:   { label: 'About', link: '/about', icon: 'info' },
-  product: { label: 'Product', link: '/product', icon: 'shopping_cart' }
+  home:    { label: 'Home', link: '/home', iconImg: HouseIcon },
+  about:   { label: 'About', link: '/about', iconImg:Building2Icon },
+  product: { label: 'Product', link: '/product', iconImg: CctvIcon }
 } satisfies Record<string, IGxBreadCrumb>;
 
 
@@ -21,17 +22,18 @@ export const routes: Routes = [
     data:{ breadcrumb: gxBreadcrumb.about}
   },
   {
-    path: 'product' ,
+    path: 'product',
+    data: { breadcrumb: gxBreadcrumb.product },
     children:[
       {
         path:'',
         loadComponent: () => import('./pages/product/product').then(m => m.Product),
-        data:{ breadcrumb: gxBreadcrumb.product },
+        data: { breadcrumb: false }
       },
       {
         path:':id',
         loadComponent:()=>import('./pages/product-detail/product-detail').then(m => m.ProductDetail),
-        data: { breadcrumb: (r) => `#${r.paramMap.get('id')}` }
+        data: { breadcrumb: (r:any) => `#${r.paramMap.get('id')}` }
       }
     ]
   },

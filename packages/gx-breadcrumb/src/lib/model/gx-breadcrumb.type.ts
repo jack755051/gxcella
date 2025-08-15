@@ -10,6 +10,7 @@ export interface IGxBreadCrumb{
     label: string;
     link?: string;
     icon?: string;
+    iconImg?: any;
     active?: boolean;
     disabled?: boolean;
 }

@@ -2,11 +2,12 @@ import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {GxBreadcrumbVariant, IGxBreadCrumb} from "../model/gx-breadcrumb.type";
+import {LucideAngularModule} from "lucide-angular";
 
 @Component({
     selector: 'gx-breadcrumb-item',
     standalone: true,
-    imports: [CommonModule, RouterLink],
+    imports: [CommonModule, RouterLink, LucideAngularModule],
     templateUrl: 'gx-breadcrumb-item.html',
     styleUrls: ['gx-breadcrumb-item.css'],
 })

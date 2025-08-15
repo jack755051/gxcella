@@ -1,0 +1,15 @@
+.gx-container{
+    display: flex;
+}
+
+.gx-breadcrumb-item{
+    flex-direction: row;
+    gap:20px
+}
+
+.gx-breadcrumb-item-available{
+    cursor: pointer;
+    &:hover {
+        color: #415E72;
+    }
+}
