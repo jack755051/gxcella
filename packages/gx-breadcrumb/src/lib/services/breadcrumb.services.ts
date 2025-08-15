@@ -47,13 +47,18 @@ export class GxBreadcrumbService{
     /** 真的把 Root 插到最前；僅在有 2 顆以上時插入（避免首頁重複） */
     private prependRoot(list: IGxBreadCrumb[], from: ActivatedRouteSnapshot): IGxBreadCrumb[] {
         const root = this.resolveRootOverride(from); // 可能是物件 / false / null
-        if (!root || list.length <= 1) return list;
+        if (!root || list.length === 0) return list;
 
-        const already =
-            list[0]?.link === root.link ||
-            list[0]?.label?.toLowerCase() === (root.label ?? '').toLowerCase();
+        const first = list[0];
+        const firstIsRoot =
+            first?.link === root.link ||
+            (first?.label ?? '').toLowerCase() === (root.label ?? '').toLowerCase();
 
-        return already ? list : [root, ...list];
+        // 首顆就是 root（/home 頁）→ 不加
+        if (firstIsRoot) return list;
+
+        // 其他任何頁 → 一律把 root 前置
+        return [root, ...list];
     }
 
 
