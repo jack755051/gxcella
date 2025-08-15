@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dododo": "rm -rf node_modules .angular/cache && yarn install && yarn start"
+    "dev": "rm -rf node_modules .angular/cache node_modules/.vite && yarn install && yarn start"
   },
   "prettier": {
     "overrides": [
@@ -33,7 +33,8 @@
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.1.11",
     "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "zone.js": "~0.15.0",
+    "lucide-angular": "^0.539.0"
   },
   "devDependencies": {
     "@angular/build": "^20.1.0",
