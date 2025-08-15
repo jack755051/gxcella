@@ -5,6 +5,7 @@
                 <gx-breadcrumb-item
                         class="gx-container gx-breadcrumb-item-container"
                         [item]="item"
+                        [isLast]="last"
                         [showIcon]="showIcon"
                         [variant]="variant"
                         (itemClick)="itemClick.emit($event)"
@@ -19,6 +20,7 @@
                     <gx-breadcrumb-item
                             class="gx-container gx-breadcrumb-item-container"
                             [item]="item"
+                            [isLast]="last"
                             [showIcon]="showIcon"
                             [variant]="variant"
                             (itemClick)="itemClick.emit($event)"

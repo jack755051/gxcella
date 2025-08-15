@@ -13,6 +13,7 @@ import {LucideAngularModule} from "lucide-angular";
 })
 export class GxBreadcrumbItem implements OnInit {
     @Input({ required: true }) item!: IGxBreadCrumb;
+    @Input() isLast = false;
     @Input() showIcon = true;
     @Input() variant: GxBreadcrumbVariant = GxBreadcrumbVariant.Modern;
     @Output() itemClick = new EventEmitter<IGxBreadCrumb>();
@@ -34,6 +35,10 @@ export class GxBreadcrumbItem implements OnInit {
 
     isExternal(link?: string) {
         return !!link && /^(https?:)?\/\//.test(link);
+    }
+
+    get isActive() {
+        return this.isLast || !!this.item.active;
     }
 
 }

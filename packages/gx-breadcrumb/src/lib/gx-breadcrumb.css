@@ -2,11 +2,10 @@
     display: flex;
     gap:20px;
 }
-
 .gx-breadcrumb-container{
     width: 100%;
     min-height: 50px;
-    padding: 15px;
+    padding: 20px 40px;
     border-radius: 12px;
     /* 立體陰影效果 */
     background-color: #fff; /* 確保陰影可見 */
@@ -15,8 +14,14 @@
             0 4px 6px rgba(0, 0, 0, 0.06),   /* 稍遠的柔和陰影 */
             inset 0 1px 0 rgba(255, 255, 255, 0.6); /* 內部亮邊讓它有浮起感 */
 }
-
-.gx-breadcrumb-item-container{
+.gx-breadcrumb{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;   /* 不要自動換行 */
 }
-
-gx-breadcrumb-item{}
+.gx-breadcrumb-separator {
+    display: inline-block;
+    line-height: 1;
+    padding: 0 6px;
+}

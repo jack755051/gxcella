@@ -1,5 +1,14 @@
+:host { display: inline-flex; align-items: center; }
+
 .gx-container{
     display: flex;
+}
+
+.gx-breadcrumb-item-available,
+.gx-breadcrumb-item-disable {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .gx-breadcrumb-item{
