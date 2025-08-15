@@ -1,20 +1,60 @@
 import {inject, Injectable} from "@angular/core";
-import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from "@angular/router";
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from "@angular/router";
 import { Observable } from "rxjs";
-import {BreadcrumbData, IGxBreadCrumb} from "../model/gx-breadcrumb.type";
-import {filter,startWith,map} from "rxjs/operators";
+import { filter,startWith,map } from "rxjs/operators";
+import { BreadcrumbData, IGxBreadCrumb } from "../model/gx-breadcrumb.type";
+import { GX_BREADCRUMB_ROOT } from "./breadcrumb.token";
 
 @Injectable({ providedIn: 'root' })
 export class GxBreadcrumbService{
     private router = inject(Router);
     private route = inject(ActivatedRoute);
+    /** load Token default */
+    private rootDefault = inject(GX_BREADCRUMB_ROOT);
 
+    /** 讓元件需要時也能拿到「目前路由鏈上最近的覆寫」 */
+    getCurrentRootOverride(): IGxBreadCrumb | false | null {
+        return this.resolveRootOverride(this.router.routerState.snapshot.root);
+    }
+
+    /** 主串流：自動麵包屑（已套用 token + route 覆寫） */
     readonly breadcrumbs$: Observable<IGxBreadCrumb[]> = this.router.events
         .pipe(
             filter(e => e instanceof NavigationEnd),
             startWith(null),
-            map(() => this.build(this.router.routerState.snapshot.root))
+            map(() =>
+                {
+                    const root = this.router.routerState.snapshot.root;
+                    const list = this.build(root);
+                    /** 在 service 內套用 Root 規則 */
+                    return this.prependRoot(list, root);
+                }
+            )
         );
+
+    /** 從當前節點往上找最近的 data 覆寫：data.breadcrumbRoot */
+    private resolveRootOverride(from: ActivatedRouteSnapshot): IGxBreadCrumb | false | null {
+        let n: ActivatedRouteSnapshot | null = from;
+        while (n) {
+            if (n.data && 'breadcrumbRoot' in n.data) {
+                return (n.data as any)['breadcrumbRoot'] as IGxBreadCrumb | false | null;
+            }
+            n = n.parent ?? null;
+        }
+        return this.rootDefault; // 沒覆寫就用 token 預設
+    }
+
+    /** 真的把 Root 插到最前；僅在有 2 顆以上時插入（避免首頁重複） */
+    private prependRoot(list: IGxBreadCrumb[], from: ActivatedRouteSnapshot): IGxBreadCrumb[] {
+        const root = this.resolveRootOverride(from); // 可能是物件 / false / null
+        if (!root || list.length <= 1) return list;
+
+        const already =
+            list[0]?.link === root.link ||
+            list[0]?.label?.toLowerCase() === (root.label ?? '').toLowerCase();
+
+        return already ? list : [root, ...list];
+    }
 
 
     private build(node: ActivatedRouteSnapshot, accUrl = ''): IGxBreadCrumb[]{
@@ -42,6 +82,7 @@ export class GxBreadcrumbService{
             if (crumb) {
                 crumb.link ??= nextUrl;
                 crumb.active = !primaryChild;
+                /** active 先交給元件用 $last 判斷，這裡不硬塞 */
                 out.push(crumb);
             }
         }
