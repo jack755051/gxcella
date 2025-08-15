@@ -1,0 +1,9 @@
+.gx-container{
+    width:inherit;
+    display: flex;
+}
+
+.gx-breadcrumb-container{
+    min-height: 50px;
+    border-radius: 2px;
+}

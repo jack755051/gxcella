@@ -9,10 +9,10 @@
     "access": "public"
   },
   "dependencies": {
-    "lucide-angular": "^0.539.0",
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
+    "lucide-angular": "^0.539.0",
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",
     "tailwindcss": "^4.1.11"
@@ -24,7 +24,8 @@
   },
   "devDependencies": {
     "ng-packagr": "^20.1.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "lucide-angular": "^0.539.0"
   },
   "sideEffects": false,
   "exports": {

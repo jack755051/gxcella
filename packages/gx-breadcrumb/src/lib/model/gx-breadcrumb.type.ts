@@ -1,3 +1,11 @@
+import {ActivatedRouteSnapshot} from "@angular/router";
+
+export type BreadcrumbData =
+    | string
+    | false
+    | ((r: ActivatedRouteSnapshot) => IGxBreadCrumb | string)
+    | IGxBreadCrumb;
+
 export interface IGxBreadCrumb{
     label: string;
     link?: string;
