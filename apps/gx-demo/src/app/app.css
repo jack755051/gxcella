@@ -1,0 +1,7 @@
+.gx-container{
+  display: flex;
+  padding: 20px;
+}
+.gx-demo-shell{
+  width:100%;
+}

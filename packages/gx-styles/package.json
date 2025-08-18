@@ -1,8 +1,15 @@
 {
   "name": "@sanring/gx-styles",
   "version": "0.0.1",
-  "dependencies": {
-    "tslib": "^2.3.0"
+  "private": true,
+  "files": ["src/lib"],
+  "sideEffects": ["**/*.css"],
+  "scripts": {
+    "build": "echo \"gx-styles (css only): nothing to build\""
   },
-  "sideEffects": ["**/*.css"]
+  "exports": {
+    ".": "./package.json",
+    "./gx.css": "./src/lib/gx-styles.css",
+    "./variables.css": "./src/lib/_variables.css"
+  }
 }

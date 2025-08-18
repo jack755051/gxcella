@@ -1,0 +1,7 @@
+@import './_variables.css';
+
+body {
+    font-family: system-ui, sans-serif;
+    background: var(--gx-gray-50);
+    color: var(--gx-dark-700);
+}

@@ -1,14 +1,19 @@
+:host{
+    width: 100%;
+}
+
 .gx-container{
     display: flex;
     gap:20px;
 }
 .gx-breadcrumb-container{
     width: 100%;
+    background-color: var(--gx-primary-900);
     min-height: 50px;
     padding: 20px 40px;
     border-radius: 12px;
     /* 立體陰影效果 */
-    background-color: #fff; /* 確保陰影可見 */
+    /*background-color: #fff; !* 確保陰影可見 *!*/
     box-shadow:
             0 1px 2px rgba(0, 0, 0, 0.08),   /* 淡淡的底部陰影 */
             0 4px 6px rgba(0, 0, 0, 0.06),   /* 稍遠的柔和陰影 */
