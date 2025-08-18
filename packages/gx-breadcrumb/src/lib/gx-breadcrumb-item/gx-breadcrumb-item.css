@@ -6,6 +6,7 @@
 
 .gx-breadcrumb-item-available,
 .gx-breadcrumb-item-disable {
+    color: var(--gx-color-gray-900);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -19,6 +20,7 @@
 .gx-breadcrumb-item-available{
     cursor: pointer;
     &:hover {
-        color: #415E72;
+        color: var(--gx-color-gray-600);
+        font-weight:var(--gx-weight-semiBold) ;
     }
 }

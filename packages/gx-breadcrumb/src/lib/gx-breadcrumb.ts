@@ -19,7 +19,7 @@ export class GxBreadcrumb {
 
   @Input() variant: GxBreadcrumbVariant = GxBreadcrumbVariant.Modern;
   @Input() separator: GxBreadcrumbSeparator = GxBreadcrumbSeparator.Slash;
-  @Input() showIcon = true;
+  @Input() showIcon = false;
   /** 單頁臨時：false=關閉；物件=覆寫；undefined=用 service (token/route) 結果 */
   @Input() rootCrumb: IGxBreadCrumb | false | undefined;
   /** 有提供 data → 手動模式；沒提供 → 用 svc.breadcrumbs$ */
