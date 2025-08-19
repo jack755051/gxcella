@@ -5,7 +5,7 @@ import { HouseIcon, Building2Icon, CctvIcon,PackageIcon } from '../icons';
 const gxBreadcrumb = {
   home:    { label: 'Home', link: '/home', iconImg: HouseIcon },
   about:   { label: 'About', link: '/about', iconImg:Building2Icon },
-  product: { label: 'Product', link: '/product', iconImg: PackageIcon , disabled: true },
+  product: { label: 'Product', link: '/product', iconImg: PackageIcon },
 } satisfies Record<string, IGxBreadCrumb>;
 
 

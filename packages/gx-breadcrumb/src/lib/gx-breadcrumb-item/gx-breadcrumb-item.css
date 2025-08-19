@@ -1,4 +1,8 @@
-:host { display: inline-flex; align-items: center; }
+:host {
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px
+}
 
 .gx-container{
     display: flex;
@@ -7,8 +11,18 @@
 .gx-breadcrumb {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
     white-space: nowrap;
+}
+
+.gx-breadcrumb-item-available {
+    transition: transform .15s ease, color .15s ease;
+    transform-origin: left center;
+}
+
+.gx-breadcrumb-item-available:hover {
+    transform: scale(1.05);
+    color: var(--gx-color-accent-500);
 }
 
 .gx-breadcrumb-item-available,
@@ -16,6 +30,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    font-weight: var(--gx-weight-medium);
 }
 
 /* 只動 label，避免整個 a/span 放大牽連 separator */
@@ -33,16 +48,14 @@
 
 .gx-breadcrumb-item-available .gx-breadcrumb-item-label {
     color: var(--gx-color-gray-900);
-    font-weight: var( --gx-weight-medium);
 }
 
 .gx-breadcrumb-item-disable .gx-breadcrumb-item-label {
     color: var(--gx-color-gray-500);
-    font-weight: var(--gx-weight-bold);
 }
 
 /* hover 效果：微放大 + 改顏色 */
-.gx-breadcrumb-item-available:hover .gx-breadcrumb-item-label {
-    transform: scale(1.03);
-    color: var(--gx-color-accent-500);
+.gx-breadcrumb-item-available:hover .gx-breadcrumb-item-label,
+.gx-breadcrumb-item-available:hover .gx-breadcrumb-item-icon {
+    color: inherit;
 }
