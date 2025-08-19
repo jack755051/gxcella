@@ -27,7 +27,7 @@ export class GxBreadcrumb {
   @Output() itemClick = new EventEmitter<IGxBreadCrumb>();
   @HostBinding('class')
   get hostClasses() {
-    return `gx-theme-${this.theme}`;
+    return `gx-theme-${this.theme} gx-variant-${this.variant}`;
   }
 
   trackByIndex = (i: number) => i;

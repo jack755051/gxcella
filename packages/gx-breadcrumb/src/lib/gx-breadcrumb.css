@@ -7,8 +7,8 @@
     gap:20px;
 }
 .gx-breadcrumb-container{
-    width: 100%;
     background-color: var(--gx-breadcrumb-bg, var(--gx-color-gray-50));
+    width: 100%;
     min-height: 50px;
     padding: 20px 40px;
     border-radius: 12px;
@@ -17,6 +17,19 @@
             0 4px 6px rgba(0, 0, 0, 0.06),   /* 稍遠的柔和陰影 */
             inset 0 1px 0 rgba(255, 255, 255, 0.6); /* 內部亮邊讓它有浮起感 */
 }
+
+/* Glass: 半透明 + 毛玻璃 */
+:host(.gx-variant-glass) .gx-breadcrumb-container {
+    background-color: rgba(255, 255, 255, 0.25); /* 半透明白 */
+    backdrop-filter: blur(10px);                 /* 毛玻璃效果 */
+    -webkit-backdrop-filter: blur(10px);         /* Safari */
+    border: 1px solid rgba(255, 255, 255, 0.3);  /* 細邊框，凸顯玻璃感 */
+    /*box-shadow:*/
+    /*        0 4px 6px rgba(0, 0, 0, 0.1),*/
+    /*        inset 0 1px 0 rgba(255, 255, 255, 0.4);*/
+    box-shadow: 0 0 30px rgba(227,228,237,0.37);
+}
+
 .gx-breadcrumb{
     display: flex;
     align-items: center;
