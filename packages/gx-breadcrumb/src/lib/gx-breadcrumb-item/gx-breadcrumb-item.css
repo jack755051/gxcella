@@ -11,7 +11,7 @@
 
     /* 動畫/距離 */
     --gx-bc-gap:       16px;   /* crumb 與 separator 間距 */
-    --gx-bc-item-gap:  6px;    /* icon 與 label 間距 */
+    --gx-bc-item-gap:  16px;    /* icon 與 label 間距 */
     --gx-bc-scale:     1.03;   /* hover 放大倍率 */
     --gx-bc-fsz:       16px;   /* base font-size */
 
@@ -66,7 +66,7 @@
     transition: transform .15s ease, color .15s ease;
     transform-origin: left center;
     text-decoration: none;
-    color: var(--gx-bc-fg);
+    color: var(--gx-bc-muted);
 }
 
 /* hover：對整個項目一起動，避免 label/icon 分別放大造成抖動 */
@@ -85,7 +85,7 @@
 /* 不可點/當前頁 */
 .gx-breadcrumb-item-disable {
     cursor: default;
-    color: var(--gx-color-gray-900);
+    color: var(--gx-bc-fg);
     font-weight: var(--gx-active-weight);
     opacity: .85;                 /* 些微淡化（仍保留對比） */
 }
