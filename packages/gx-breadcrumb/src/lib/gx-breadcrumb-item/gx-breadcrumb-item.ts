@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterLink} from "@angular/router";
-import {GxBreadcrumbVariant, IGxBreadCrumb} from "../model/gx-breadcrumb.type";
+import {GxVariant, IGxBreadCrumb} from "../model/gx-breadcrumb.type";
 import {LucideAngularModule} from "lucide-angular";
 
 @Component({
@@ -15,7 +15,7 @@ export class GxBreadcrumbItem implements OnInit {
     @Input({ required: true }) item!: IGxBreadCrumb;
     @Input() isLast = false;
     @Input() showIcon = false;
-    @Input() variant: GxBreadcrumbVariant = GxBreadcrumbVariant.Modern;
+    @Input() variant: GxVariant = 'modern';
     @Output() itemClick = new EventEmitter<IGxBreadCrumb>();
 
     constructor() {}

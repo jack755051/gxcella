@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import {IGxBreadCrumb} from '@sanring/gx-breadcrumb';
-import { HouseIcon, Building2Icon, CctvIcon } from '../icons';
+import { HouseIcon, Building2Icon, CctvIcon,PackageIcon } from '../icons';
 
 const gxBreadcrumb = {
   home:    { label: 'Home', link: '/home', iconImg: HouseIcon },
   about:   { label: 'About', link: '/about', iconImg:Building2Icon },
-  product: { label: 'Product', link: '/product', iconImg: CctvIcon }
+  product: { label: 'Product', link: '/product', iconImg: PackageIcon , disabled: true },
 } satisfies Record<string, IGxBreadCrumb>;
 
 
