@@ -3,7 +3,20 @@
  * ------------------------------------- */
 :host {
     --gx-bar-bc: var(--gx-color-accent-400);
-    --gx-bar-gap: 8px;
+    --gx-bar-gap: 5px;
+
+    --gx-base-item-width:5px;
+    --gx-base-item-heigh:30px;
+    --gx-base-heigh: 40px;
+
+    --gx-bar-duration: 0.8s;
+    --gx-bar-delay-step: 0.08s; /* 每根的延遲遞增量 */
+}
+
+.gx-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .gx-loading{
@@ -14,18 +27,28 @@
 
 /* loading-bar */
 .gx-loading-bar{
-    display: flex;        /* 關鍵！讓 gap 與均分生效 */
-    width: 100%;          /* 讓 aspect-ratio 有寬度基準 */
-    aspect-ratio: 16 / 9;
+    height: var(--gx-base-heigh);
     gap: var(--gx-bar-gap);
+    align-items: center;
 }
 
 .gx-loading-bar-item{
-    flex: 1;                         /* 均分 */
-    height: 100%;                    /* 吃滿容器高度 */
+    width: var(--gx-base-item-width);
+    height: var(--gx-base-item-heigh);
     background-color: var(--gx-bar-bc);
-    border-radius: 4px;
+    border-radius: 3px;
+    animation: gx-wave var(--gx-bar-duration) ease-in-out infinite;
+    /* 用 transform 讓「從中線伸縮」，視覺更自然 */
+    transform-origin: center;
+    /* 依索引延遲：由模板 [style.--i]="i" 傳進來 */
+    animation-delay: calc(var(--i) * var(--gx-bar-delay-step));
 }
+
+@keyframes gx-wave {
+    0%, 100% { transform: scaleY(0.35); }
+    50%      { transform: scaleY(1);    }
+}
+
 
 /* loading-spinner */
 .gx-loading-spinner{

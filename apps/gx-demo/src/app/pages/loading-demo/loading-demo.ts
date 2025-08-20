@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-
+import { GxLoading } from "@sanring/gx-ui";
 @Component({
   selector: 'app-loading-demo',
   standalone: true,
-  imports: [],
+  imports: [
+    GxLoading
+  ],
   templateUrl: './loading-demo.html',
-  styleUrl: './loading-demo.css'
+  styleUrls: ['./loading-demo.css']
 })
 export class LoadingDemo {
 

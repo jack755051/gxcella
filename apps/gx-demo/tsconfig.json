@@ -13,7 +13,6 @@
       ],
       "gx-ui": [
         "./dist/gx-ui",
-        "./dist/gx-ui"
       ]
     },
     "noImplicitOverride": true,

@@ -1566,6 +1566,16 @@
   optionalDependencies:
     fsevents "~2.3.2"
 
+"@sanring/gx-breadcrumb@file:dist/@sanring/gx-breadcrumb":
+  version "0.0.1"
+  dependencies:
+    tslib "^2.3.0"
+
+"@sanring/gx-ui@file:dist/@sanring/gx-ui":
+  version "0.0.1"
+  dependencies:
+    tslib "^2.3.0"
+
 "@schematics/angular@20.1.5":
   version "20.1.5"
   resolved "https://registry.npmjs.org/@schematics/angular/-/angular-20.1.5.tgz"

@@ -1,8 +1,8 @@
 <div class="gx-container">
     @if(type() === 'bar'){
         <div class="gx-loading gx-loading-bar">
-            @for (_ of barsArray(); track $index) {
-                <div class="gx-loading-bar-item"></div>
+            @for (i of barsArray(); track i) {
+                <div class="gx-loading-bar-item bar-item" [style.--i]="i"></div>
             }
         </div>
     }

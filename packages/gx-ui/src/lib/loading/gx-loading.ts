@@ -9,12 +9,13 @@ import {GxLoadingType} from "./model/gx-loading.type";
     styleUrls: ['gx-loading.css'],
 })
 export class GxLoading {
-    type = input<GxLoadingType>('spinner');
+    type = input<GxLoadingType>('bar');
     barsAmount = input<number, number | string>(5, {
         transform: (v) => {
             const n = typeof v === 'string' ? parseInt(v, 10) : v;
-            return Number.isFinite(n) ? Math.max(5, n) : 5;
+            const safe = Number.isFinite(n) ? n : 5;
+            return Math.min(12, Math.max(3, safe)); // 建議範圍 3~12，可依需求調整
         },
     });
-    barsArray = computed(() => Array.from({ length: Math.max(5, this.barsAmount()) }));
+    barsArray = computed(() => Array.from({ length: this.barsAmount() }, (_, i) => i));
 }
