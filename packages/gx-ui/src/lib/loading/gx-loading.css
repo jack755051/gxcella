@@ -1,0 +1,33 @@
+/* ---------------------------------------
+ * Design tokens (可由外部覆寫)
+ * ------------------------------------- */
+:host {
+    --gx-bar-bc: var(--gx-color-accent-400);
+    --gx-bar-gap: 8px;
+}
+
+.gx-loading{
+    max-width: 20vw;
+    display: flex;
+    width: 100%;
+}
+
+/* loading-bar */
+.gx-loading-bar{
+    display: flex;        /* 關鍵！讓 gap 與均分生效 */
+    width: 100%;          /* 讓 aspect-ratio 有寬度基準 */
+    aspect-ratio: 16 / 9;
+    gap: var(--gx-bar-gap);
+}
+
+.gx-loading-bar-item{
+    flex: 1;                         /* 均分 */
+    height: 100%;                    /* 吃滿容器高度 */
+    background-color: var(--gx-bar-bc);
+    border-radius: 4px;
+}
+
+/* loading-spinner */
+.gx-loading-spinner{
+    aspect-ratio: 1/1;
+}

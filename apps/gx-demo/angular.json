@@ -147,9 +147,40 @@
           }
         }
       }
+    },
+    "gx-ui": {
+      "projectType": "library",
+      "root": "projects/gx-ui",
+      "sourceRoot": "projects/gx-ui/src",
+      "prefix": "gx",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/gx-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/gx-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/gx-ui/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "packageManager": "yarn"
   }
 }

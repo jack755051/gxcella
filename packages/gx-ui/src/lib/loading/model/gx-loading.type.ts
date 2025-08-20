@@ -1,0 +1,1 @@
+export type GxLoadingType = 'spinner' | 'dots' | 'bar' | 'skeleton';

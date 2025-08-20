@@ -1,1 +1,1 @@
-export { HouseIcon, Building2Icon, CctvIcon ,PackageIcon } from 'lucide-angular';
+export { HouseIcon, Building2Icon, CctvIcon ,PackageIcon,LoaderIcon } from 'lucide-angular';

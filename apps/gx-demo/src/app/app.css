@@ -1,5 +1,14 @@
+:host{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: gray;
+}
+
 .gx-container{
   display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 20px;
 }
 .gx-demo-shell{

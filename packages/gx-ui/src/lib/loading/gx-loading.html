@@ -1,0 +1,13 @@
+<div class="gx-container">
+    @if(type() === 'bar'){
+        <div class="gx-loading gx-loading-bar">
+            @for (_ of barsArray(); track $index) {
+                <div class="gx-loading-bar-item"></div>
+            }
+        </div>
+    }
+
+    @if (type() === 'spinner') {
+        <div class="gx-loading gx-loading-spinner" aria-label="Loading"></div>
+    }
+</div>
