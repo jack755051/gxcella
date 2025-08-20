@@ -3,11 +3,13 @@
  * ------------------------------------- */
 :host {
     --gx-bar-bc: var(--gx-color-accent-400);
-    --gx-bar-gap: 5px;
+    --gx-bar-gap: 8px;
 
-    --gx-base-item-width:5px;
-    --gx-base-item-heigh:30px;
-    --gx-base-heigh: 40px;
+    --gx-item-width: 5px;
+    --gx-item-height: 30px;
+    --gx-base-height: 40px;
+
+    --gx-radius: 6px;
 
     --gx-bar-duration: 0.8s;
     --gx-bar-delay-step: 0.08s; /* 每根的延遲遞增量 */
@@ -15,33 +17,34 @@
 
 .gx-container{
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .gx-loading{
     max-width: 20vw;
-    display: flex;
     width: 100%;
 }
 
 /* loading-bar */
 .gx-loading-bar{
-    height: var(--gx-base-heigh);
+    display: flex;
+    height: var(--gx-base-height);
     gap: var(--gx-bar-gap);
     align-items: center;
+    justify-content: center;
 }
 
 .gx-loading-bar-item{
-    width: var(--gx-base-item-width);
-    height: var(--gx-base-item-heigh);
+    width: var(--gx-item-width);
+    height: var(--gx-item-height);
     background-color: var(--gx-bar-bc);
     border-radius: 3px;
     animation: gx-wave var(--gx-bar-duration) ease-in-out infinite;
     /* 用 transform 讓「從中線伸縮」，視覺更自然 */
     transform-origin: center;
     /* 依索引延遲：由模板 [style.--i]="i" 傳進來 */
-    animation-delay: calc(var(--i) * var(--gx-bar-delay-step));
+    animation-delay: calc(var(--gx-i, 0) * (var(--gx-bar-duration) / 10));
 }
 
 @keyframes gx-wave {

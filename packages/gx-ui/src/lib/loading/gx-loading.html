@@ -1,8 +1,8 @@
-<div class="gx-container">
+<div class="gx-container" [ngStyle]="hostVars()">
     @if(type() === 'bar'){
         <div class="gx-loading gx-loading-bar">
             @for (i of barsArray(); track i) {
-                <div class="gx-loading-bar-item bar-item" [style.--i]="i"></div>
+                <div class="gx-loading-bar-item bar-item"  [style.--gx-i]="i"></div>
             }
         </div>
     }
