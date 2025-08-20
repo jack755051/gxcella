@@ -3,45 +3,53 @@
         <a class="gx-breadcrumb-item gx-breadcrumb-item-available"
            [href]="item.link"
            (click)="onClick($event)">
-            @if (showIcon) {
-                @if(item.iconImg){
-                    <lucide-icon [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+            <span class="gx-breadcrumb-item-inner">
+                @if (showIcon) {
+
+                        @if(item.iconImg){
+                            <lucide-icon [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+                        }
+                        @if(!item.iconImg && item.icon){
+                            <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+                        }
+
                 }
-                @if(!item.iconImg && item.icon){
-                    <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
-                }
-            }
-            <span class="gx-breadcrumb-item-label">{{ item.label }}</span>
+                <span class="gx-breadcrumb-item-label">{{ item.label }}</span>
+            </span>
         </a>
     } @else {
         <a class="gx-breadcrumb-item gx-breadcrumb-item-available"
            [routerLink]="item.link"
            (click)="onClick($event)">
-            @if (showIcon) {
-                @if(item.iconImg){
-                    <lucide-icon [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+            <span class="gx-breadcrumb-item-inner">
+                @if (showIcon) {
+
+                        @if(item.iconImg){
+                            <lucide-icon [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+                        }
+                        @if(!item.iconImg && item.icon){
+                            <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+                        }
+
                 }
-                @if(!item.iconImg && item.icon){
-                    <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
-                }
-            }
-            <span class="gx-breadcrumb-item-label">{{ item.label }}</span>
+                <span class="gx-breadcrumb-item-label">{{ item.label }}</span>
+            </span>
         </a>
     }
 
 } @else {
     <span class="gx-breadcrumb-item gx-breadcrumb-item-disable"
           [attr.aria-current]="isActive ? 'page' : null"
-          [class.gx-breadcrumb-disabled]="item.disabled">
-    @if (showIcon) {
-        @if(item.iconImg){
-            <lucide-icon [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+          [class.gx-breadcrumb-disabled]="item.disabled"><span class="gx-breadcrumb-item-inner">
+        @if (showIcon) {
+            @if(item.iconImg){
+                <lucide-icon [img]="item.iconImg" class="gx-breadcrumb-item-icon"></lucide-icon>
+            }
+            @if(!item.iconImg && item.icon){
+                <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
+            }
         }
-        @if(!item.iconImg && item.icon){
-            <span class="gx-breadcrumb-item-icon">{{ item.icon }}</span>
-        }
-    }
-        <span class="gx-breadcrumb-item-label gx-disable-label">{{ item.label }}</span>
-  </span>
-
+            <span class="gx-breadcrumb-item-label gx-disable-label">{{ item.label }}</span>
+      </span>
+    </span>
 }

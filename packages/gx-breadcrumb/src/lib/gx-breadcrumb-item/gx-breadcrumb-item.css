@@ -49,30 +49,36 @@
 .gx-breadcrumb-item-disable {
     display: inline-flex;
     align-items: center;
-    gap: var(--gx-bc-item-gap);
     font-weight: var(--gx-normal-weight);
 }
+.gx-breadcrumb-item-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gx-bc-item-gap);
+    transform-origin: center center;                     /* ✅ 從中心放大 */
+    transition: transform .15s ease;                     /* 只管縮放 */
+}
 
-/* label 與 icon：預設繼承顏色；給 transition 讓 hover 更順 */
-.gx-breadcrumb-item-label,
-.gx-breadcrumb-item-icon {
-    display: inline-block;
-    transition: color .15s ease, transform .15s ease;
-    transform-origin: left center;
+/* icon/label 僅需要顏色過渡，不做 transform，避免抖動 */
+.gx-breadcrumb-item-icon,
+.gx-breadcrumb-item-label {
+    transition: color .15s ease;
 }
 
 /* 可點狀態（連結） */
+/* 可點狀態 */
 .gx-breadcrumb-item-available {
-    transition: transform .15s ease, color .15s ease;
-    transform-origin: left center;
     text-decoration: none;
     color: var(--gx-bc-muted);
+    padding: 2px 4px;                                    /* 放大時不會貼到分隔符 */
 }
 
 /* hover：對整個項目一起動，避免 label/icon 分別放大造成抖動 */
 .gx-breadcrumb-item-available:hover {
-    transform: scale(var(--gx-bc-scale));
     color: var(--gx-bc-hover);
+}
+.gx-breadcrumb-item-available:hover .gx-breadcrumb-item-inner {
+    transform: scale(var(--gx-bc-scale));                /* ✅ 中心縮放 */
 }
 
 /* focus：鍵盤導覽可見（a 元素） */
@@ -94,9 +100,9 @@
  * 無動畫偏好（減少位移造成的不適）
  * ------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-    .gx-breadcrumb-item-available,
-    .gx-breadcrumb-item-label,
-    .gx-breadcrumb-item-icon {
+    .gx-breadcrumb-item-inner,
+    .gx-breadcrumb-item-icon,
+    .gx-breadcrumb-item-label {
         transition: none;
     }
 }
