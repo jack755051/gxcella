@@ -1,12 +1,16 @@
 import {Component, computed, input } from "@angular/core";
 import {GxLoadingSize, GxLoadingSpeed, GxLoadingType} from "./model/gx-loading.type";
 import {NgStyle} from "@angular/common";
+import {GxLoadingBar} from "./gx-loading-bar/gx-loading-bar";
+import {GxLoadingSpinner} from "./gx-loading-spinner/gx-loading-spinner";
 
 @Component({
     selector: 'gx-loading',
     standalone: true,
     imports: [
-        NgStyle
+        NgStyle,
+        GxLoadingBar,
+        GxLoadingSpinner
     ],
     templateUrl: 'gx-loading.html',
     styleUrls: ['gx-loading.css'],
@@ -18,7 +22,7 @@ export class GxLoading {
     color = input<string | undefined>(undefined);
 
     // 對應成 CSS 變數
-    hostVars = computed(() => {
+    readonly hostVars = computed(() => {
         const sizeMap = { sm: 24, md: 40, lg: 56 };           // 高度 px
         const gapMap = { sm: 4, md: 8, lg: 10 };
         const durMap = { slow: '1.2s', normal: '0.8s', fast: '0.5s' };

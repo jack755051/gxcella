@@ -1,0 +1,25 @@
+/* loading-bar */
+.gx-loading-bar{
+    display: flex;
+    height: var(--gx-base-height);
+    gap: var(--gx-bar-gap);
+    align-items: center;
+    justify-content: center;
+}
+
+.gx-loading-bar-item{
+    width: var(--gx-item-width);
+    height: var(--gx-item-height);
+    background-color: var(--gx-bar-bc);
+    border-radius: 3px;
+    animation: gx-wave var(--gx-bar-duration) ease-in-out infinite;
+    /* 用 transform 讓「從中線伸縮」，視覺更自然 */
+    transform-origin: center;
+    /* 依索引延遲：由模板 [style.--i]="i" 傳進來 */
+    animation-delay: calc(var(--gx-i, 0) * (var(--gx-bar-duration) / 10));
+}
+
+@keyframes gx-wave {
+    0%, 100% { transform: scaleY(0.35); }
+    50%      { transform: scaleY(1);    }
+}

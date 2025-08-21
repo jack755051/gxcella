@@ -1,0 +1,30 @@
+/* ---------------------------------------
+ * Design tokens (可由外部覆寫)
+ * ------------------------------------- */
+:host {
+    --gx-bar-bc: var(--gx-color-accent-400);
+    --gx-bar-gap: 8px;
+
+    --gx-item-width: 5px;
+    --gx-item-height: 30px;
+    --gx-base-height: 40px;
+
+    --gx-radius: 6px;
+
+    --gx-bar-duration: 0.8s;
+    --gx-bar-delay-step: 0.08s; /* 每根的延遲遞增量 */
+
+
+    --gx-spinner-size: 40px; /* loading-spinner 的大小 */
+}
+
+.gx-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gx-loading{
+    max-width: 20vw;
+    width: 100%;
+}

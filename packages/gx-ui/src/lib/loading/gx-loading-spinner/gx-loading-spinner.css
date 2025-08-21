@@ -1,0 +1,27 @@
+/* loading-spinner */
+.gx-loading-spinner {
+    inline-size: var(--spinner-size, var(--gx-spinner-size, var(--gx-base-height)));
+    block-size:  var(--spinner-size, var(--gx-spinner-size, var(--gx-base-height)));
+    aspect-ratio: 1;
+    animation: rotate 2s linear infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+.spinner-path {
+    stroke: cornflowerblue;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+    /* 若不想縮放時描邊變粗細，打開這行 */
+    /* vector-effect: non-scaling-stroke; */
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes dash {
+    0%   { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+    50%  { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+    100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+}
