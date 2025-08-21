@@ -1,6 +1,6 @@
 <div class="gx-container" [ngStyle]="hostVars()">
     @switch (type()) {
-        @case ('bar')     { <gx-loading-bar     [color]="color()"></gx-loading-bar> }
+        @case ('bar')     { <gx-loading-bar     [color]="color()" [barsAmount]="barsAmount()"></gx-loading-bar> }
         @case ('spinner') {
             <gx-loading-spinner
                     [color]="color()"

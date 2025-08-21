@@ -8,7 +8,7 @@
                 @for(c of colors(); track $index) {
                     <stop
                             [attr.offset]="($index / (colors()!.length - 1)) * 100 + '%'"
-                            [attr.stop-color]="c"
+                            [style.stop-color]="c"
                     />
                 }
             </linearGradient>
@@ -21,6 +21,6 @@
             [attr.stroke-width]="strokeWidth()"
             fill="none"
             stroke-linecap="round"
-            [attr.stroke]="colors()?.length! > 1 ? 'url(#' + gradId + ')' : null"
+            [style.stroke]="colors()?.length! > 1 ? 'url(#' + gradId + ')' : null"
     />
 </svg>

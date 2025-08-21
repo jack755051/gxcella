@@ -1,20 +1,21 @@
 import {Component, computed, input} from "@angular/core";
+import {clampNumberLike} from "../util/number.util";
 
 @Component({
     selector: 'gx-loading-bar',
     standalone: true,
     templateUrl: 'gx-loading-bar.html',
     styleUrls: ['gx-loading-bar.css'],
+    host: {
+        // 若 CSS 有用到 --gx-bars，就在這裡統一輸出
+        '[style.--gx-bars]': 'String(barsAmount())'
+    }
 })
 export class GxLoadingBar {
     color = input<string|undefined>(undefined);
-    /** for loading bar*/
     barsAmount = input<number, number | string>(5, {
-        transform: (v) => {
-            const n = typeof v === 'string' ? parseInt(v, 10) : v;
-            const safe = Number.isFinite(n) ? n : 5;
-            return Math.min(12, Math.max(3, safe)); // 建議範圍 3~12，可依需求調整
-        },
+        transform: v => clampNumberLike(v, 3, 12, 5)
     });
     barsArray = computed(() => Array.from({ length: this.barsAmount() }, (_, i) => i));
+    protected readonly String = String;
 }

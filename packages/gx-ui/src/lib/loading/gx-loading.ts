@@ -5,6 +5,7 @@ import {GxLoadingBar} from "./gx-loading-bar/gx-loading-bar";
 import {GxLoadingSpinner} from "./gx-loading-spinner/gx-loading-spinner";
 import {DUR_MAP, GAP_MAP, RADIUS_RATIO, SIZE_MAP} from "./constants/gx-loading-map";
 import {TOKENS} from "./constants/gx-loading-token";
+import {clampNumberLike} from "./util";
 
 @Component({
     selector: 'gx-loading',
@@ -26,11 +27,10 @@ export class GxLoading {
     /** 只有 spinner 用得到（可選），父層先宣告好再往下傳 */
     colors = input<string[]|undefined>(undefined);
     strokeWidth = input<number, number|string>(4, {
-        transform: v => {
-            const n = typeof v === 'string' ? parseFloat(v) : v;
-            const safe = Number.isFinite(n) ? n : 4;
-            return Math.min(8, Math.max(1, safe));
-        }
+        transform: (v) => clampNumberLike(v, 1, 8, 4)
+    });
+    barsAmount = input<number, number | string>(5, {
+        transform: v => clampNumberLike(v, 3, 12, 5)
     });
 
     // 對應成 CSS 變數
@@ -47,17 +47,6 @@ export class GxLoading {
             [TOKENS.barDuration]: dur,
             [TOKENS.spinnerSize]: `${h}px`,
             ...(this.color() ? { [TOKENS.barColor]: this.color()! } : {}),
-            // 如果你要用均分模式，可暴露 --gx-bars 給 CSS 算寬
-            [TOKENS.bars]: String(this.barsAmount()),
         };
-    });
-
-    /** for loading bar*/
-    barsAmount = input<number, number | string>(5, {
-        transform: (v) => {
-            const n = typeof v === 'string' ? parseInt(v, 10) : v;
-            const safe = Number.isFinite(n) ? n : 5;
-            return Math.min(12, Math.max(3, safe)); // 建議範圍 3~12，可依需求調整
-        },
     });
 }
