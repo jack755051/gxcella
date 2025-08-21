@@ -1,7 +1,13 @@
 <div class="gx-container" [ngStyle]="hostVars()">
     @switch (type()) {
         @case ('bar')     { <gx-loading-bar     [color]="color()"></gx-loading-bar> }
-        @case ('spinner') { <gx-loading-spinner [color]="color()"></gx-loading-spinner> }
+        @case ('spinner') {
+            <gx-loading-spinner
+                    [color]="color()"
+                    [colors]="colors()"
+                    [strokeWidth]="strokeWidth()"
+                    ></gx-loading-spinner>
+        }
         @default          { <gx-loading-bar     [color]="color()"></gx-loading-bar> }
     }
 </div>

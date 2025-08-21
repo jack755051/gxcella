@@ -1,3 +1,26 @@
-<svg class="gx-loading gx-loading-spinner" viewBox="25 25 50 50">
-    <circle class="spinner-path" cx="50" cy="50" r="20" fill="none" stroke-width="4"/>
+<svg
+    class="gx-loading gx-loading-spinner"
+    viewBox="25 25 50 50"
+>
+    @if(colors()?.length && colors()!.length > 1){
+        <defs>
+            <linearGradient [attr.id]="gradId" x1="0%" y1="0%" x2="100%" y2="0%">
+                @for(c of colors(); track $index) {
+                    <stop
+                            [attr.offset]="($index / (colors()!.length - 1)) * 100 + '%'"
+                            [attr.stop-color]="c"
+                    />
+                }
+            </linearGradient>
+        </defs>
+    }
+    <circle
+            class="spinner-path"
+            cx="50" cy="50"
+            [attr.r]="20 - strokeWidth()/2"
+            [attr.stroke-width]="strokeWidth()"
+            fill="none"
+            stroke-linecap="round"
+            [attr.stroke]="colors()?.length! > 1 ? 'url(#' + gradId + ')' : null"
+    />
 </svg>

@@ -9,7 +9,7 @@
 }
 
 .spinner-path {
-    stroke: cornflowerblue;
+    stroke: var(--gx-spinner-color, var(--gx-bar-bc, cornflowerblue));
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
     /* 若不想縮放時描邊變粗細，打開這行 */
