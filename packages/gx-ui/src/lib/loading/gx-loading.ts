@@ -34,6 +34,7 @@ export class GxLoading {
             '--gx-bar-gap':     `${gap}px`,
             '--gx-radius':      `${rad}px`,
             '--gx-bar-duration': durMap[this.speed()],
+            '--gx-spinner-size':  `${h}px`,        // ★ 同步 spinner 預設
             ...(this.color() ? { '--gx-bar-bc': this.color()! } : {}),
             // 如果你要用均分模式，可暴露 --gx-bars 給 CSS 算寬
             '--gx-bars': String(this.barsAmount()),

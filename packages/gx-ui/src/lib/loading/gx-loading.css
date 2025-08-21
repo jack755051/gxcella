@@ -13,6 +13,9 @@
 
     --gx-bar-duration: 0.8s;
     --gx-bar-delay-step: 0.08s; /* 每根的延遲遞增量 */
+
+
+    --gx-spinner-size: 40px; /* loading-spinner 的大小 */
 }
 
 .gx-container{
@@ -54,6 +57,29 @@
 
 
 /* loading-spinner */
-.gx-loading-spinner{
-    aspect-ratio: 1/1;
+.gx-loading-spinner {
+    inline-size: var(--spinner-size, var(--gx-spinner-size, var(--gx-base-height)));
+    block-size:  var(--spinner-size, var(--gx-spinner-size, var(--gx-base-height)));
+    aspect-ratio: 1;
+    animation: rotate 2s linear infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+.spinner-path {
+    stroke: cornflowerblue;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+    /* 若不想縮放時描邊變粗細，打開這行 */
+    /* vector-effect: non-scaling-stroke; */
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes dash {
+    0%   { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+    50%  { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+    100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
 }

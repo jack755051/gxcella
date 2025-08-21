@@ -8,6 +8,8 @@
     }
 
     @if (type() === 'spinner') {
-        <div class="gx-loading gx-loading-spinner" aria-label="Loading"></div>
+        <svg class="gx-loading gx-loading-spinner" viewBox="25 25 50 50">
+            <circle class="spinner-path" cx="50" cy="50" r="20" fill="none" stroke-width="4"/>
+        </svg>
     }
 </div>
