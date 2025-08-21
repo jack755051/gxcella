@@ -1,0 +1,22 @@
+<!-- 預留 icon -->
+@if (item().icon) {
+    <div class="gx-toast-icon"></div>
+}
+
+<div class="gx-toast-content">
+    @if (item().title) {
+        <div class="gx-toast-title">{{ item().title }}</div>
+    }
+    <div class="gx-toast-msg">{{ item().message }}</div>
+</div>
+
+<div class="gx-toast-actions">
+    @if (item().action) {
+        <button class="gx-toast-btn" (click)="onAction()">
+            {{ item().action!.label }}
+        </button>
+    }
+    @if (item().dismissible !== false) {
+        <button class="gx-toast-close" aria-label="Close" (click)="onDismiss()">✕</button>
+    }
+</div>

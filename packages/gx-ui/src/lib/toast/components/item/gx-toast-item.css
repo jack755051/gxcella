@@ -1,0 +1,43 @@
+/* tokens */
+:host {
+    --gx-toast-title-fz: 24px;
+    --gx-toast-msg-fz:   16px;
+
+    --gx-toast-info:    #447D9B;
+    --gx-toast-success: #309898;
+    --gx-toast-warning: #FF9F00;
+    --gx-toast-error:   #CB0404;
+
+    /* base layout */
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    background: var(--gx-toast-info); /* 預設給一個，會被下面 kind 覆蓋 */
+}
+
+/* kind modifiers（類名套在 host → 用 :host(.class)） */
+:host(.gx-toast-info)    { background: var(--gx-toast-info); }
+:host(.gx-toast-success) { background: var(--gx-toast-success); }
+:host(.gx-toast-warning) { background: var(--gx-toast-warning); }
+:host(.gx-toast-error)   { background: var(--gx-toast-error); }
+
+.gx-toast-content { display: grid; gap: 6px; }
+.gx-toast-title   { font-size: var(--gx-toast-title-fz); font-weight: 700; line-height: 1.2; }
+.gx-toast-msg     { font-size: var(--gx-toast-msg-fz);   line-height: 1.4; }
+
+.gx-toast-actions { margin-left: auto; display: inline-flex; gap: 8px; }
+.gx-toast-btn,
+.gx-toast-close   {
+    appearance: none;
+    border: 0; border-radius: 6px;
+    padding: 6px 10px;
+    color: inherit; background: rgba(255,255,255,.18);
+    cursor: pointer;
+}
+.gx-toast-btn:hover,
+.gx-toast-close:hover { background: rgba(255,255,255,.28); }

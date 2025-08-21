@@ -1,0 +1,68 @@
+/* ---------------------------------------
+ * Design tokens（可由外部覆寫）
+ * ------------------------------------- */
+:host {
+    --gx-toast-width:320px ;
+    --gx-toast-space:           16px;
+    --gx-toast-text-color:      #fff;
+    --gx-toast-bg-color:        #fe7743;
+    --gx-toast-bg-hover-color:  #ff956b;
+    --gx-toast-radius:          10px;   /* 原本用 --gx-base-height 來算，這裡直接給固定值 */
+    --gx-toast-shadow:          0 6px 18px rgba(0,0,0,.12);
+
+    /* toolbar 尺寸與排版 */
+    --gx-toolbar-pad-y:         6px;
+    --gx-toolbar-pad-x:         12px;
+    --gx-toolbar-font-size:     12px;
+}
+
+/* Host 容器：固定在右上角＆不擋底下點擊 */
+.gx-toast-host {
+    width: var(--gx-toast-width);
+    position: fixed;
+    top: var(--gx-toast-space);
+    right: var(--gx-toast-space);
+    display: flex;
+    flex-direction: column-reverse; /* 新的在上：改在 service push 時已經是 [t, ...list]，那這裡就用 column 正常；若想 toolbar 在最上且新 toast 在其下，用 column-reverse。二擇一。*/
+    gap: calc(var(--gx-toast-space) / 2);
+    z-index: 1200;
+    pointer-events: none;
+}
+
+/* 讓子元素仍可互動 */
+.gx-toast-host > * {
+    pointer-events: auto;
+    width: 100%;
+}
+
+/* 清除全部：按鈕語義、非滿版 */
+.gx-toast-toolbar {
+    align-self: flex-end;
+    text-align: center;
+    padding: var(--gx-toolbar-pad-y) var(--gx-toolbar-pad-x);
+    font-size: var(--gx-toolbar-font-size);
+    line-height: 1;
+    color: var(--gx-toast-text-color);
+    background-color: var(--gx-toast-bg-color);
+    border: 0;
+    border-radius: var(--gx-toast-radius);
+    box-shadow: var(--gx-toast-shadow);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color .15s ease, transform .1s ease;
+}
+
+.gx-toast-toolbar:hover {
+    background-color: var(--gx-toast-bg-hover-color);
+}
+
+.gx-toast-toolbar:active {
+    transform: translateY(1px);
+}
+
+/* 減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .gx-toast-toolbar {
+        transition: none;
+    }
+}

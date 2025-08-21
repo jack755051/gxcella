@@ -1,0 +1,19 @@
+<div class="gx-toast-host" role="region" aria-label="Notifications">
+    @if(svc.toasts().length > 1){
+        <button
+                class="gx-toast-toolbar"
+                type="button"
+                (click)="svc.clear()"
+                aria-label="清除所有通知"
+        >
+            清除全部
+        </button>
+    }
+    @for(t of svc.toasts(); track t.id){
+        <gx-toast-item
+                [item]="t"
+                (dismiss)="svc.dismiss($event)"
+                (action)="onAction($event)"
+        ></gx-toast-item>
+    }
+</div>
