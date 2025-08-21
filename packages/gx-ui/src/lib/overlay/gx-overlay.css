@@ -1,0 +1,31 @@
+:host {
+    /* 可被外部覆寫的 tokens */
+    --gx-overlay-bg: rgba(0,0,0,.5);
+    --gx-overlay-z: 1100;
+    --gx-overlay-content-radius: 12px;
+    --gx-overlay-content-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.gx-overlay {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: var(--gx-overlay-bg);
+    z-index: var(--gx-overlay-z);
+}
+
+.gx-overlay-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: var(--gx-overlay-content-radius);
+    box-shadow: var(--gx-overlay-content-shadow);
+    overflow: auto;
+    /* 可選：初次淡入 */
+    animation: gx-fade-in .12s ease-out;
+}
+
+@keyframes gx-fade-in {
+    from { transform: scale(.98); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}

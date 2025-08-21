@@ -1,0 +1,6 @@
+<div class="gx-overlay" role="dialog" aria-modal="true" (click)="onBackdropClick()">
+    <!-- 內容層：阻止冒泡，避免點內部也關閉 -->
+    <div class="gx-overlay-content" (click)="$event.stopPropagation()">
+        <ng-content></ng-content>
+    </div>
+</div>
