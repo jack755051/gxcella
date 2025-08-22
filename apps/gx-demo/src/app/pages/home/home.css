@@ -1,0 +1,52 @@
+:host{
+  --gx-toast-info:    #447D9B;
+  --gx-toast-success: #309898;
+  --gx-toast-warning: #FF9F00;
+  --gx-toast-error:   #CB0404;
+}
+
+.demo-actions{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap:12px
+}
+
+.demo-button{
+  width: 10%;
+  border-radius: 8px;
+  padding: 15px;
+  color: white;
+  font-weight: bold;
+}
+
+.demo-button:hover{
+  animation: test .8s ease-in-out;
+}
+
+@keyframes test {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+.demo-button.success,
+.demo-button.long,
+.demo-button.custom{
+  background-color: var(--gx-toast-success)
+}
+.demo-button.info{
+  background-color: var(--gx-toast-info)
+}
+.demo-button.warning{
+  background-color: var(--gx-toast-warning)
+}
+.demo-button.error{
+  background-color: var(--gx-toast-error)
+}

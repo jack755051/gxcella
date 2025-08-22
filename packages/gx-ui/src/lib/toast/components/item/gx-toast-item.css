@@ -3,10 +3,9 @@
     --gx-toast-title-fz: 24px;
     --gx-toast-msg-fz:   16px;
 
-    --gx-toast-info:    #447D9B;
-    --gx-toast-success: #309898;
-    --gx-toast-warning: #FF9F00;
-    --gx-toast-error:   #CB0404;
+    /* 預設視為 info，背景/前景走語意 token（在 _semantic.css 定義） */
+    --gx-toast-bg: var(--gx-intent-info-bg);
+    --gx-toast-fg: var(--gx-intent-info-foreground);
 
     /* base layout */
     display: flex;
@@ -15,16 +14,28 @@
     width: 100%;
     padding: 12px 14px;
     border-radius: 8px;
-    color: #fff;
+    color: var(--gx-toast-fg);
     box-shadow: 0 6px 18px rgba(0,0,0,.12);
-    background: var(--gx-toast-info); /* 預設給一個，會被下面 kind 覆蓋 */
+    background: var(--gx-toast-bg);
 }
 
-/* kind modifiers（類名套在 host → 用 :host(.class)） */
-:host(.gx-toast-info)    { background: var(--gx-toast-info); }
-:host(.gx-toast-success) { background: var(--gx-toast-success); }
-:host(.gx-toast-warning) { background: var(--gx-toast-warning); }
-:host(.gx-toast-error)   { background: var(--gx-toast-error); }
+/* kind modifiers（用 host class 切換） */
+:host(.gx-toast-info)    {
+    --gx-toast-bg: var(--gx-intent-info-bg);
+    --gx-toast-fg: var(--gx-intent-info-foreground);
+}
+:host(.gx-toast-success) {
+    --gx-toast-bg: var(--gx-intent-success-bg);
+    --gx-toast-fg: var(--gx-intent-success-foreground);
+}
+:host(.gx-toast-warning) {
+    --gx-toast-bg: var(--gx-intent-warning-bg);
+    --gx-toast-fg: var(--gx-intent-warning-foreground);
+}
+:host(.gx-toast-error)   {
+    --gx-toast-bg: var(--gx-intent-error-bg);
+    --gx-toast-fg: var(--gx-intent-error-foreground);
+}
 
 .gx-toast-content { display: grid; gap: 6px; }
 .gx-toast-title   { font-size: var(--gx-toast-title-fz); font-weight: 700; line-height: 1.2; }
@@ -36,8 +47,11 @@
     appearance: none;
     border: 0; border-radius: 6px;
     padding: 6px 10px;
-    color: inherit; background: rgba(255,255,255,.18);
+    color: var(--gx-toast-fg);
+    background: color-mix(in oklab, var(--gx-toast-fg) 18%, transparent);
     cursor: pointer;
 }
 .gx-toast-btn:hover,
-.gx-toast-close:hover { background: rgba(255,255,255,.28); }
+.gx-toast-close:hover {
+    background: color-mix(in oklab, var(--gx-toast-fg) 28%, transparent);
+}

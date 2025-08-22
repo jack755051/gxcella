@@ -14,18 +14,23 @@
     --gx-toolbar-pad-y:         6px;
     --gx-toolbar-pad-x:         12px;
     --gx-toolbar-font-size:     12px;
+
+    --gx-z-toast: 1200;
 }
 
 /* Host 容器：固定在右上角＆不擋底下點擊 */
 .gx-toast-host {
     width: var(--gx-toast-width);
+    max-height: calc(100vh - 2 * var(--gx-toast-space));
+    overflow: auto;
+    overscroll-behavior: contain;
     position: fixed;
     top: var(--gx-toast-space);
     right: var(--gx-toast-space);
     display: flex;
-    flex-direction: column-reverse; /* 新的在上：改在 service push 時已經是 [t, ...list]，那這裡就用 column 正常；若想 toolbar 在最上且新 toast 在其下，用 column-reverse。二擇一。*/
+    flex-direction: column; /* 新的在上：改在 service push 時已經是 [t, ...list]，那這裡就用 column 正常；若想 toolbar 在最上且新 toast 在其下，用 column-reverse。二擇一。*/
     gap: calc(var(--gx-toast-space) / 2);
-    z-index: 1200;
+    z-index: var(--gx-z-toast);
     pointer-events: none;
 }
 
