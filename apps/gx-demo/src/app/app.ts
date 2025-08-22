@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { GxBreadcrumb, GxBreadcrumbSeparator } from '@sanring/gx-breadcrumb';
 import { HouseIcon, Building2Icon, CctvIcon,PackageIcon } from '../icons';
 import { LucideAngularModule} from 'lucide-angular';
-import { GxToastHost } from '@sanring/gx-ui';
+// import { GxToastHost } from '@sanring/gx-ui';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { GxToastHost } from '@sanring/gx-ui';
     RouterOutlet,
     GxBreadcrumb,
     LucideAngularModule,
-    GxToastHost
+    // GxToastHost
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
