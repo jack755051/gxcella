@@ -1,0 +1,104 @@
+/* ===============================
+   Semantic tokens for UI intents
+   =============================== */
+:root {
+    /* -------- Info (藍綠) -------- */
+    --gx-color-info-50:  #F4F8FA;
+    --gx-color-info-100: #D8E7EE;
+    --gx-color-info-200: #B5CFDB;
+    --gx-color-info-300: #8BAEC1;
+    --gx-color-info-400: #5C8DA9;
+    --gx-color-info-500: #447D9B; /* 基準 */
+    --gx-color-info-600: #366580;
+    --gx-color-info-700: #274B62;
+    --gx-color-info-800: #193345;
+    --gx-color-info-900: #0D1C29;
+
+    /* -------- Success (青綠) -------- */
+    --gx-color-success-50:  #E6F8F8;
+    --gx-color-success-100: #C2ECEC;
+    --gx-color-success-200: #8FDADA;
+    --gx-color-success-300: #5BC7C7;
+    --gx-color-success-400: #36ADAD;
+    --gx-color-success-500: #309898; /* 基準 */
+    --gx-color-success-600: #267A7A;
+    --gx-color-success-700: #1C5B5B;
+    --gx-color-success-800: #133E3E;
+    --gx-color-success-900: #0A2323;
+
+    /* -------- Warning (橙黃) -------- */
+    --gx-color-warning-50:  #FFF9EB;
+    --gx-color-warning-100: #FFEFC6;
+    --gx-color-warning-200: #FFDF8F;
+    --gx-color-warning-300: #FFCF58;
+    --gx-color-warning-400: #FFB92B;
+    --gx-color-warning-500: #FF9F00; /* 基準 */
+    --gx-color-warning-600: #DB8700;
+    --gx-color-warning-700: #B76E00;
+    --gx-color-warning-800: #935600;
+    --gx-color-warning-900: #6F3E00;
+
+    /* -------- Error (紅) -------- */
+    --gx-color-error-50:  #FDECEC;
+    --gx-color-error-100: #F9C5C5;
+    --gx-color-error-200: #F49797;
+    --gx-color-error-300: #EF6969;
+    --gx-color-error-400: #EA3C3C;
+    --gx-color-error-500: #CB0404; /* 基準 */
+    --gx-color-error-600: #A00303;
+    --gx-color-error-700: #760202;
+    --gx-color-error-800: #4D0101;
+    --gx-color-error-900: #260000;
+
+    /* === Canonical intent bases ===
+       若你想讓 info 借用品牌 accent，也可以：
+       --gx-color-info: var(--gx-color-accent-500); */
+    --gx-color-info:    var(--gx-color-info-500);
+    --gx-color-success: var(--gx-color-success-500);
+    --gx-color-warning: var(--gx-color-warning-500);
+    --gx-color-error:   var(--gx-color-error-500);
+
+    /* === Derived (for components) ===
+       filled / hover / active / soft / border / foreground */
+    /* Info */
+    --gx-intent-info-bg:        var(--gx-color-info-500);
+    --gx-intent-info-hover:     var(--gx-color-info-600);
+    --gx-intent-info-active:    var(--gx-color-info-700);
+    --gx-intent-info-soft-bg:   var(--gx-color-info-50);
+    --gx-intent-info-border:    var(--gx-color-info-400);
+    --gx-intent-info-foreground:#ffffff;
+
+    /* Success */
+    --gx-intent-success-bg:        var(--gx-color-success-500);
+    --gx-intent-success-hover:     var(--gx-color-success-600);
+    --gx-intent-success-active:    var(--gx-color-success-700);
+    --gx-intent-success-soft-bg:   var(--gx-color-success-50);
+    --gx-intent-success-border:    var(--gx-color-success-400);
+    --gx-intent-success-foreground:#ffffff;
+
+    /* Warning */
+    --gx-intent-warning-bg:        var(--gx-color-warning-500);
+    --gx-intent-warning-hover:     var(--gx-color-warning-600);
+    --gx-intent-warning-active:    var(--gx-color-warning-700);
+    --gx-intent-warning-soft-bg:   var(--gx-color-warning-50);
+    --gx-intent-warning-border:    var(--gx-color-warning-400);
+    --gx-intent-warning-foreground:#1f1f1f; /* 黃底用深字較佳 */
+
+    /* Error */
+    --gx-intent-error-bg:        var(--gx-color-error-500);
+    --gx-intent-error-hover:     var(--gx-color-error-600);
+    --gx-intent-error-active:    var(--gx-color-error-700);
+    --gx-intent-error-soft-bg:   var(--gx-color-error-50);
+    --gx-intent-error-border:    var(--gx-color-error-400);
+    --gx-intent-error-foreground:#ffffff;
+}
+
+/* 深色主題：soft 背景與 foreground 調整（示例） */
+.gx-theme-dark {
+    --gx-intent-info-soft-bg:     color-mix(in oklab, var(--gx-color-info-700) 25%, transparent);
+    --gx-intent-success-soft-bg:  color-mix(in oklab, var(--gx-color-success-700) 25%, transparent);
+    --gx-intent-warning-soft-bg:  color-mix(in oklab, var(--gx-color-warning-700) 25%, transparent);
+    --gx-intent-error-soft-bg:    color-mix(in oklab, var(--gx-color-error-700) 25%, transparent);
+
+    --gx-intent-warning-foreground:#fff; /* 深色主題下黃底用白字 */
+}
