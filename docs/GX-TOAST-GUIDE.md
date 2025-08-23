@@ -2,7 +2,7 @@
 
 ## 概述
 
-GX Toast 是一個靈活且功能豐富的通知組件，支援多種類型的訊息顯示、自定義樣式和互動功能。
+GX Toast 是一個靈活且功能豐富的通知組件，支援多種類型的訊息顯示、自定義樣式、互動功能，以及**倒數計時顯示**。
 
 ## 快速開始
 
@@ -39,10 +39,10 @@ provideToasts({
   defaultDuration: 3000
 })
 
-// 自定義配置範例
+// 自定義配置範例（包含您的設定）
 provideToasts({
-  defaultDuration: 5000, // 全域覆寫自動關閉時間
-  width: '700px',        // 自定義寬度
+  defaultDuration: 5000, // 全域覆寫自動關閉時間為 5 秒
+  width: '700px',        // 自定義寬度為 700px
   max: 4,                // 最大同時顯示 4 個通知
   position: 'top-center', // 置中顯示
   zIndex: 10000,         // 自定義層級
@@ -70,6 +70,7 @@ import { GxToastService } from '@sanring/gx-ui';
   selector: 'app-example',
   template: `
     <button (click)="showToast()">顯示通知</button>
+    <button (click)="showCountdownToast()">顯示倒數通知</button>
   `
 })
 export class ExampleComponent {
@@ -81,6 +82,17 @@ export class ExampleComponent {
       title: '操作成功',
       message: '您的操作已成功完成！',
       duration: 3000
+    });
+  }
+
+  // 新功能：帶倒數計時的通知
+  showCountdownToast() {
+    this.toast.show({
+      kind: 'info',
+      title: '處理中',
+      message: '系統正在處理您的請求',
+      duration: 10000,
+      countdown: true  // 啟用倒數計時顯示
     });
   }
 }
@@ -116,6 +128,8 @@ interface GxToast {
   icon?: string;                 // 自定義圖示
   duration?: number;             // 自動關閉時間（毫秒）
   dismissible?: boolean;         // 是否可手動關閉（預設 true）
+  countdown?: boolean;           // 🆕 是否顯示倒數計時（預設 false）
+  remainingSec?: number;         // 🆕 剩餘秒數（由服務內部維護，無需手動設定）
   action?: {                     // 自定義動作按鈕
     label: string;
     handler: () => void;
@@ -219,6 +233,81 @@ export class ToastExamplesComponent {
 }
 ```
 
+### 🆕 倒數計時功能
+
+倒數計時功能讓用戶清楚知道通知還有多久會自動關閉，提升用戶體驗：
+
+```typescript
+export class CountdownToastExamples {
+  private toast = inject(GxToastService);
+
+  // 基本倒數通知
+  showCountdownInfo() {
+    this.toast.show({
+      kind: 'info',
+      title: '系統維護通知',
+      message: '系統將在倒數時間結束後進行維護',
+      duration: 10000,
+      countdown: true  // 啟用倒數計時
+    });
+  }
+
+  // 處理進度通知
+  showProcessingWithCountdown() {
+    this.toast.show({
+      kind: 'warning',
+      title: '正在處理',
+      message: '請勿關閉瀏覽器',
+      duration: 15000,
+      countdown: true,
+      dismissible: false  // 不允許手動關閉
+    });
+  }
+
+  // 重要提醒倒數
+  showImportantCountdown() {
+    this.toast.show({
+      kind: 'error',
+      title: '重要提醒',
+      message: '您的會話即將過期，請儲存您的工作',
+      duration: 30000,
+      countdown: true,
+      action: {
+        label: '延長會話',
+        handler: () => this.extendSession()
+      }
+    });
+  }
+
+  // 臨時訊息倒數
+  showTempMessage() {
+    this.toast.show({
+      kind: 'success',
+      title: '複製成功',
+      message: '連結已複製到剪貼簿',
+      duration: 3000,
+      countdown: true
+    });
+  }
+
+  private extendSession() {
+    // 延長會話邏輯
+    console.log('會話已延長');
+  }
+}
+```
+
+### 倒數計時的顯示效果
+
+當啟用 `countdown: true` 時，Toast 會在訊息後方顯示剩餘秒數：
+
+```
+✅ 操作成功
+您的檔案已成功上傳 (5s)
+```
+
+倒數會每秒更新，直到歸零自動關閉。
+
 ### 帶有動作按鈕的通知
 
 ```typescript
@@ -227,11 +316,12 @@ showWithAction() {
     kind: 'success',
     title: '檔案已刪除',
     message: '檔案已移至垃圾桶',
+    duration: 8000,
+    countdown: true,  // 顯示倒數，讓用戶知道復原時間
     action: {
       label: '復原',
       handler: () => {
         console.log('復原操作');
-        // 執行復原邏輯
         this.restoreFile();
       }
     }
@@ -245,19 +335,54 @@ showWithAction() {
 ```typescript
 const DURATION_GUIDELINES = {
   success: 3000,      // 成功訊息：3 秒
-  info: 4000,         // 一般資訊：4 秒
+  info: 4000,         // 一般資訊：4 秒  
   warning: 5000,      // 警告訊息：5 秒
   error: 6000,        // 錯誤訊息：6 秒（或不自動關閉）
-  critical: 0         // 重要訊息：不自動關閉
+  critical: 0,        // 重要訊息：不自動關閉
+  processing: 15000,  // 🆕 處理中：15 秒（建議啟用倒數）
+  session: 30000      // 🆕 會話提醒：30 秒（建議啟用倒數）
 };
 ```
 
-### 2. 避免濫用
+### 2. 倒數計時使用建議
+
+**適合使用倒數的場景：**
+- 重要操作的確認時間（如會話過期提醒）
+- 處理進度通知（讓用戶知道還要等多久）
+- 臨時性訊息（如複製成功提示）
+- 系統維護通知
+
+**不建議使用倒數的場景：**
+- 簡短的成功訊息（3 秒以下）
+- 純資訊性的通知
+- 錯誤訊息（用戶可能需要仔細閱讀）
+
+```typescript
+// ✅ 適合使用倒數
+this.toast.show({
+  kind: 'warning',
+  title: '會話即將過期',
+  message: '請儲存您的工作',
+  duration: 30000,
+  countdown: true  // 讓用戶知道還有多少時間
+});
+
+// ❌ 不建議使用倒數
+this.toast.show({
+  kind: 'success',
+  message: '已儲存',
+  duration: 2000,
+  countdown: true  // 太短的訊息不需要倒數
+});
+```
+
+### 3. 避免濫用
 - 不要為每個小操作都顯示通知
 - 避免同時顯示過多通知
 - 重要性高的訊息優先顯示
+- 謹慎使用倒數功能，避免視覺干擾
 
-### 3. 訊息內容指南
+### 4. 訊息內容指南
 - 保持簡潔明瞭
 - 使用用戶友好的語言
 - 提供具體的操作結果
@@ -279,6 +404,30 @@ Toast 組件提供以下 CSS 變數供自定義：
 }
 ```
 
+### 倒數計時樣式自定義
+
+您可以透過 CSS 自定義倒數計時的顯示樣式：
+
+```css
+.gx-toast-countdown {
+  opacity: 0.7;
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+/* 快到期時的視覺提示 */
+.gx-toast-item[data-countdown-urgent="true"] .gx-toast-countdown {
+  color: #ff4444;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+```
+
 ## 故障排除
 
 ### 常見問題
@@ -287,13 +436,39 @@ Toast 組件提供以下 CSS 變數供自定義：
    - 確認已在 app.config.ts 中添加 `provideToasts()`
    - 檢查是否有 CSS 樣式覆蓋問題
 
-2. **位置不正確**
+2. **倒數計時不顯示**
+   - 確認 `countdown: true` 已設定
+   - 確認 `duration` 大於 0
+   - 檢查 template 是否有更新
+
+3. **位置不正確**
    - 檢查 `attachTo` 配置
    - 確認父容器的 CSS position 設定
 
-3. **樣式不生效**
+4. **樣式不生效**
    - 確認 CSS 變數的作用域
    - 檢查 z-index 設定
+
+### 調試技巧
+
+```typescript
+// 開啟調試模式
+this.toast.show({
+  kind: 'info',
+  title: 'Debug',
+  message: `當前 toast 數量: ${this.toast.toasts().length}`,
+  duration: 5000,
+  countdown: true
+});
+```
+
+## 版本更新記錄
+
+- **v1.0.0**: 初始版本，基本功能實現
+- **v1.1.0**: 新增動作按鈕支援
+- **v1.2.0**: 新增自定義圖示功能
+- **v1.3.0**: 改善無障礙支援
+- **v1.4.0**: 🆕 新增倒數計時功能
 
 ---
 
