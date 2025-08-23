@@ -30,6 +30,16 @@ export class Home {
     });
   }
 
+  showLongWithTicker() {
+    this.toast.show({
+      kind: 'info',
+      title: 'Processing…',
+      message: 'This message will stay for',
+      duration: 5000,
+      countdown: true,
+    });
+  }
+
   showCustom() {
     this.toast.show({
       kind: 'success',

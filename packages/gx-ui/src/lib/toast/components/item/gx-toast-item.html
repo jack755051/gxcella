@@ -7,7 +7,12 @@
     @if (item().title) {
         <div class="gx-toast-title">{{ item().title }}</div>
     }
-    <div class="gx-toast-msg">{{ item().message }}</div>
+    <div class="gx-toast-msg">
+        {{ item().message }}
+        @if (item().remainingSec != null) {
+            <span class="gx-toast-countdown"> ({{ item().remainingSec }}s) </span>
+        }
+    </div>
 </div>
 
 <div class="gx-toast-actions">

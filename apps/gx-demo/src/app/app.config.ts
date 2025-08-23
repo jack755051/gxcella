@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
     { provide: GX_BREADCRUMB_ROOT, useValue: { label: 'Home', link: '/home', iconImg: HouseIcon } },
     provideToasts({
       defaultDuration: 5000, // 全域覆寫
-      width: '700px',
+      width: '400px',
       max: 4,
     }),
   ]

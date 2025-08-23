@@ -9,4 +9,8 @@ export interface GxToast {
     duration?: number;
     dismissible?: boolean;
     action?: { label: string; handler: () => void };
+    // ★ 新增（可選）：需要顯示倒數嗎？
+    countdown?: boolean;
+    // ★ 由 service 內部維護，用於 UI 呈現
+    remainingSec?: number;
 }
