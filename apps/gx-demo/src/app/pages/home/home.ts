@@ -1,16 +1,21 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {GxToastService} from '@sanring/gx-ui';
+import {GxToastService,GxButton} from '@sanring/gx-ui';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, GxButton],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home {
   private toast = inject(GxToastService);
+
+  successAction = {
+    label: 'Success',
+    handler: () => this.show('success'),
+  };
 
   show(kind: 'success'|'info'|'warning'|'error') {
     this.toast.show({

@@ -1,0 +1,82 @@
+:host {
+    display: inline-flex;     /* ❗ inline-flex：由內容決定寬度 */
+    width: fit-content;
+    flex: 0 0 auto;           /* 不要自動伸縮 */
+    cursor: pointer !important;
+}
+
+.gx-btn {
+    display: inline-flex;
+    cursor: pointer !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding-inline: var(--gx-btn-px, 12px);
+    padding-block:  var(--gx-btn-py, 8px);
+    border-radius:  var(--gx-btn-radius, 8px);
+    border: 1px solid var(--gx-btn-border, transparent);
+
+    font: inherit;
+    width: auto;
+
+    background: var(--gx-btn-bg, #fff);
+    color: var(--gx-btn-fg, #111);
+
+    transition: filter .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+/* ------------------------------
+   Filled Variants
+------------------------------- */
+.gx-btn.gx-variant-filled.gx-intent-info {
+    --gx-btn-bg: var(--gx-intent-info-bg);
+    --gx-btn-fg: var(--gx-color-info-50);
+    --gx-btn-border: transparent;
+}
+.gx-btn.gx-variant-filled.gx-intent-warning {
+    --gx-btn-bg: var(--gx-intent-warning-bg);
+    --gx-btn-fg: var(--gx-color-warning-50);
+    --gx-btn-border: transparent;
+}
+.gx-btn.gx-variant-filled.gx-intent-success {
+    --gx-btn-bg: var(--gx-intent-success-bg);
+    --gx-btn-fg: var(--gx-color-success-50);
+    --gx-btn-border: transparent;
+}
+.gx-btn.gx-variant-filled.gx-intent-error {
+    --gx-btn-bg: var(--gx-intent-error-bg);
+    --gx-btn-fg: var(--gx-color-error-50);
+    --gx-btn-border: transparent;
+}
+
+/* ------------------------------
+   Outline Variants
+------------------------------- */
+.gx-btn.gx-variant-outline.gx-intent-info {
+    --gx-btn-bg: transparent;
+    --gx-btn-fg: var(--gx-intent-info-bg);
+    --gx-btn-border: var(--gx-intent-info-border);
+}
+
+/* ------------------------------
+   Soft Variants
+------------------------------- */
+.gx-btn.gx-variant-soft.gx-intent-info {
+    --gx-btn-bg: var(--gx-intent-info-soft-bg);
+    --gx-btn-fg: var(--gx-intent-info-bg);
+    --gx-btn-border: transparent;
+}
+
+/* ------------------------------
+   Disabled (最後蓋掉)
+------------------------------- */
+.gx-btn.gx-variant-filled:disabled,
+.gx-btn.gx-variant-outline:disabled,
+.gx-btn.gx-variant-soft:disabled {
+    --gx-btn-bg: #f5f5f5 !important;
+    --gx-btn-fg: #999 !important;
+    --gx-btn-border: #ddd !important;
+    opacity: 0.6;
+    cursor: not-allowed !important;
+}

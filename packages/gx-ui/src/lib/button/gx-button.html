@@ -1,0 +1,12 @@
+<button
+        class="gx-btn gx-variant-{{variant()}} gx-intent-{{intent()}}"
+        type="button"
+        [disabled]="isDisabled"
+        (click)="onClick($event)"
+>
+    @if(!action()?.label){
+        <ng-content></ng-content>
+    }@else{
+        {{ action()?.label || '' }}
+    }
+</button>
