@@ -14,6 +14,13 @@
     </div>
     <div class="show-shell-content">
       <gx-button (pressed)="show('info')">Info</gx-button>
+      <gx-button
+        [needsAriaLabel]="true"
+        [tooltip]="'更多資訊'"
+        (pressed)="show('info')"
+      >
+        <i class="icon-info" aria-hidden="true"></i>
+      </gx-button>
       <gx-button [intent]="'warning'" (pressed)="show('warning')">Warning</gx-button>
       <gx-button [intent]="'success'" (pressed)="show('success')">Success</gx-button>
       <gx-button [intent]="'error'" (pressed)="show('error')">Error</gx-button>

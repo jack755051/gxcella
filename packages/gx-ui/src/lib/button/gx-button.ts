@@ -31,6 +31,15 @@ export class GxButton {
     readonly isDisabled = computed(
         () => !!this.disabled() || !!this.action()?.disabled
     );
+    /** 計算出的原生工具提示（title） */
+    readonly computedTitle = computed<string | null>(() =>
+        this.tooltip() ?? this.action()?.label ?? null
+    );
+    /** 計算出的可存取名稱（aria-label）— 只有在 needsAriaLabel=true 時才提供 */
+    readonly computedAriaLabel = computed<string | null>(() => {
+        if (!this.needsAriaLabel()) return null;
+        return this.action()?.label ?? this.tooltip() ?? 'button';
+    });
 
     onClick(ev: MouseEvent) {
         if (this.isDisabled()) return;  // ✅ 使用統一的邏輯

@@ -3,13 +3,13 @@
         type="button"
         [disabled]="isDisabled()"
         [attr.aria-disabled]="isDisabled() ? 'true' : null"
+        [attr.title]="computedTitle()"
+        [attr.aria-label]="computedAriaLabel()"
         (click)="onClick($event)"
-        [attr.title]="tooltip || action()?.label || null"
-        [attr.aria-label]="(needsAriaLabel ? (action()?.label || 'button') : null)"
 >
-    @if(!action()?.label){
+    @if (!action()?.label) {
         <ng-content></ng-content>
-    }@else{
+    } @else {
         {{ action()?.label || '' }}
     }
 </button>
