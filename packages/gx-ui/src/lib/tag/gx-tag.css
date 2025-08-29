@@ -1,0 +1,27 @@
+.gx-tag-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.gx-tag-remove {
+    appearance: none;
+    border: none;
+    background: none;
+    padding: 2px;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+    border-radius: 4px;
+}
+
+.gx-tag-remove:hover:not(:disabled) {
+    opacity: 1;
+    background: rgba(0,0,0,0.05);
+}
+
+.gx-tag-remove:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}

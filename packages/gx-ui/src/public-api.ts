@@ -19,4 +19,6 @@ export * from './lib/toast/config/provide-toasts';
 export * from './lib/skeleton/gx-skeleton';
 // button
 export * from './lib/button/gx-button';
+export * from './lib/button/model/button.types';
 // tag
+export * from './lib/tag/gx-tag';

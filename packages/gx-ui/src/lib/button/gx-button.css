@@ -243,6 +243,20 @@
 }
 
 /* ===============================
+   tag Variants
+=============================== */
+.gx-btn.gx-variant-tag {
+    --gx-btn-px: 8px;
+    --gx-btn-py: 4px;
+    --gx-btn-radius: 999px;  /* 藥丸形狀 */
+    font-size: 0.875rem;
+    min-height: 24px;
+}
+.gx-btn.gx-variant-tag:hover:not(:disabled) {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+/* ===============================
    Disabled State (基於色票系統)
 =============================== */
 .gx-btn:disabled {

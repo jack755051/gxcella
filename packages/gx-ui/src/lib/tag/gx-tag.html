@@ -1,0 +1,23 @@
+<span class="gx-tag-wrapper" [attr.data-removable]="removable()">
+      <gx-button
+              [intent]="intent()"
+              [variant]="'soft'"
+              [disabled]="disabled()"
+              [styleTokens]="tagStyles"
+              (pressed)="onClick.emit($event)">
+        <ng-content></ng-content>
+      </gx-button>
+
+    @if (removable()) {
+        <button
+                class="gx-tag-remove"
+                type="button"
+                [disabled]="disabled()"
+                (click)="onRemove($event)"
+                aria-label="Remove tag">
+          <svg width="12" height="12" viewBox="0 0 12 12">
+            <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </button>
+    }
+    </span>

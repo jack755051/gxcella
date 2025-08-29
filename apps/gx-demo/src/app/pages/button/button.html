@@ -14,13 +14,6 @@
     </div>
     <div class="show-shell-content">
       <gx-button (pressed)="show('info')">Info</gx-button>
-      <gx-button
-        [needsAriaLabel]="true"
-        [tooltip]="'更多資訊'"
-        (pressed)="show('info')"
-      >
-        <i class="icon-info" aria-hidden="true"></i>
-      </gx-button>
       <gx-button [intent]="'warning'" (pressed)="show('warning')">Warning</gx-button>
       <gx-button [intent]="'success'" (pressed)="show('success')">Success</gx-button>
       <gx-button [intent]="'error'" (pressed)="show('error')">Error</gx-button>
@@ -67,6 +60,23 @@
       <gx-button [variant]="'ghost'" [intent]="'success'" (pressed)="show('success')">Success</gx-button>
       <gx-button [variant]="'ghost'" [intent]="'error'" (pressed)="show('error')">Error</gx-button>
       <gx-button [variant]="'ghost'" [disabled]="true">Disable</gx-button>
+    </div>
+  </div>
+
+  <div class="show-shell">
+    <div class="show-shell-label">
+      <p class="show-shell-label title">無效按鈕</p>
+      <span class="show-shell-label description">內容沒有顯示 / disabled</span>
+    </div>
+    <div class="show-shell-content">
+      <gx-button
+        [needsAriaLabel]="true"
+        [tooltip]="'更多資訊'"
+        (pressed)="show('info')"
+      >
+        <i class="icon-info" aria-hidden="true"></i>
+      </gx-button>
+      <gx-button [variant]="'outline'" [disabled]="true">Disable</gx-button>
     </div>
   </div>
 

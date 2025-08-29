@@ -1,0 +1,15 @@
+<div class="demo-actions">
+  <div class="show-shell">
+    <div class="show-shell-label">
+      <p class="show-shell-label title">普通標籤</p>
+      <span class="show-shell-label description">有背景色、有前景色</span>
+    </div>
+    <div class="show-shell-content">
+      @for (tag of tags; track $index) {
+        <gx-tag [intent]="tag.intent" [removable]="true" (remove)="removeTag($index)">
+          {{ tag.label }}
+        </gx-tag>
+      }
+    </div>
+  </div>
+</div>
