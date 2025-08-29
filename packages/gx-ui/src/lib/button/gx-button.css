@@ -1,6 +1,7 @@
 :host {
     display: inline-flex;
     width: fit-content;
+    inline-size: max-content;
     flex: 0 0 auto;
 }
 
@@ -15,12 +16,14 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: auto;
+    box-sizing: border-box;      /* ✅ 一致尺寸計算 */
+    inline-size: max-content;    /* ✅ 配合 host，避免被父層 flex 拉寬 */
+    min-inline-size: auto;
 
     /* 間距與邊框 */
     padding-inline: var(--gx-btn-px, 12px);
-    padding-block: var(--gx-btn-py, 8px);
-    border-radius: var(--gx-btn-radius, 8px);
+    padding-block:  var(--gx-btn-py, 8px);
+    border-radius:  var(--gx-btn-radius, 8px);
     border: 1px solid var(--gx-btn-border, transparent);
     margin: 0;
 
@@ -29,12 +32,19 @@
     background: var(--gx-btn-bg, #fff);
     color: var(--gx-btn-fg, #111);
 
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .08s ease;
     /* 互動 */
     cursor: pointer;
-    transition: all .15s ease;
 }
 
+.gx-btn:not(:disabled) { cursor: pointer; }
+
 .gx-btn:focus {
+    outline: 2px solid var(--gx-color-accent-400);
+    outline-offset: 2px;
+}
+
+.gx-btn:focus-visible {
     outline: 2px solid var(--gx-color-accent-400);
     outline-offset: 2px;
 }

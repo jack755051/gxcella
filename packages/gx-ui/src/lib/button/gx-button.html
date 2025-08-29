@@ -1,8 +1,11 @@
 <button
         class="gx-btn gx-variant-{{variant()}} gx-intent-{{intent()}}"
         type="button"
-        [disabled]="isDisabled"
+        [disabled]="isDisabled()"
+        [attr.aria-disabled]="isDisabled() ? 'true' : null"
         (click)="onClick($event)"
+        [attr.title]="tooltip || action()?.label || null"
+        [attr.aria-label]="(needsAriaLabel ? (action()?.label || 'button') : null)"
 >
     @if(!action()?.label){
         <ng-content></ng-content>
