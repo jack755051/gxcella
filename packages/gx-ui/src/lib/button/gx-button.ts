@@ -23,10 +23,15 @@ export class GxButton {
 
     @HostBinding('style.--gx-btn-px.px') get _px() { return this.styleTokens()?.px ?? 12; }
     @HostBinding('style.--gx-btn-py.px') get _py() { return this.styleTokens()?.py ?? 8;  }
-    @HostBinding('style.--gx-btn-radius.px') get _r(){ return this.styleTokens()?.radius ?? 8; }
+    @HostBinding('style.--gx-btn-radius.px') get _r() { return this.styleTokens()?.radius ?? 8; }
 
     get isDisabled() {
-        return this.disabled() || this.action()?.disabled;
+        const disabledValue = this.disabled();
+        const actionDisabled = this.action()?.disabled;
+        
+        // 明確轉換為布林值
+        const result = Boolean(disabledValue || actionDisabled);
+        return result;
     }
 
     onClick(ev: MouseEvent) {

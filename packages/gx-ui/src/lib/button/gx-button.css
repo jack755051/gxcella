@@ -1,28 +1,23 @@
 :host {
-    display: inline-flex;     /* ❗ inline-flex：由內容決定寬度 */
+    display: inline-flex;
     width: fit-content;
-    flex: 0 0 auto;           /* 不要自動伸縮 */
-    cursor: pointer !important;
+    flex: 0 0 auto;
+    cursor: pointer;
 }
 
 .gx-btn {
     display: inline-flex;
-    cursor: pointer !important;
     align-items: center;
     justify-content: center;
     gap: 8px;
-
     padding-inline: var(--gx-btn-px, 12px);
     padding-block:  var(--gx-btn-py, 8px);
     border-radius:  var(--gx-btn-radius, 8px);
     border: 1px solid var(--gx-btn-border, transparent);
-
     font: inherit;
     width: auto;
-
     background: var(--gx-btn-bg, #fff);
     color: var(--gx-btn-fg, #111);
-
     transition: filter .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
 }
 
@@ -69,11 +64,9 @@
 }
 
 /* ------------------------------
-   Disabled (最後蓋掉)
+   Disabled State
 ------------------------------- */
-.gx-btn.gx-variant-filled:disabled,
-.gx-btn.gx-variant-outline:disabled,
-.gx-btn.gx-variant-soft:disabled {
+.gx-btn:disabled {
     --gx-btn-bg: #f5f5f5 !important;
     --gx-btn-fg: #999 !important;
     --gx-btn-border: #ddd !important;
