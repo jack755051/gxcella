@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 import {IGxBreadCrumb} from '@sanring/gx-breadcrumb';
-import { HouseIcon, Building2Icon, CctvIcon,PackageIcon,LoaderIcon } from '../icons';
+import { HouseIcon, Building2Icon, CctvIcon,PackageIcon,LoaderIcon,MousePointerClickIcon } from '../icons';
 
 const gxBreadcrumb = {
   home:    { label: 'Home', link: '/home', iconImg: HouseIcon },
   about:   { label: 'About', link: '/about', iconImg:Building2Icon },
   product: { label: 'Product', link: '/product', iconImg: PackageIcon },
+  button: { label: 'Button', link: '/product', iconImg: MousePointerClickIcon },
   loading: { label: 'Loading', link: '/loading', iconImg: LoaderIcon }
 } satisfies Record<string, IGxBreadCrumb>;
 
@@ -21,6 +22,11 @@ export const routes: Routes = [
     path: 'about',
     loadComponent:()=> import('./pages/about/about').then(m => m.About),
     data:{ breadcrumb: gxBreadcrumb.about}
+  },
+  {
+    path: 'button',
+    loadComponent:()=> import('./pages/button/button').then(m => m.Button),
+    data:{ breadcrumb: gxBreadcrumb.button}
   },
   {
     path: 'product',

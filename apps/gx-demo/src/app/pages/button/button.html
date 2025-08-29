@@ -1,0 +1,67 @@
+<div class="demo-actions">
+  <!--  <button class="demo-button success" (click)="show('success')">Success</button>-->
+  <!--  <button class="demo-button info" (click)="show('info')">Info</button>-->
+  <!--  <button class="demo-button warning" (click)="show('warning')">Warning</button>-->
+  <!--  <button class="demo-button error" (click)="show('error')">Error</button>-->
+  <!--  <button class="demo-button long" (click)="showLong()">Long (5s)</button>-->
+  <!--  <button class="demo-button long" (click)="showLongWithTicker()">LongWithTicker(5s)</button>-->
+  <!--  <button class="demo-button custom" (click)="showCustom()">Custom Title</button>-->
+
+  <div class="show-shell">
+    <div class="show-shell-label">
+      <p class="show-shell-label title">滿版按鈕</p>
+      <span class="show-shell-label description">有背景色、有前景色</span>
+    </div>
+    <div class="show-shell-content">
+      <gx-button (pressed)="show('info')">Info</gx-button>
+      <gx-button [intent]="'warning'" (pressed)="show('warning')">Warning</gx-button>
+      <gx-button [intent]="'success'" (pressed)="show('success')">Success</gx-button>
+      <gx-button [intent]="'error'" (pressed)="show('error')">Error</gx-button>
+      <gx-button [disabled]="true">Disable</gx-button>
+    </div>
+  </div>
+
+  <div class="show-shell">
+    <div class="show-shell-label">
+      <p class="show-shell-label title">邊框按鈕</p>
+      <span class="show-shell-label description">透明背景、有邊框、主色文字</span>
+    </div>
+    <div class="show-shell-content">
+      <gx-button [variant]="'outline'" (pressed)="show('info')">Info</gx-button>
+      <gx-button [variant]="'outline'" [intent]="'warning'" (pressed)="show('warning')">Warning</gx-button>
+      <gx-button [variant]="'outline'" [intent]="'success'" (pressed)="show('success')">Success</gx-button>
+      <gx-button [variant]="'outline'" [intent]="'error'" (pressed)="show('error')">Error</gx-button>
+      <gx-button [variant]="'outline'" [disabled]="true">Disable</gx-button>
+    </div>
+  </div>
+
+  <div class="show-shell">
+    <div class="show-shell-label">
+      <p class="show-shell-label title">柔和按鈕</p>
+      <span class="show-shell-label description">淡背景色、主色文字、無邊框</span>
+    </div>
+    <div class="show-shell-content">
+      <gx-button [variant]="'soft'" (pressed)="show('info')">Info</gx-button>
+      <gx-button [variant]="'soft'" [intent]="'warning'" (pressed)="show('warning')">Warning</gx-button>
+      <gx-button [variant]="'soft'" [intent]="'success'" (pressed)="show('success')">Success</gx-button>
+      <gx-button [variant]="'soft'" [intent]="'error'" (pressed)="show('error')">Error</gx-button>
+      <gx-button [variant]="'soft'" [disabled]="true">Disable</gx-button>
+    </div>
+  </div>
+
+  <div class="show-shell">
+    <div class="show-shell-label">
+      <p class="show-shell-label title">幽靈按鈕</p>
+      <span class="show-shell-label description">透明背景、主色文字、無邊框</span>
+    </div>
+    <div class="show-shell-content">
+      <gx-button [variant]="'ghost'" (pressed)="show('info')">Info</gx-button>
+      <gx-button [variant]="'ghost'" [intent]="'warning'" (pressed)="show('warning')">Warning</gx-button>
+      <gx-button [variant]="'ghost'" [intent]="'success'" (pressed)="show('success')">Success</gx-button>
+      <gx-button [variant]="'ghost'" [intent]="'error'" (pressed)="show('error')">Error</gx-button>
+      <gx-button [variant]="'ghost'" [disabled]="true">Disable</gx-button>
+    </div>
+  </div>
+
+
+</div>

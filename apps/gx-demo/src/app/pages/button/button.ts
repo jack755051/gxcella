@@ -1,15 +1,15 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {GxToastService} from '@sanring/gx-ui';
+import {GxButton, GxToastService} from '@sanring/gx-ui';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-button',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './home.html',
-  styleUrl: './home.css'
+  imports: [CommonModule, GxButton],
+  templateUrl: './button.html',
+  styleUrl: './button.css'
 })
-export class Home {
+export class Button {
   private toast = inject(GxToastService);
 
   successAction = {
@@ -54,4 +54,5 @@ export class Home {
       // duration: 3000,
     });
   }
+
 }
