@@ -2,74 +2,280 @@
     display: inline-flex;
     width: fit-content;
     flex: 0 0 auto;
-    cursor: pointer;
 }
 
 .gx-btn {
+    /* 重置瀏覽器預設樣式 */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* 佈局 */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding-inline: var(--gx-btn-px, 12px);
-    padding-block:  var(--gx-btn-py, 8px);
-    border-radius:  var(--gx-btn-radius, 8px);
-    border: 1px solid var(--gx-btn-border, transparent);
-    font: inherit;
     width: auto;
+
+    /* 間距與邊框 */
+    padding-inline: var(--gx-btn-px, 12px);
+    padding-block: var(--gx-btn-py, 8px);
+    border-radius: var(--gx-btn-radius, 8px);
+    border: 1px solid var(--gx-btn-border, transparent);
+    margin: 0;
+
+    /* 字體與顏色 */
+    font: inherit;
     background: var(--gx-btn-bg, #fff);
     color: var(--gx-btn-fg, #111);
-    transition: filter .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+
+    /* 互動 */
+    cursor: pointer;
+    transition: all .15s ease;
 }
 
-/* ------------------------------
+.gx-btn:focus {
+    outline: 2px solid var(--gx-color-accent-400);
+    outline-offset: 2px;
+}
+
+.gx-btn:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.gx-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* ===============================
    Filled Variants
-------------------------------- */
+=============================== */
 .gx-btn.gx-variant-filled.gx-intent-info {
     --gx-btn-bg: var(--gx-intent-info-bg);
-    --gx-btn-fg: var(--gx-color-info-50);
-    --gx-btn-border: transparent;
+    --gx-btn-fg: var(--gx-intent-info-foreground);
+    --gx-btn-border: var(--gx-intent-info-bg);
 }
-.gx-btn.gx-variant-filled.gx-intent-warning {
-    --gx-btn-bg: var(--gx-intent-warning-bg);
-    --gx-btn-fg: var(--gx-color-warning-50);
-    --gx-btn-border: transparent;
+.gx-btn.gx-variant-filled.gx-intent-info:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-info-hover);
+    --gx-btn-border: var(--gx-intent-info-hover);
 }
-.gx-btn.gx-variant-filled.gx-intent-success {
-    --gx-btn-bg: var(--gx-intent-success-bg);
-    --gx-btn-fg: var(--gx-color-success-50);
-    --gx-btn-border: transparent;
-}
-.gx-btn.gx-variant-filled.gx-intent-error {
-    --gx-btn-bg: var(--gx-intent-error-bg);
-    --gx-btn-fg: var(--gx-color-error-50);
-    --gx-btn-border: transparent;
+.gx-btn.gx-variant-filled.gx-intent-info:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-info-active);
+    --gx-btn-border: var(--gx-intent-info-active);
 }
 
-/* ------------------------------
+.gx-btn.gx-variant-filled.gx-intent-success {
+    --gx-btn-bg: var(--gx-intent-success-bg);
+    --gx-btn-fg: var(--gx-intent-success-foreground);
+    --gx-btn-border: var(--gx-intent-success-bg);
+}
+.gx-btn.gx-variant-filled.gx-intent-success:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-success-hover);
+    --gx-btn-border: var(--gx-intent-success-hover);
+}
+.gx-btn.gx-variant-filled.gx-intent-success:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-success-active);
+    --gx-btn-border: var(--gx-intent-success-active);
+}
+
+.gx-btn.gx-variant-filled.gx-intent-warning {
+    --gx-btn-bg: var(--gx-intent-warning-bg);
+    --gx-btn-fg: var(--gx-intent-warning-foreground);
+    --gx-btn-border: var(--gx-intent-warning-bg);
+}
+.gx-btn.gx-variant-filled.gx-intent-warning:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-warning-hover);
+    --gx-btn-border: var(--gx-intent-warning-hover);
+}
+.gx-btn.gx-variant-filled.gx-intent-warning:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-warning-active);
+    --gx-btn-border: var(--gx-intent-warning-active);
+}
+
+.gx-btn.gx-variant-filled.gx-intent-error {
+    --gx-btn-bg: var(--gx-intent-error-bg);
+    --gx-btn-fg: var(--gx-intent-error-foreground);
+    --gx-btn-border: var(--gx-intent-error-bg);
+}
+.gx-btn.gx-variant-filled.gx-intent-error:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-error-hover);
+    --gx-btn-border: var(--gx-intent-error-hover);
+}
+.gx-btn.gx-variant-filled.gx-intent-error:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-error-active);
+    --gx-btn-border: var(--gx-intent-error-active);
+}
+
+/* ===============================
    Outline Variants
-------------------------------- */
+=============================== */
 .gx-btn.gx-variant-outline.gx-intent-info {
     --gx-btn-bg: transparent;
     --gx-btn-fg: var(--gx-intent-info-bg);
     --gx-btn-border: var(--gx-intent-info-border);
 }
+.gx-btn.gx-variant-outline.gx-intent-info:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-info-soft-bg);
+    --gx-btn-fg: var(--gx-intent-info-hover);
+    --gx-btn-border: var(--gx-intent-info-hover);
+}
+.gx-btn.gx-variant-outline.gx-intent-info:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-info-100);
+    --gx-btn-fg: var(--gx-intent-info-active);
+    --gx-btn-border: var(--gx-intent-info-active);
+}
 
-/* ------------------------------
+.gx-btn.gx-variant-outline.gx-intent-success {
+    --gx-btn-bg: transparent;
+    --gx-btn-fg: var(--gx-intent-success-bg);
+    --gx-btn-border: var(--gx-intent-success-border);
+}
+.gx-btn.gx-variant-outline.gx-intent-success:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-success-soft-bg);
+    --gx-btn-fg: var(--gx-intent-success-hover);
+    --gx-btn-border: var(--gx-intent-success-hover);
+}
+.gx-btn.gx-variant-outline.gx-intent-success:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-success-100);
+    --gx-btn-fg: var(--gx-intent-success-active);
+    --gx-btn-border: var(--gx-intent-success-active);
+}
+
+.gx-btn.gx-variant-outline.gx-intent-warning {
+    --gx-btn-bg: transparent;
+    --gx-btn-fg: var(--gx-intent-warning-bg);
+    --gx-btn-border: var(--gx-intent-warning-border);
+}
+.gx-btn.gx-variant-outline.gx-intent-warning:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-warning-soft-bg);
+    --gx-btn-fg: var(--gx-intent-warning-hover);
+    --gx-btn-border: var(--gx-intent-warning-hover);
+}
+.gx-btn.gx-variant-outline.gx-intent-warning:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-warning-100);
+    --gx-btn-fg: var(--gx-intent-warning-active);
+    --gx-btn-border: var(--gx-intent-warning-active);
+}
+
+.gx-btn.gx-variant-outline.gx-intent-error {
+    --gx-btn-bg: transparent;
+    --gx-btn-fg: var(--gx-intent-error-bg);
+    --gx-btn-border: var(--gx-intent-error-border);
+}
+.gx-btn.gx-variant-outline.gx-intent-error:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-intent-error-soft-bg);
+    --gx-btn-fg: var(--gx-intent-error-hover);
+    --gx-btn-border: var(--gx-intent-error-hover);
+}
+.gx-btn.gx-variant-outline.gx-intent-error:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-error-100);
+    --gx-btn-fg: var(--gx-intent-error-active);
+    --gx-btn-border: var(--gx-intent-error-active);
+}
+
+/* ===============================
    Soft Variants
-------------------------------- */
+=============================== */
 .gx-btn.gx-variant-soft.gx-intent-info {
     --gx-btn-bg: var(--gx-intent-info-soft-bg);
     --gx-btn-fg: var(--gx-intent-info-bg);
     --gx-btn-border: transparent;
 }
+.gx-btn.gx-variant-soft.gx-intent-info:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-info-100);
+    --gx-btn-fg: var(--gx-intent-info-hover);
+}
+.gx-btn.gx-variant-soft.gx-intent-info:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-info-200);
+    --gx-btn-fg: var(--gx-intent-info-active);
+}
 
-/* ------------------------------
-   Disabled State
-------------------------------- */
+.gx-btn.gx-variant-soft.gx-intent-success {
+    --gx-btn-bg: var(--gx-intent-success-soft-bg);
+    --gx-btn-fg: var(--gx-intent-success-bg);
+    --gx-btn-border: transparent;
+}
+.gx-btn.gx-variant-soft.gx-intent-success:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-success-100);
+    --gx-btn-fg: var(--gx-intent-success-hover);
+}
+.gx-btn.gx-variant-soft.gx-intent-success:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-success-200);
+    --gx-btn-fg: var(--gx-intent-success-active);
+}
+
+.gx-btn.gx-variant-soft.gx-intent-warning {
+    --gx-btn-bg: var(--gx-intent-warning-soft-bg);
+    --gx-btn-fg: var(--gx-intent-warning-bg);
+    --gx-btn-border: transparent;
+}
+.gx-btn.gx-variant-soft.gx-intent-warning:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-warning-100);
+    --gx-btn-fg: var(--gx-intent-warning-hover);
+}
+.gx-btn.gx-variant-soft.gx-intent-warning:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-warning-200);
+    --gx-btn-fg: var(--gx-intent-warning-active);
+}
+
+.gx-btn.gx-variant-soft.gx-intent-error {
+    --gx-btn-bg: var(--gx-intent-error-soft-bg);
+    --gx-btn-fg: var(--gx-intent-error-bg);
+    --gx-btn-border: transparent;
+}
+.gx-btn.gx-variant-soft.gx-intent-error:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-error-100);
+    --gx-btn-fg: var(--gx-intent-error-hover);
+}
+.gx-btn.gx-variant-soft.gx-intent-error:active:not(:disabled) {
+    --gx-btn-bg: var(--gx-color-error-200);
+    --gx-btn-fg: var(--gx-intent-error-active);
+}
+
+/* ===============================
+   Disabled State (基於色票系統)
+=============================== */
 .gx-btn:disabled {
-    --gx-btn-bg: #f5f5f5 !important;
-    --gx-btn-fg: #999 !important;
-    --gx-btn-border: #ddd !important;
-    opacity: 0.6;
+    /* 使用 gray 色票而非硬編碼 */
+    --gx-btn-bg: var(--gx-color-gray-100) !important;
+    --gx-btn-fg: var(--gx-color-gray-400) !important;
+    --gx-btn-border: var(--gx-color-gray-200) !important;
+
+    opacity: 0.7;
     cursor: not-allowed !important;
+
+    /* 禁用所有互動效果 */
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* 特殊處理 outline disabled 狀態 */
+.gx-btn.gx-variant-outline:disabled {
+    --gx-btn-bg: transparent !important;
+    --gx-btn-fg: var(--gx-color-gray-400) !important;
+    --gx-btn-border: var(--gx-color-gray-300) !important;
+}
+
+/* ===============================
+   Loading State (可選)
+=============================== */
+.gx-btn.gx-loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.gx-btn.gx-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: button-spin 0.8s linear infinite;
+    color: var(--gx-btn-fg);
+}
+
+@keyframes button-spin {
+    to { transform: rotate(360deg); }
 }
