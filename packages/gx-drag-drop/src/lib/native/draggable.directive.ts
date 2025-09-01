@@ -50,6 +50,10 @@ export class DraggableDirective implements OnDestroy {
         this.unlistenFunctions = [];
     }
 
+    /** 限制拖拽觸發區域 : 
+     *      讓某個 CSS selector 指定的區塊成為拖曳把手，
+     *      其餘區域無法直接觸發拖曳
+     * */
     private setupDragHandle(selector: string) {
         const element = this.el.nativeElement;
         const handle = element.querySelector(selector);
@@ -57,6 +61,7 @@ export class DraggableDirective implements OnDestroy {
         if (handle) {
             // 只有把手區域可以拖曳
             element.draggable = false;
+            // 讓把手區域的滑鼠指標顯示為「可拖拽」的樣式
             this.renderer.setStyle(handle, 'cursor', 'move');
 
             const mousedownUnlisten = this.renderer.listen(handle, 'mousedown', () => {
