@@ -1,0 +1,58 @@
+/* 拖曳中的元素 */
+.gx-dragging {
+    opacity: 0.5;
+    cursor: move !important;
+}
+
+/* 可放置區域 */
+.gx-drop-active {
+    position: relative;
+}
+
+.gx-drop-hover {
+    background-color: rgba(59, 130, 246, 0.05);
+    border: 2px dashed #3b82f6;
+    border-radius: 8px;
+}
+
+.gx-drop-valid {
+    border-color: #10b981;
+}
+
+.gx-drop-invalid {
+    border-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+/* 排序相關 */
+.gx-sortable-dragging {
+    opacity: 0.5;
+    transform: scale(1.05);
+}
+
+.gx-sortable-placeholder {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 2px dashed #cbd5e1 !important;
+}
+
+/* 檔案上傳區域 */
+.gx-file-drop-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 48px;
+    text-align: center;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.gx-file-drop-zone.gx-drop-hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    transform: scale(1.02);
+}
+
+.gx-file-drop-zone.gx-drop-active {
+    border-color: #10b981;
+    background: #f0fdf4;
+}

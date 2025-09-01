@@ -8,6 +8,9 @@
       "gx-breadcrumb": [
         "./dist/gx-breadcrumb"
       ],
+      "gx-drag-drop": [
+        "./dist/gx-drag-drop"
+      ],
       "gx-styles": [
         "./dist/gx-styles"
       ],
@@ -64,6 +67,12 @@
     },
     {
       "path": "../../packages/gx-ui/tsconfig.spec.json"
+    },
+    {
+      "path": "../../packages/gx-drag-drop/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/gx-drag-drop/tsconfig.spec.json"
     }
   ]
 }

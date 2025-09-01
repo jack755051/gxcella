@@ -1,0 +1,43 @@
+{
+  "name": "@sanring/gx-drag-drop",
+  "version": "0.0.1",
+  "description": "Lightweight drag & drop utilities (native + CDK helpers) for Angular",
+  "license": "MIT",
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json"
+  },
+  "peerDependencies": {
+    "@angular/common": "^20.1.0",
+    "@angular/core": "^20.1.0",
+    "@angular/cdk": "^20.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@angular/cdk": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "ng-packagr": "^20.1.0",
+    "typescript": "^5.9.2"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/fesm2022/sanring-gx-drag-drop.mjs"
+    },
+    "./styles/*": "./dist/styles/*",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  }
+}
