@@ -1,13 +1,41 @@
 <div class="demo-actions">
   <div class="show-shell">
     <div class="show-shell-label">
-      <p class="show-shell-label title">方形卡牌</p>
-      <span class="show-shell-label description">有背景色、有前景色</span>
+      <p class="show-shell-label title">Classic 卡牌展示</p>
+      <span class="show-shell-label description">
+        經典卡片形狀 - 包含 Header、Content 和 Footer 三個區塊
+      </span>
     </div>
     <div class="show-shell-content">
-      @for (card of cards; track $index) {
-      <gx-card [data]="card" (actions)="onCardAction($event)"></gx-card>
+      @for (card of cards; track card.id) {
+        <gx-card
+          [data]="card"
+          (actions)="onCardAction($event)">
+        </gx-card>
       }
+    </div>
+  </div>
+
+  <div class="show-shell">
+    <div class="show-shell-label">
+      <p class="show-shell-label title">卡片變體</p>
+      <span class="show-shell-label description">
+        展示不同的 variant: elevated、outlined、flat
+      </span>
+    </div>
+    <div class="card-variants-demo">
+      <div class="variant-info">
+        <h4>Elevated</h4>
+        <p>有陰影效果的卡片</p>
+      </div>
+      <div class="variant-info">
+        <h4>Outlined</h4>
+        <p>有邊框線的卡片</p>
+      </div>
+      <div class="variant-info">
+        <h4>Flat</h4>
+        <p>平面樣式的卡片</p>
+      </div>
     </div>
   </div>
 </div>
