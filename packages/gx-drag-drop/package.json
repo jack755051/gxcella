@@ -12,9 +12,7 @@
     "@angular/cdk": "^20.1.0"
   },
   "peerDependenciesMeta": {
-    "@angular/cdk": {
-      "optional": true
-    }
+    "@angular/cdk": { "optional": true }
   },
   "dependencies": {
     "tslib": "^2.3.0"
@@ -29,13 +27,12 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/fesm2022/sanring-gx-drag-drop.mjs"
     },
-    "./styles/*": "./dist/styles/*",
-    "./package.json": "./package.json"
+    "./styles/*": {
+      "default": "./dist/styles/*"
+    }
   },
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "publishConfig": {
     "access": "public",
     "directory": "dist"

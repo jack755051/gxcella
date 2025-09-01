@@ -1,14 +1,16 @@
 // 可拖拽指令
-import {Directive, effect, ElementRef, HostBinding, HostListener, inject, input, output} from "@angular/core";
+import {Directive, effect, ElementRef, HostBinding, HostListener, inject, input, output, Renderer2, OnDestroy} from "@angular/core";
 import {DragData, GxDragService} from "../core";
 
 @Directive({
     selector: '[gxDraggable]',
     standalone: true
 })
-export class DraggableDirective {
+export class DraggableDirective implements OnDestroy {
     private el = inject(ElementRef);
     private dragService = inject(GxDragService);
+    private renderer = inject(Renderer2);
+    private unlistenFunctions: Array<() => void> = [];
 
     /** Inputs（外部可設定的行為） */
     dragData = input.required<any>();
@@ -31,10 +33,21 @@ export class DraggableDirective {
         // 如果有指定拖曳把手，設置事件監聽
         effect(() => {
             const handle = this.dragHandle();
+            // 先清理舊的事件監聽器
+            this.cleanupEventListeners();
             if (handle) {
                 this.setupDragHandle(handle);
             }
         });
+    }
+
+    ngOnDestroy() {
+        this.cleanupEventListeners();
+    }
+
+    private cleanupEventListeners() {
+        this.unlistenFunctions.forEach(unlisten => unlisten());
+        this.unlistenFunctions = [];
     }
 
     private setupDragHandle(selector: string) {
@@ -44,15 +57,17 @@ export class DraggableDirective {
         if (handle) {
             // 只有把手區域可以拖曳
             element.draggable = false;
-            handle.style.cursor = 'move';
+            this.renderer.setStyle(handle, 'cursor', 'move');
 
-            handle.addEventListener('mousedown', () => {
+            const mousedownUnlisten = this.renderer.listen(handle, 'mousedown', () => {
                 element.draggable = this.dragEnabled();
             });
 
-            handle.addEventListener('mouseup', () => {
+            const mouseupUnlisten = this.renderer.listen(handle, 'mouseup', () => {
                 element.draggable = false;
             });
+
+            this.unlistenFunctions.push(mousedownUnlisten, mouseupUnlisten);
         }
     }
 

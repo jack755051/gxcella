@@ -40,6 +40,44 @@
   gap: 20px;
 }
 
+/* 可拖曳標籤容器樣式 */
+.sortable-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 60px;
+  padding: 16px;
+  border: 2px dashed transparent;
+  border-radius: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.sortable-container:hover {
+  border-color: var(--gx-color-gray-200);
+}
+
+/* 可拖曳標籤樣式 */
+.sortable-tag {
+  cursor: move;
+  user-select: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.sortable-tag:hover {
+  transform: translateY(-2px);
+}
+
+.sortable-tag.gx-sortable-dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+}
+
+.sortable-tag.gx-sortable-placeholder {
+  opacity: 0.4;
+  border: 2px dashed var(--gx-color-gray-300);
+  background-color: var(--gx-color-gray-100);
+}
+
 .demo-button{
   width: 20%;
   border-radius: 8px;
