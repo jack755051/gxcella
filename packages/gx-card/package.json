@@ -1,0 +1,20 @@
+{
+  "name": "gx-card",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json"
+  },
+  "peerDependencies": {
+    "@angular/common": "^20.1.0",
+    "@angular/core": "^20.1.0",
+    "lucide-angular": "^0.539.0",
+    "@sanring/gx-styles": "workspace:*"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "lucide-angular": "^0.539.0"
+  },
+  "sideEffects": false
+}

@@ -1,0 +1,13 @@
+<div class="demo-actions">
+  <div class="show-shell">
+    <div class="show-shell-label">
+      <p class="show-shell-label title">方形卡牌</p>
+      <span class="show-shell-label description">有背景色、有前景色</span>
+    </div>
+    <div class="show-shell-content">
+      @for (card of cards; track $index) {
+      <gx-card [data]="card" (actions)="onCardAction($event)"></gx-card>
+      }
+    </div>
+  </div>
+</div>

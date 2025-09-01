@@ -207,6 +207,36 @@
           }
         }
       }
+    },
+    "gx-card": {
+      "projectType": "library",
+      "root": "projects/gx-card",
+      "sourceRoot": "projects/gx-card/src",
+      "prefix": "gx",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/gx-card/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/gx-card/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/gx-card/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
