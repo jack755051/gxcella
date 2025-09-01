@@ -1,6 +1,10 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/@sanring/gx-ui",
+  "dest": "./dist",
   "lib": { "entryFile": "src/public-api.ts" },
+  "assets": [
+    "src/lib/button/gx-button.css",
+    "src/lib/loading/gx-loading.css"
+  ],
   "allowedNonPeerDependencies": []
 }

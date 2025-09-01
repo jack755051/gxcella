@@ -5,20 +5,20 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "gx-breadcrumb": [
-        "./dist/gx-breadcrumb"
+      "@sanring/gx-breadcrumb": [
+        "../../packages/gx-breadcrumb/dist"
       ],
-      "gx-card": [
-        "./dist/gx-card"
+      "@sanring/gx-card": [
+        "../../packages/gx-card/dist"
       ],
-      "gx-drag-drop": [
-        "./dist/gx-drag-drop"
+      "@sanring/gx-drag-drop": [
+        "../../packages/gx-drag-drop/dist"
       ],
-      "gx-styles": [
-        "./dist/gx-styles"
+      "@sanring/gx-styles": [
+        "../../packages/gx-styles/dist"
       ],
-      "gx-ui": [
-        "./dist/gx-ui",
+      "@sanring/gx-ui": [
+        "../../packages/gx-ui/dist"
       ]
     },
     "noImplicitOverride": true,

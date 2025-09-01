@@ -1,0 +1,65 @@
+
+:host{
+    --square-padding: 8px;
+    --square-border-radius: 4px;
+
+    --landscape-padding: 12px;
+    --landscape-border-radius: 4px;
+
+    --horizontal-gap: 16px;
+    --vertical-gap: 16px;
+    --grid-gap: 16px;
+}
+
+
+.gx-card,
+.gx-card-header{
+    display: flex;
+}
+
+/* Card shape styles */
+.gx-shape-square {
+    flex-direction: column;
+    aspect-ratio: 1;
+    width: auto;
+    padding: var(--square-padding, 8px);
+    border-radius: var(--square-border-radius, 4px);
+    background: var(--gx-card-background, gray);
+}
+
+.gx-shape-landscape {
+    flex-direction: row;
+    width: 100%;
+    padding: var(--landscape-padding, 12px);
+    border-radius: var(--landscape-border-radius, 4px);
+    background: var(--gx-card-background, gray);
+}
+
+.gx-shape-landscape .gx-card-header {
+    flex-direction: column;
+    width: 30%;
+    margin-right: 16px;
+}
+
+.gx-shape-landscape .gx-card-content {
+    flex: 1;
+}
+
+/* Layout styles for card groups */
+.gx-layout-horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: var(--horizontal-gap, 16px);
+}
+
+.gx-layout-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vertical-gap, 16px);
+}
+
+.gx-layout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--grid-gap, 16px);
+}

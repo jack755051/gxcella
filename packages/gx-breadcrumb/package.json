@@ -16,7 +16,7 @@
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",
     "tailwindcss": "^4.1.11",
-    "@sanring/gx-styles": "workspace:*"
+    "@sanring/gx-styles": "workspace:^"
   },
   "peerDependenciesMeta": {
     "tailwindcss": {

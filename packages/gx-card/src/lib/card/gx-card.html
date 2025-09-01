@@ -1,32 +1,44 @@
 <article [class]="classes">
-    <!-- Header slot 或資料 -->
-    <div class="gx-card-header">
-        <ng-content select="[card-header]"></ng-content>
-        @if(data()?.header?.image){
-            <img class="gx-card-header-img" [src]="data()!.header!.image!" alt="" />
-        }
-        @if (data()?.header?.title)  { <h3>{{ data()!.header!.title }}</h3> }
-        @if (data()?.header?.subtitle) { <p class="sub">{{ data()!.header!.subtitle }}</p> }
-    </div>
-    <!-- Content slot 或資料 -->
-    <div class="gx-card-content">
-        <ng-content></ng-content>
-        @if (data()?.content?.image)       { <img class="gx-card-media" [src]="data()!.content!.image!" alt="" /> }
-        @if (data()?.content?.title)       { <h4>{{ data()!.content!.title }}</h4> }
-        @if (data()?.content?.subtitle)    { <p class="sub">{{ data()!.content!.subtitle }}</p> }
-        @if (data()?.content?.description) { <p>{{ data()!.content!.description }}</p> }
-    </div>
-    <!-- Footer slot 或資料 -->
-    <div class="gx-card-footer">
-        <ng-content select="[card-footer]"></ng-content>
-        @if (data()?.footer?.actions?.length) {
-        <div class="gx-card-actions">
-            @for (a of data()!.footer!.actions!; track a.id) {
-            <button type="button" class="gx-card-btn" [disabled]="a.disabled" (click)="onAction(a)">
-                {{ a.label }}
-            </button>
-            }
-        </div>
-        }
+  <!-- Header -->
+  <div class="gx-card-header">
+    <ng-content select="[card-header]"></ng-content>
+    @if (data()?.header?.cover?.src) {
+      <img class="gx-card-header-img"
+           [src]="data()!.header!.cover!.src"
+           [alt]="data()!.header!.cover!.alt || ''" />
+    }
+    @if (data()?.header?.title)   { <h3>{{ data()!.header!.title }}</h3> }
+    @if (data()?.header?.subtitle){ <p class="sub">{{ data()!.header!.subtitle }}</p> }
   </div>
+
+  <!-- Content -->
+  <div class="gx-card-content">
+    <ng-content></ng-content>
+    @if (data()?.content?.image?.src) {
+      <img class="gx-card-media"
+           [src]="data()!.content!.image!.src"
+           [alt]="data()!.content!.image!.alt || ''" />
+    }
+    @if (data()?.content?.title)       { <h4>{{ data()!.content!.title }}</h4> }
+    @if (data()?.content?.subtitle)    { <p class="sub">{{ data()!.content!.subtitle }}</p> }
+    @if (data()?.content?.description) { <p>{{ data()!.content!.description }}</p> }
+  </div>
+
+  <!-- Footer：全部用 gx-button -->
+  @if (data()?.footer?.actions?.length) {
+    <div class="gx-card-footer">
+      <div class="gx-card-actions">
+        @for (a of data()!.footer!.actions; track a.id) {
+          <gx-button
+            [variant]="'filled'"
+            [intent]="mapIntent(a.intent)"
+            [disabled]="a.disabled ?? false"
+            [tooltip]="a.ariaLabel || a.label"
+            (pressed)="onActionPressed(a, $event)">
+            {{ a.label }}
+          </gx-button>
+        }
+      </div>
+    </div>
+  }
 </article>
