@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, input, NgModule, output } from '@angular/core';
 import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, IGxCard } from '../core/card.type';
 import { GxCardGroupContext } from '../core/group-context.service';
+import { GxCardConfigService } from '../core/card-config.service';
 
 @Component({
   selector: 'gx-card',
@@ -34,13 +35,14 @@ export class GxCard {
   actions = output<GxAction>();
 
   private group = inject(GxCardGroupContext, { optional: true });
+  private cardConfig = inject(GxCardConfigService);
 
   readonly effectiveVariant = computed<GxCardVariant>(() =>
-    this.variant() ?? this.group?.variant() ?? 'elevated'
+    this.variant() ?? this.group?.variant() ?? this.cardConfig.config.defaultVariant ?? 'elevated'
   );
 
   readonly effectiveLayout = computed<GxCardLayout>(() =>
-    this.layout() ?? this.group?.layout() ?? 'grid'
+    this.layout() ?? this.group?.layout() ?? this.cardConfig.config.defaultLayout ?? 'grid'
   );
 
   /**
@@ -51,7 +53,7 @@ export class GxCard {
    * 4. 不相容就自動降級到 allowed 的第一個（你也可改成更聰明的策略）
    */
   private readonly rawShape = computed<GxCardShape>(() =>
-    this.shape() ?? this.data()?.shape ?? 'classic'
+    this.shape() ?? this.data()?.shape ?? this.cardConfig.config.defaultShape ?? 'classic'
   );
 
   readonly resolvedShape = computed<GxCardShape>(() => {
@@ -103,16 +105,9 @@ export class GxCard {
   getVisibleActions() {
     const actions = this.data()?.footer?.actions || [];
     const shape = this.resolvedShape();
+    const maxActions = this.cardConfig.getMaxActions(shape);
     
-    switch (shape) {
-      case 'square': 
-        return actions.slice(0, 1); // 只顯示一個
-      case 'landscape':
-        return actions.slice(0, 2); // 最多兩個
-      case 'classic':
-      default:
-        return actions; // 顯示全部
-    }
+    return maxActions === Infinity ? actions : actions.slice(0, maxActions);
   }
 
 
@@ -120,9 +115,9 @@ export class GxCard {
 
   get classes() {
     return [
-      'gx-card',
-      `gx-variant-${this.effectiveVariant()}`,
-      `gx-shape-${this.resolvedShape()}`
+      this.cardConfig.getCssClass('card'),
+      this.cardConfig.getCssClass(`variant-${this.effectiveVariant()}`),
+      this.cardConfig.getCssClass(`shape-${this.resolvedShape()}`)
     ].join(' ');
   }
 
