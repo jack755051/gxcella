@@ -1,6 +1,6 @@
 import { GxButton } from '@sanring/gx-ui';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, input, NgModule, output } from '@angular/core';
+import { Component, computed, inject, input, NgModule, output, signal } from '@angular/core';
 import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, IGxCard } from '../core/card.type';
 import { GxCardGroupContext } from '../core/group-context.service';
 import { GxCardConfigService } from '../core/card-config.service';
@@ -36,6 +36,9 @@ export class GxCard {
 
   private group = inject(GxCardGroupContext, { optional: true });
   private cardConfig = inject(GxCardConfigService);
+
+  // 展開/收起狀態管理
+  private isExpanded = signal(false);
 
   readonly effectiveVariant = computed<GxCardVariant>(() =>
     this.variant() ?? this.group?.variant() ?? this.cardConfig.config.defaultVariant ?? 'elevated'
@@ -88,27 +91,63 @@ export class GxCard {
   });
 
   /**
-   * 根據 shape 調整按鈕樣式
+   * 根據配置服務獲取按鈕變體
    */
-  // getButtonVariant(shape: GxCardShape): 'filled' | 'outlined' | 'text' {
-  //   switch (shape) {
-  //     case 'classic': return 'filled';
-  //     case 'square': return 'filled'; 
-  //     case 'landscape': return 'outlined';
-  //     default: return 'filled';
-  //   }
-  // }
+  readonly buttonVariant = computed(() => {
+    return this.cardConfig.getButtonVariant(this.resolvedShape());
+  });
 
   /**
-   * 根據 shape 限制動作數量
+   * 根據配置服務限制動作數量
    */
-  getVisibleActions() {
+  readonly visibleActions = computed(() => {
     const actions = this.data()?.footer?.actions || [];
     const shape = this.resolvedShape();
     const maxActions = this.cardConfig.getMaxActions(shape);
     
     return maxActions === Infinity ? actions : actions.slice(0, maxActions);
-  }
+  });
+
+  /**
+   * 文字展開/收起相關計算屬性
+   */
+  readonly expandableText = computed(() => {
+    const description = this.data()?.content?.description;
+    const shape = this.resolvedShape();
+    
+    if (!description || shape !== 'classic') {
+      return {
+        originalText: description || '',
+        truncatedText: description || '',
+        shouldShowButton: false,
+        isExpanded: this.isExpanded()
+      };
+    }
+
+    const maxLines = this.cardConfig.getExpandableLimit(shape);
+    const lines = description.split('\n');
+    const shouldTruncate = lines.length > maxLines;
+    
+    return {
+      originalText: description,
+      truncatedText: shouldTruncate ? lines.slice(0, maxLines).join('\n') + '...' : description,
+      shouldShowButton: shouldTruncate,
+      isExpanded: this.isExpanded()
+    };
+  });
+
+  readonly displayText = computed(() => {
+    const { originalText, truncatedText, isExpanded } = this.expandableText();
+    return isExpanded ? originalText : truncatedText;
+  });
+
+  readonly expandButtonText = computed(() => {
+    const isExpanded = this.isExpanded();
+    const config = this.cardConfig.config.expandable?.buttonText;
+    return isExpanded ? 
+      (config?.collapse || '收起內容') : 
+      (config?.expand || '展開更多');
+  });
 
 
   readonly isCustom = computed(() => this.resolvedShape() === 'custom');
@@ -125,6 +164,13 @@ export class GxCard {
     ev.stopPropagation();
     if (action.disabled) return; // 雙保險
     this.actions.emit(action);
+  }
+
+  /**
+   * 切換文字展開/收起狀態
+   */
+  toggleExpand() {
+    this.isExpanded.update(value => !value);
   }
 
     /** 可選：把 GxActionIntent -> GxButtonIntent 的映射（如果色系想對齊） */

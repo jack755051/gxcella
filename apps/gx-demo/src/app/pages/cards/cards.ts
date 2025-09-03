@@ -25,7 +25,7 @@ export class Cards {
         subtitle: 'Classic Card subtitle'
       },
       content: {
-        description: 'This is a classic card shape with header, content, and footer sections. It demonstrates the basic structure of a card component.',
+        description: 'This component represents a classic card style layout that is widely used in modern web applications and user interfaces. The card provides a clean and organized structure to display information in a compact yet visually appealing way. At the top of the card, there is typically an avatar or profile image, which helps to give context about the subject or the person represented in the card. Right next to or below the avatar, the card includes a main title that captures the user’s attention, often used for names, product titles, or key identifiers. Beneath the title, a subtitle is displayed to provide supporting information or secondary context in a lighter tone. Following this, the card contains a description area, where additional details, explanatory text, or other relevant content can be written. The card also includes an expand/collapse button, which allows the user to toggle between a brief overview and more detailed information, improving readability and conserving space. Finally, action buttons are placed at the bottom or side of the card, enabling users to perform tasks such as editing, deleting, sharing, or confirming actions directly from the card. Altogether, this design balances clarity, aesthetics, and functionality.',
       },
       footer: {
         actions: [

@@ -24,9 +24,17 @@
              [src]="data()!.content!.image!.src"
              [alt]="data()!.content!.image!.alt || ''" />
       }
-      <!-- @if (data()?.content?.title)       { <h4>{{ data()!.content!.title }}</h4> }
-      @if (data()?.content?.subtitle)    { <p class="sub">{{ data()!.content!.subtitle }}</p> } -->
-      @if (data()?.content?.description) { <p>{{ data()!.content!.description }}</p> }
+      @if (data()?.content?.description) { 
+        <p>{{ displayText() }}</p>
+        @if (expandableText().shouldShowButton) {
+          <button 
+            type="button"
+            class="gx-expand-button"
+            (click)="toggleExpand()">
+            {{ expandButtonText() }}
+          </button>
+        }
+      }
       <ng-content></ng-content>
     </div>
 
@@ -34,9 +42,8 @@
     @if (data()?.footer?.actions?.length) {
       <div class="gx-card-footer">
         <div class="gx-card-actions">
-          @for (a of data()!.footer!.actions; track a.id) {
+          @for (a of visibleActions(); track a.id) {
             <gx-button
-              [variant]="'filled'"
               [intent]="mapIntent(a.intent)"
               [disabled]="a.disabled ?? false"
               [tooltip]="a.ariaLabel || a.label"
@@ -81,7 +88,7 @@
     @if (data()?.footer?.actions?.length && primaryAction()) {
       <div class="gx-card-footer">
         <gx-button
-          [variant]="'filled'"
+          [variant]="buttonVariant()"
           [intent]="mapIntent(primaryAction()!.intent)"
           [disabled]="primaryAction()!.disabled ?? false"
           (pressed)="onActionPressed(primaryAction()!, $event)">
@@ -119,8 +126,9 @@
     @if (data()?.footer?.actions?.length) {
       <div class="gx-card-footer">
         <div class="gx-card-actions">
-          @for (a of data()!.footer!.actions | slice:0:2; track a.id) {
+          @for (a of visibleActions(); track a.id) {
             <gx-button
+              [variant]="buttonVariant()"
               [intent]="mapIntent(a.intent)"
               [disabled]="a.disabled ?? false"
               [tooltip]="a.ariaLabel || a.label"

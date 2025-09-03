@@ -16,7 +16,7 @@ export interface GxCardGlobalConfig {
   
   /** 擴展卡片配置 */
   expandable?: {
-    /** 不同 shape 的預設文字限制 */
+    /** 不同 shape 的預設行數限制 */
     shapeLimits?: {
       classic?: number;
       landscape?: number;
@@ -39,7 +39,7 @@ export interface GxCardGlobalConfig {
     maxActions?: Record<GxCardShape, number>;
     
     /** 預設按鈕變體 */
-    buttonVariants?: Record<GxCardShape, 'filled' | 'outlined' | 'text'>;
+    buttonVariants?: Record<GxCardShape, 'filled' | 'outline' | 'soft' | 'ghost' | 'tag'>;
   };
   
   /** 自定義 CSS 類別前綴 */
@@ -55,9 +55,9 @@ export const DEFAULT_CARD_CONFIG: GxCardGlobalConfig = {
   defaultShape: 'classic',
   expandable: {
     shapeLimits: {
-      classic: 150,
-      landscape: 120,
-      square: 80
+      classic: 3,
+      landscape: 2,
+      square: 1
     },
     animationDuration: 300,
     buttonText: {
@@ -76,7 +76,7 @@ export const DEFAULT_CARD_CONFIG: GxCardGlobalConfig = {
     buttonVariants: {
       classic: 'filled',
       square: 'filled',
-      landscape: 'outlined',
+      landscape: 'outline',
       portrait: 'filled',
       custom: 'filled'
     }
@@ -109,7 +109,7 @@ export class GxCardConfigService {
   }
   
   /**
-   * 獲取擴展卡片的文字限制
+   * 獲取擴展卡片的行數限制
    */
   getExpandableLimit(shape: GxCardShape): number {
     return this.config.expandable?.shapeLimits?.[shape] || 
@@ -129,7 +129,7 @@ export class GxCardConfigService {
   /**
    * 獲取按鈕變體
    */
-  getButtonVariant(shape: GxCardShape): 'filled' | 'outlined' | 'text' {
+  getButtonVariant(shape: GxCardShape): 'filled' | 'outline' | 'soft' | 'ghost' | 'tag' {
     return this.config.actions?.buttonVariants?.[shape] || 
            this.config.actions?.buttonVariants?.classic || 
            DEFAULT_CARD_CONFIG.actions!.buttonVariants!.classic!;

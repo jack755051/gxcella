@@ -108,6 +108,31 @@
     gap:var(--info-footer-action-gap,12px);
 }
 
+/* 展開按鈕樣式 */
+.gx-expand-button {
+    background: none;
+    border: none;
+    color: var(--gx-color-accent-600, #447b9b);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 0;
+    margin-top: 8px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.gx-expand-button:hover {
+    color: var(--gx-color-accent-700, #2e5a75);
+    text-decoration: underline;
+}
+
+.gx-expand-button:focus {
+    outline: 2px solid var(--gx-color-accent-500, #5a92b3);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
 
 .gx-shape-square {
     flex-direction: column;
