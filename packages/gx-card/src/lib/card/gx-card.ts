@@ -43,10 +43,6 @@ export class GxCard {
     this.layout() ?? this.group?.layout() ?? 'grid'
   );
 
-  readonly effectiveShape = computed<GxCardShape>(() =>
-    this.shape() ?? this.data()?.shape ?? 'square'
-  );
-
   /**
    * 形狀計算邏輯：
    * 1. 單卡覆蓋（@Input shape）
@@ -71,7 +67,6 @@ export class GxCard {
     return [
       'gx-card',
       `gx-variant-${this.effectiveVariant()}`,
-      `gx-layout-${this.effectiveLayout()}`,
       `gx-shape-${this.resolvedShape()}`
     ].join(' ');
   }

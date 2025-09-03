@@ -1,19 +1,20 @@
-<article [class]="classes">
+<article class="gx-shape" [class]="classes">
   <!-- Header -->
   <div class="gx-card-header">
     <ng-content select="[card-header]"></ng-content>
-    @if (data()?.header?.cover?.src) {
+    @if (data()?.header?.avatar?.src) {
       <img class="gx-card-header-img"
-           [src]="data()!.header!.cover!.src"
-           [alt]="data()!.header!.cover!.alt || ''" />
+           [src]="data()!.header!.avatar!.src"
+           [alt]="data()!.header!.avatar!.alt || ''" />
     }
-    @if (data()?.header?.title)   { <h3>{{ data()!.header!.title }}</h3> }
-    @if (data()?.header?.subtitle){ <p class="sub">{{ data()!.header!.subtitle }}</p> }
+    <div class="gx-card-header-info">
+      @if (data()?.header?.title)   { <h3 class="title">{{ data()!.header!.title }}</h3> }
+      @if (data()?.header?.subtitle){ <p class="subtitle">{{ data()!.header!.subtitle }}</p> }
+    </div>
   </div>
 
   <!-- Content -->
   <div class="gx-card-content">
-    <ng-content></ng-content>
     @if (data()?.content?.image?.src) {
       <img class="gx-card-media"
            [src]="data()!.content!.image!.src"
@@ -22,6 +23,7 @@
     @if (data()?.content?.title)       { <h4>{{ data()!.content!.title }}</h4> }
     @if (data()?.content?.subtitle)    { <p class="sub">{{ data()!.content!.subtitle }}</p> }
     @if (data()?.content?.description) { <p>{{ data()!.content!.description }}</p> }
+    <ng-content></ng-content>
   </div>
 
   <!-- Footer：全部用 gx-button -->

@@ -16,23 +16,16 @@ export class Cards {
       shape: 'classic',
       variant: 'elevated',
       header: {
-        cover: {
-          src: '../../assets/test_01.jpg',
-          alt: 'Card cover image',
+        avatar: {
+          src: '/test_01.jpg',
+          alt: 'Card avatar image',
           ratio: '16:9'
         },
         title: 'Classic Card Header',
         subtitle: 'Header subtitle description'
       },
       content: {
-        title: 'Content Title',
-        subtitle: 'Content Subtitle',
         description: 'This is a classic card shape with header, content, and footer sections. It demonstrates the basic structure of a card component.',
-        image: {
-          src: '../../assets/test_02.jpg',
-          alt: 'Content image',
-          ratio: '4:3'
-        }
       },
       footer: {
         actions: [
@@ -55,7 +48,7 @@ export class Cards {
       variant: 'outlined',
       header: {
         avatar: {
-          src: '../../assets/test_01.jpg',
+          src: '/test_01.jpg',
           alt: 'User avatar',
           ratio: '1:1'
         },
@@ -94,8 +87,8 @@ export class Cards {
       target: '_self',
       ariaLabel: 'Navigate to product details',
       header: {
-        cover: {
-          src: '../../assets/test_02.jpg',
+        avatar: {
+          src: '/test_02.jpg',
           alt: 'Product image',
           ratio: '1:1'
         },

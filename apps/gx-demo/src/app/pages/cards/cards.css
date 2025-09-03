@@ -43,6 +43,10 @@
   max-width: 1200px;
 }
 
+.show-shell-content-cards{
+  flex-direction: column;
+}
+
 .card-variants-demo {
   display: flex;
   gap: 30px;
