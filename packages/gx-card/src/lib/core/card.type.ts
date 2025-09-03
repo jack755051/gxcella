@@ -89,3 +89,30 @@ export interface GxAction extends IGxInteractive {
   intent?: GxActionIntent;
   disabled?: boolean;
 }
+
+export const SHAPE_DISPLAY_RULES = {
+  classic: {
+    headerSubtitle: true,
+    contentImage: true,
+    contentSubtitle: true,
+    contentDescription: true,
+    maxActions: Infinity,
+    buttonVariant: 'filled' as const
+  },
+  square: {
+    headerSubtitle: false,
+    contentImage: false,
+    contentSubtitle: false,
+    contentDescription: false,
+    maxActions: 1,
+    buttonVariant: 'filled' as const
+  },
+  landscape: {
+    headerSubtitle: true,
+    contentImage: false,
+    contentSubtitle: false,
+    contentDescription: true,
+    maxActions: 2,
+    buttonVariant: 'outlined' as const
+  }
+} as const;

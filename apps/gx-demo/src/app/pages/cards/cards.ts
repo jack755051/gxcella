@@ -21,8 +21,8 @@ export class Cards {
           alt: 'Card avatar image',
           ratio: '16:9'
         },
-        title: 'Classic Card Header',
-        subtitle: 'Header subtitle description'
+        title: 'Classic Card',
+        subtitle: 'Classic Card subtitle'
       },
       content: {
         description: 'This is a classic card shape with header, content, and footer sections. It demonstrates the basic structure of a card component.',

@@ -61,6 +61,61 @@ export class GxCard {
     return (allowed as readonly string[]).includes(wanted) ? wanted : (allowed[0] as GxCardShape);
   });
 
+/**
+   * Square 卡片只顯示第一個（主要）動作
+   */
+  readonly primaryAction = computed<GxAction | undefined>(() => {
+    const actions = this.data()?.footer?.actions;
+    return actions && actions.length > 0 ? actions[0] : undefined;
+  });
+
+  /**
+   * 根據 shape 決定是否顯示特定內容
+   */
+  readonly shouldShowContent = computed(() => {
+    const shape = this.resolvedShape();
+    return {
+      avatar: true, // 所有 shape 都顯示頭像
+      headerSubtitle: shape !== 'square', // square 不顯示 header subtitle
+      contentImage: shape === 'classic', // 只有 classic 顯示內容圖片
+      contentSubtitle: shape !== 'square', // square 不顯示 content subtitle  
+      contentDescription: shape !== 'square', // square 不顯示描述
+      allActions: shape === 'classic', // 只有 classic 顯示所有動作
+      limitedActions: shape === 'landscape' // landscape 限制動作數量
+    };
+  });
+
+  /**
+   * 根據 shape 調整按鈕樣式
+   */
+  // getButtonVariant(shape: GxCardShape): 'filled' | 'outlined' | 'text' {
+  //   switch (shape) {
+  //     case 'classic': return 'filled';
+  //     case 'square': return 'filled'; 
+  //     case 'landscape': return 'outlined';
+  //     default: return 'filled';
+  //   }
+  // }
+
+  /**
+   * 根據 shape 限制動作數量
+   */
+  getVisibleActions() {
+    const actions = this.data()?.footer?.actions || [];
+    const shape = this.resolvedShape();
+    
+    switch (shape) {
+      case 'square': 
+        return actions.slice(0, 1); // 只顯示一個
+      case 'landscape':
+        return actions.slice(0, 2); // 最多兩個
+      case 'classic':
+      default:
+        return actions; // 顯示全部
+    }
+  }
+
+
   readonly isCustom = computed(() => this.resolvedShape() === 'custom');
 
   get classes() {
