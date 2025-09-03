@@ -120,19 +120,30 @@ export class GxCard {
         originalText: description || '',
         truncatedText: description || '',
         shouldShowButton: false,
-        isExpanded: this.isExpanded()
+        isExpanded: this.isExpanded(),
+        maxLines: 0
       };
     }
 
     const maxLines = this.cardConfig.getExpandableLimit(shape);
-    const lines = description.split('\n');
-    const shouldTruncate = lines.length > maxLines;
+    
+    // 簡化邏輯：如果文字超過一定長度，就認為需要截斷
+    // 這裡使用字符數來估算，每行大約 50-60 個字符
+    const estimatedLines = Math.ceil(description.length / 55);
+    const shouldTruncate = estimatedLines > maxLines;
+    
+    // 計算截斷位置（大約每行 55 個字符）
+    const truncateLength = maxLines * 55;
+    const truncatedText = shouldTruncate ? 
+      description.substring(0, truncateLength) + '...' : 
+      description;
     
     return {
       originalText: description,
-      truncatedText: shouldTruncate ? lines.slice(0, maxLines).join('\n') + '...' : description,
+      truncatedText,
       shouldShowButton: shouldTruncate,
-      isExpanded: this.isExpanded()
+      isExpanded: this.isExpanded(),
+      maxLines
     };
   });
 

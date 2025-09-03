@@ -25,14 +25,20 @@
              [alt]="data()!.content!.image!.alt || ''" />
       }
       @if (data()?.content?.description) { 
-        <p>{{ displayText() }}</p>
+        <div class="gx-card-description" 
+             [class.expanded]="expandableText().isExpanded"
+             [style.--max-lines]="expandableText().maxLines">
+          <p class="description-text">{{ displayText() }}</p>
+        </div>
         @if (expandableText().shouldShowButton) {
-          <button 
-            type="button"
-            class="gx-expand-button"
-            (click)="toggleExpand()">
-            {{ expandButtonText() }}
-          </button>
+          <div class="gx-expand-button-container">
+            <button 
+              type="button"
+              class="gx-expand-button"
+              (click)="toggleExpand()">
+              {{ expandButtonText() }}
+            </button>
+          </div>
         }
       }
       <ng-content></ng-content>
