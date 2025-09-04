@@ -77,7 +77,7 @@ export type GxMedia = {
 };
 
 
-export interface IGxCardHeader{
+export interface IGxCardHeader extends IGxInteractive{
   avatar?: GxMedia;   // 可選：作者頭像
   title?: string;     // 標題（通常搭配 cover/頭像時使用）
   subtitle?: string;  // 副標題

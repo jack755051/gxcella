@@ -1,7 +1,7 @@
 import { GxButton, GxTag } from '@sanring/gx-ui';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, input, NgModule, output, signal } from '@angular/core';
-import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, IGxCard, IGxTag } from '../core/card.type';
+import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, GxMedia, IGxCard, IGxTag } from '../core/card.type';
 import { GxCardGroupContext } from '../core/group-context.service';
 import { GxCardConfigService } from '../core/card-config.service';
 
@@ -35,10 +35,35 @@ export class GxCard {
   actions = output<GxAction>();
 
   /**
+   * 卡片點擊事件
+   */
+  cardClick = output<MouseEvent>();
+
+  /**
    * Tag 相關事件
    */
   tagClick = output<{ tag: IGxTag, event: MouseEvent }>();
   tagRemove = output<{ tag: IGxTag }>();
+
+  /**
+   * Header 點擊事件
+   */
+  headerClick = output<{ headerData: IGxCard['header'], event: MouseEvent }>();
+
+  /**
+   * Avatar 點擊事件
+   */
+  avatarClick = output<{ avatarData: GxMedia | undefined, event: MouseEvent }>();
+
+  /**
+   * Title 點擊事件
+   */
+  titleClick = output<{ title: string, event: MouseEvent }>();
+
+  /**
+   * Subtitle 點擊事件
+   */
+  subtitleClick = output<{ subtitle: string, event: MouseEvent }>();
 
   private group = inject(GxCardGroupContext, { optional: true });
   private cardConfig = inject(GxCardConfigService);
@@ -169,12 +194,24 @@ export class GxCard {
 
   readonly isCustom = computed(() => this.resolvedShape() === 'custom');
 
+  /**
+   * 是否可點擊（用於控制 cursor 和樣式）
+   */
+  clickable = input<boolean>(false);
+
   get classes() {
-    return [
+    const baseClasses = [
       this.cardConfig.getCssClass('card'),
       this.cardConfig.getCssClass(`variant-${this.effectiveVariant()}`),
       this.cardConfig.getCssClass(`shape-${this.resolvedShape()}`)
-    ].join(' ');
+    ];
+
+    // 如果卡片可點擊，添加可點擊類別
+    if (this.clickable()) {
+      baseClasses.push('gx-card-clickable');
+    }
+
+    return baseClasses.join(' ');
   }
 
   onActionPressed(action: GxAction, ev: MouseEvent) {
@@ -202,6 +239,100 @@ export class GxCard {
    */
   onTagRemove(tag: IGxTag) {
     this.tagRemove.emit({ tag });
+  }
+
+  /**
+   * 處理 Header 點擊事件
+   */
+  onHeaderClick(event: MouseEvent) {
+    const headerData = this.data()?.header;
+    
+    if (!headerData?.href) return;
+    
+    event.stopPropagation(); // 防止觸發卡片點擊
+    
+    // 如果有 href，進行路由導航
+    if (headerData.href) {
+      if (headerData.target === '_blank') {
+        window.open(headerData.href, '_blank');
+      } else {
+        // 這裡可以使用 Router 進行內部路由導航
+        // 或者觸發事件讓父組件處理
+        window.location.href = headerData.href;
+      }
+    }
+    
+    // 發送點擊事件給父組件
+    this.headerClick.emit({ headerData, event });
+  }
+
+  /**
+   * 處理 Avatar 點擊事件
+   */
+  onAvatarClick(event: MouseEvent) {
+    event.stopPropagation(); // 防止觸發其他點擊事件
+    const avatarData = this.data()?.header?.avatar;
+    this.avatarClick.emit({ avatarData, event });
+  }
+
+  /**
+   * 處理 Title 點擊事件
+   */
+  onTitleClick(event: MouseEvent) {
+    event.stopPropagation(); // 防止觸發其他點擊事件
+    const title = this.data()?.header?.title;
+    if (title) {
+      this.titleClick.emit({ title, event });
+    }
+  }
+
+  /**
+   * 處理 Subtitle 點擊事件
+   */
+  onSubtitleClick(event: MouseEvent) {
+    event.stopPropagation(); // 防止觸發其他點擊事件
+    const subtitle = this.data()?.header?.subtitle;
+    if (subtitle) {
+      this.subtitleClick.emit({ subtitle, event });
+    }
+  }
+
+  /**
+   * 處理卡片點擊事件
+   */
+  onCardClick(event: MouseEvent) {
+    // 只有在可點擊且點擊的不是互動元素時才觸發
+    if (this.clickable() && !this.isInteractiveElement(event.target as Element)) {
+      this.cardClick.emit(event);
+    }
+  }
+
+  /**
+   * 檢查點擊的元素是否為互動元素
+   */
+  private isInteractiveElement(target: Element): boolean {
+    if (!target) return false;
+    
+    // 檢查元素本身和其父元素是否為互動元素
+    let current: Element | null = target;
+    while (current) {
+      const tagName = current.tagName.toLowerCase();
+      const hasClickHandler = current.hasAttribute('(click)') || current.hasAttribute('ng-click');
+      
+      if (tagName === 'button' || 
+          tagName === 'gx-button' || 
+          tagName === 'gx-tag' ||
+          current.classList.contains('gx-expand-button') ||
+          current.classList.contains('gx-card-header-img') ||
+          current.classList.contains('title') ||
+          current.classList.contains('subtitle') ||
+          hasClickHandler) {
+        return true;
+      }
+      current = current.parentElement;
+    }
+    
+    return false;
   }
 
     /** 可選：把 GxActionIntent -> GxButtonIntent 的映射（如果色系想對齊） */

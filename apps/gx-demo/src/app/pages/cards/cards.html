@@ -10,7 +10,11 @@
       @for (card of cards; track card.id) {
         <gx-card
           [data]="card"
-          (actions)="onCardAction($event)">
+          (actions)="onCardAction($event)"
+          (avatarClick)="onAvatarClick($event)"
+          (titleClick)="onTitleClick($event)"
+          (subtitleClick)="onSubtitleClick($event)"
+        >
         </gx-card>
       }
     </div>

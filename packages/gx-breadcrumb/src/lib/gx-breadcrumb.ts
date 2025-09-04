@@ -31,6 +31,7 @@ export class GxBreadcrumb {
   }
 
   trackByIndex = (i: number) => i;
+  trackByAutoIndex = (i: number, item: IGxBreadCrumb) => `auto-${i}-${item.label}`;
   getSeparator(): string { return SEP_MAP[this.separator] ?? '/'; }
   /** 在 template 用：先取來源，再決定是否用 Input 覆蓋 root */
   mergeCrumbs(auto: IGxBreadCrumb[] | null): IGxBreadCrumb[] {

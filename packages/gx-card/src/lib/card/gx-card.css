@@ -74,8 +74,47 @@
     padding: var(--classic-padding-x, 16px);
     /* 基礎過渡效果 */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* 預設不顯示 pointer cursor，避免與內部按鈕衝突 */
+}
+
+/* 只有當卡片本身可點擊時才顯示 pointer cursor */
+.gx-shape-classic.gx-card-clickable {
     cursor: pointer;
 }
+
+/* 在非互動區域顯示 pointer cursor（僅當卡片可點擊時） */
+.gx-shape-classic.gx-card-clickable .gx-card-header,
+.gx-shape-classic.gx-card-clickable .gx-card-content > :not(button):not(gx-button):not(gx-tag):not(.gx-card-tags):not(.gx-expand-button-container) {
+    cursor: pointer;
+}
+
+/* Header 可點擊樣式 */
+.gx-card-header.gx-header-clickable {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 8px;
+    padding: 4px;
+    margin: -4px;
+}
+
+.gx-card-header.gx-header-clickable:hover {
+    background-color: var(--gx-color-accent-50, rgba(0, 122, 204, 0.05));
+}
+
+/* 個別元素可點擊樣式 */
+.gx-card-header-img:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.gx-card-header .title:hover,
+.gx-card-header .subtitle:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: text-decoration 0.2s ease;
+}
+
 .gx-shape-classic:hover{
     /* background-color: var(--classic-background-hover, #D4E5ED); */
     border: var(--classic-border-hover, 2px solid #7EB1C8);
