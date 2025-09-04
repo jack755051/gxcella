@@ -1,14 +1,14 @@
-import { GxButton } from '@sanring/gx-ui';
+import { GxButton, GxTag } from '@sanring/gx-ui';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, input, NgModule, output, signal } from '@angular/core';
-import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, IGxCard } from '../core/card.type';
+import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, IGxCard, IGxTag } from '../core/card.type';
 import { GxCardGroupContext } from '../core/group-context.service';
 import { GxCardConfigService } from '../core/card-config.service';
 
 @Component({
   selector: 'gx-card',
   standalone: true,
-  imports: [ CommonModule,GxButton],
+  imports: [ CommonModule,GxButton,GxTag],
   templateUrl: './gx-card.html',
   styleUrls: ['./gx-card.css']
 })
@@ -33,6 +33,12 @@ export class GxCard {
    * @memberof GxCard
    */
   actions = output<GxAction>();
+
+  /**
+   * Tag 相關事件
+   */
+  tagClick = output<{ tag: IGxTag, event: MouseEvent }>();
+  tagRemove = output<{ tag: IGxTag }>();
 
   private group = inject(GxCardGroupContext, { optional: true });
   private cardConfig = inject(GxCardConfigService);
@@ -182,6 +188,20 @@ export class GxCard {
    */
   toggleExpand() {
     this.isExpanded.update(value => !value);
+  }
+
+  /**
+   * 處理 Tag 點擊事件
+   */
+  onTagClick(tag: IGxTag, event: MouseEvent) {
+    this.tagClick.emit({ tag, event });
+  }
+
+  /**
+   * 處理 Tag 移除事件
+   */
+  onTagRemove(tag: IGxTag) {
+    this.tagRemove.emit({ tag });
   }
 
     /** 可選：把 GxActionIntent -> GxButtonIntent 的映射（如果色系想對齊） */

@@ -1,3 +1,16 @@
+import { GxTag } from "@sanring/gx-ui";
+
+/**
+ * Tag 資料介面
+ */
+export interface IGxTag {
+  id: string;
+  label: string;
+  intent?: 'info' | 'success' | 'warning' | 'error';
+  disabled?: boolean;
+  removable?: boolean;
+}
+
 export type GxCardVariant = 'elevated' | 'outlined' | 'flat';
 /**
  * 卡片群組的排列方式
@@ -74,6 +87,7 @@ export interface IGxCardContent {
   title?: string;
   subtitle?: string;
   description?: string;
+  tags?: IGxTag[]; // 標籤
   image?: GxMedia;   // 內文中的插圖
 }
 

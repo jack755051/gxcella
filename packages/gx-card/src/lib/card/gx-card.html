@@ -24,6 +24,20 @@
              [src]="data()!.content!.image!.src"
              [alt]="data()!.content!.image!.alt || ''" />
       }
+      @if (data()?.content?.tags) {
+        <div class="gx-card-tags">
+          @for (tag of data()!.content!.tags; track tag.id) {
+            <gx-tag
+              [intent]="tag.intent ?? 'info'"
+              [disabled]="tag.disabled ?? false"
+              [removable]="tag.removable ?? false"
+              (remove)="onTagRemove(tag)"
+              (onClick)="onTagClick(tag, $event)">
+              {{ tag.label }}
+            </gx-tag>
+          }
+        </div>
+      }
       @if (data()?.content?.description) { 
         <div class="gx-card-description" 
              [class.expanded]="expandableText().isExpanded"

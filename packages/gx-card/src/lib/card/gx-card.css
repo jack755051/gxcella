@@ -14,8 +14,6 @@
     --border-width: 2px;
 
 
-    
-
     /* public */
     --info-title-color: var(--gx-color-gray-800);
     --info-title-font-size: 18px;
@@ -24,6 +22,9 @@
     --info-subtitle-font-size: 12px;
     --info-subtitle-font-weight: normal;
     --info-footer-action-gap: 12px;
+
+    --tags-gap: 12px;
+    --tags-padding: 4px 8px;
 
     --expand-button-font-size: 14px;
     --expand-button-text-color: var(--gx-color-accent-500, #007acc);
@@ -47,21 +48,20 @@
 
 }
 
-
 .gx-card,
 .gx-card-header,
 .gx-shape,
 .gx-card-header,
 .gx-card-header-info,
 .gx-card-actions,
-.gx-expand-button-container {
+.gx-expand-button-container,
+.gx-card-tags {
     display: flex;
 }
-.gx-expand-button-container{
+.gx-expand-button-container,
+.gx-card-tags {
     width: 100%;
-    justify-content: flex-end;
 }
-
 
 /* Card shape styles */
 .gx-shape-classic {
@@ -77,7 +77,7 @@
     cursor: pointer;
 }
 .gx-shape-classic:hover{
-    background-color: var(--classic-background-hover, #D4E5ED);
+    /* background-color: var(--classic-background-hover, #D4E5ED); */
     border: var(--classic-border-hover, 2px solid #7EB1C8);
     box-shadow: var(--classic-shadow-hover, 0 4px 12px rgba(68, 125, 155, 0.15));
 }
@@ -191,6 +191,12 @@
     gap: var(--grid-gap, 16px);
 }
 
+.gx-card-tags{
+    justify-content: start;
+    padding: var(--tags-padding, 4px 8px);
+    gap: var(--tags-gap, 12px);
+}
+
 /* Text expand/collapse styles */
 .gx-card-description {
     position: relative;
@@ -226,6 +232,10 @@
     margin-top: 8px;
     text-decoration: none;
     transition: color 0.2s ease;
+}
+
+.gx-expand-button-container{
+    justify-content: flex-end;
 }
 
 .gx-expand-button:hover {
