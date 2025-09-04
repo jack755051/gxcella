@@ -1,0 +1,79 @@
+/* GxClickable Directive 樣式 */
+
+/* 預設可點擊樣式 */
+.gx-clickable {
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  position: relative;
+}
+
+/* Hover 效果 */
+.gx-clickable-hover {
+  background-color: var(--gx-color-accent-50, rgba(0, 122, 204, 0.05));
+  border-radius: 4px;
+  transform: translateY(-1px);
+}
+
+/* 禁用狀態 */
+.gx-clickable:disabled,
+.gx-clickable[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* 針對不同類型元素的特定樣式 */
+.gx-clickable-avatar {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.gx-clickable-avatar:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.gx-clickable-text {
+  border-radius: 2px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+}
+
+.gx-clickable-text:hover {
+  background-color: var(--gx-color-accent-50, rgba(0, 122, 204, 0.05));
+  text-decoration: underline;
+}
+
+/* 頁首區域樣式 */
+.gx-clickable-header {
+  border-radius: 8px;
+  padding: 4px;
+  margin: -4px;
+}
+
+.gx-clickable-header:hover {
+  background-color: var(--gx-color-accent-50, rgba(0, 122, 204, 0.05));
+}
+
+/* 焦點樣式（鍵盤導航） */
+.gx-clickable:focus {
+  outline: 2px solid var(--gx-color-accent-500, #007acc);
+  outline-offset: 2px;
+}
+
+/* 無障礙支援 */
+.gx-clickable[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 響應式觸控優化 */
+@media (hover: none) and (pointer: coarse) {
+  .gx-clickable-hover {
+    transform: none;
+  }
+  
+  .gx-clickable-avatar:hover {
+    transform: none;
+  }
+}

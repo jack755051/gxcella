@@ -88,7 +88,7 @@
     cursor: pointer;
 }
 
-/* Header 可點擊樣式 */
+/* Header 可點擊樣式 - 現在由 directive 處理 */
 .gx-card-header.gx-header-clickable {
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -99,20 +99,6 @@
 
 .gx-card-header.gx-header-clickable:hover {
     background-color: var(--gx-color-accent-50, rgba(0, 122, 204, 0.05));
-}
-
-/* 個別元素可點擊樣式 */
-.gx-card-header-img:hover {
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
-}
-
-.gx-card-header .title:hover,
-.gx-card-header .subtitle:hover {
-    cursor: pointer;
-    text-decoration: underline;
-    transition: text-decoration 0.2s ease;
 }
 
 .gx-shape-classic:hover{

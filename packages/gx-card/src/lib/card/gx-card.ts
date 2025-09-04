@@ -4,11 +4,12 @@ import { Component, computed, inject, input, NgModule, output, signal } from '@a
 import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, GxMedia, IGxCard, IGxTag } from '../core/card.type';
 import { GxCardGroupContext } from '../core/group-context.service';
 import { GxCardConfigService } from '../core/card-config.service';
+import { GxClickableDirective, GxClickableEvent } from '../directives/gx-clickable.directive';
 
 @Component({
   selector: 'gx-card',
   standalone: true,
-  imports: [ CommonModule,GxButton,GxTag],
+  imports: [ CommonModule, GxButton, GxTag, GxClickableDirective],
   templateUrl: './gx-card.html',
   styleUrls: ['./gx-card.css']
 })
@@ -105,6 +106,23 @@ export class GxCard {
     return actions && actions.length > 0 ? actions[0] : undefined;
   });
 
+  /**
+   * 優化的 computed - 快取常用的資料
+   */
+  readonly headerData = computed(() => this.data()?.header);
+  readonly contentData = computed(() => this.data()?.content);
+  readonly footerData = computed(() => this.data()?.footer);
+
+  /**
+   * 優化的 computed - 避免重複計算
+   */
+  readonly hasAvatar = computed(() => !!this.headerData()?.avatar?.src);
+  readonly hasTitle = computed(() => !!this.headerData()?.title);
+  readonly hasSubtitle = computed(() => !!this.headerData()?.subtitle);
+  readonly hasContentImage = computed(() => !!this.contentData()?.image?.src);
+  readonly hasDescription = computed(() => !!this.contentData()?.description);
+  readonly hasTags = computed(() => !!this.contentData()?.tags?.length);
+  readonly hasActions = computed(() => !!this.footerData()?.actions?.length);
   /**
    * 根據 shape 決定是否顯示特定內容
    */
@@ -269,31 +287,30 @@ export class GxCard {
   /**
    * 處理 Avatar 點擊事件
    */
-  onAvatarClick(event: MouseEvent) {
-    event.stopPropagation(); // 防止觸發其他點擊事件
-    const avatarData = this.data()?.header?.avatar;
-    this.avatarClick.emit({ avatarData, event });
+  onAvatarClick(event: GxClickableEvent<GxMedia>) {
+    event.event.stopPropagation();
+    this.avatarClick.emit({ avatarData: event.data, event: event.event });
   }
 
   /**
    * 處理 Title 點擊事件
    */
-  onTitleClick(event: MouseEvent) {
-    event.stopPropagation(); // 防止觸發其他點擊事件
-    const title = this.data()?.header?.title;
+  onTitleClick(event: GxClickableEvent<string>) {
+    event.event.stopPropagation();
+    const title = event.data;
     if (title) {
-      this.titleClick.emit({ title, event });
+      this.titleClick.emit({ title, event: event.event });
     }
   }
 
   /**
    * 處理 Subtitle 點擊事件
    */
-  onSubtitleClick(event: MouseEvent) {
-    event.stopPropagation(); // 防止觸發其他點擊事件
-    const subtitle = this.data()?.header?.subtitle;
+  onSubtitleClick(event: GxClickableEvent<string>) {
+    event.event.stopPropagation();
+    const subtitle = event.data;
     if (subtitle) {
-      this.subtitleClick.emit({ subtitle, event });
+      this.subtitleClick.emit({ subtitle, event: event.event });
     }
   }
 
@@ -308,27 +325,44 @@ export class GxCard {
   }
 
   /**
-   * 檢查點擊的元素是否為互動元素
+   * 檢查點擊的元素是否為互動元素 - 優化版本
    */
+  private readonly interactiveSelectors = [
+    'button', 'gx-button', 'gx-tag', 'a', 'input', 'select', 'textarea'
+  ];
+
+  private readonly interactiveClasses = [
+    'gx-expand-button',
+    'gx-card-header-img', 
+    'title',
+    'subtitle'
+  ];
+
   private isInteractiveElement(target: Element): boolean {
     if (!target) return false;
     
-    // 檢查元素本身和其父元素是否為互動元素
     let current: Element | null = target;
     while (current) {
       const tagName = current.tagName.toLowerCase();
-      const hasClickHandler = current.hasAttribute('(click)') || current.hasAttribute('ng-click');
       
-      if (tagName === 'button' || 
-          tagName === 'gx-button' || 
-          tagName === 'gx-tag' ||
-          current.classList.contains('gx-expand-button') ||
-          current.classList.contains('gx-card-header-img') ||
-          current.classList.contains('title') ||
-          current.classList.contains('subtitle') ||
-          hasClickHandler) {
+      // 檢查標籤名稱
+      if (this.interactiveSelectors.includes(tagName)) {
         return true;
       }
+      
+      // 檢查類別名稱
+      if (this.interactiveClasses.some(className => 
+        current!.classList.contains(className))) {
+        return true;
+      }
+      
+      // 檢查是否有點擊處理器
+      if (current.hasAttribute('gxClickable') || 
+          current.hasAttribute('(click)') || 
+          current.hasAttribute('ng-click')) {
+        return true;
+      }
+      
       current = current.parentElement;
     }
     

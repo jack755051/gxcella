@@ -4,25 +4,9 @@
   <!-- Classic Shape - 完整顯示 -->
   @if (resolvedShape() === 'classic') {
     <!-- Header -->
-    <div class="gx-card-header" 
-         [class.gx-header-clickable]="data()?.header?.href"
-         (click)="onHeaderClick($event)">
-      <ng-content select="[card-header]"></ng-content>
-      @if (data()?.header?.avatar?.src) {
-        <img class="gx-card-header-img"
-             [src]="data()!.header!.avatar!.src"
-             [alt]="data()!.header!.avatar!.alt || ''"
-             (click)="onAvatarClick($event)" />
-      }
-      <div class="gx-card-header-info">
-        @if (data()?.header?.title)    { 
-          <h3 class="title" (click)="onTitleClick($event)">{{ data()!.header!.title }}</h3> 
-        }
-        @if (data()?.header?.subtitle) { 
-          <p class="subtitle" (click)="onSubtitleClick($event)">{{ data()!.header!.subtitle }}</p> 
-        }
-      </div>
-    </div>
+    @defer {
+      <ng-container [ngTemplateOutlet]="headerTemplate"></ng-container>
+    }
 
     <!-- Content -->
     <div class="gx-card-content">
@@ -67,42 +51,22 @@
 
     <!-- Footer -->
     @if (data()?.footer?.actions?.length) {
-      <div class="gx-card-footer">
-        <div class="gx-card-actions">
-          @for (a of visibleActions(); track a.id) {
-            <gx-button
-              [intent]="mapIntent(a.intent)"
-              [disabled]="a.disabled ?? false"
-              [tooltip]="a.ariaLabel || a.label"
-              (pressed)="onActionPressed(a, $event)">
-              {{ a.label }}
-            </gx-button>
-          }
-        </div>
-      </div>
+      @defer {
+        <ng-container [ngTemplateOutlet]="actionsTemplate"></ng-container>
+      }
     }
   }
 
   <!-- Square Shape - 簡化顯示 -->
   @else if (resolvedShape() === 'square') {
-    <!-- 只顯示主要內容，省略 subtitle 和複雜的 footer -->
-    <div class="gx-card-header" 
-         [class.gx-header-clickable]="data()?.header?.href"
-         (click)="onHeaderClick($event)">
-      @if (data()?.header?.avatar?.src) {
-        <img class="gx-card-header-img"
-             [src]="data()!.header!.avatar!.src"
-             [alt]="data()!.header!.avatar!.alt || ''"
-             (click)="onAvatarClick($event)" />
-      }
-      @if (data()?.header?.title) { 
-        <h3 class="title" (click)="onTitleClick($event)">{{ data()!.header!.title }}</h3> 
-      }
-      <!-- 省略 subtitle -->
-    </div>
+    <!-- Header -->
+    @defer {
+      <ng-container [ngTemplateOutlet]="headerTemplate"></ng-container>
+    }
 
+    <!-- Content -->
     <div class="gx-card-content">
-      @if (data()?.content?.image?.src) {
+      @if (data()?.content?.image?.src && shouldShowContent().contentImage) {
         <img class="gx-card-media"
              [src]="data()!.content!.image!.src"
              [alt]="data()!.content!.image!.alt || ''" />
@@ -110,11 +74,10 @@
       @if (data()?.content?.title) { 
         <h4>{{ data()!.content!.title }}</h4> 
       }
-      <!-- 省略 subtitle 和 description -->
       <ng-content></ng-content>
     </div>
 
-    <!-- 最多顯示一個主要動作 -->
+    <!-- Footer with primary action only -->
     @if (data()?.footer?.actions?.length && primaryAction()) {
       <div class="gx-card-footer">
         <gx-button
@@ -130,51 +93,31 @@
 
   <!-- Landscape Shape - 橫向布局 -->
   @else if (resolvedShape() === 'landscape') {
+    <!-- Header with special layout -->
     <div class="gx-card-header" 
          [class.gx-header-clickable]="data()?.header?.href"
          (click)="onHeaderClick($event)">
       <div class="gx-card-header-content">
-        @if (data()?.header?.avatar?.src) {
-          <img class="gx-card-header-img"
-               [src]="data()!.header!.avatar!.src"
-               [alt]="data()!.header!.avatar!.alt || ''"
-               (click)="onAvatarClick($event)" />
+        @defer {
+          <ng-container [ngTemplateOutlet]="headerContentTemplate"></ng-container>
         }
-        <div class="gx-card-header-info">
-          @if (data()?.header?.title)    { 
-            <h3 class="title" (click)="onTitleClick($event)">{{ data()!.header!.title }}</h3> 
-          }
-          @if (data()?.header?.subtitle) { 
-            <p class="subtitle" (click)="onSubtitleClick($event)">{{ data()!.header!.subtitle }}</p> 
-          }
-        </div>
       </div>
     </div>
 
+    <!-- Content -->
     <div class="gx-card-content">
-      @if (data()?.content?.title)       { <h4>{{ data()!.content!.title }}</h4> }
-      @if (data()?.content?.description) { <p>{{ data()!.content!.description }}</p> }
+      @if (data()?.content?.title) { <h4>{{ data()!.content!.title }}</h4> }
+      @if (data()?.content?.description && shouldShowContent().contentDescription) { 
+        <p>{{ data()!.content!.description }}</p> 
+      }
       <ng-content></ng-content>
-      
-      <!-- Landscape 不顯示內容圖片，空間有限 -->
     </div>
 
-    <!-- 簡化的動作區域 -->
+    <!-- Actions -->
     @if (data()?.footer?.actions?.length) {
-      <div class="gx-card-footer">
-        <div class="gx-card-actions">
-          @for (a of visibleActions(); track a.id) {
-            <gx-button
-              [variant]="buttonVariant()"
-              [intent]="mapIntent(a.intent)"
-              [disabled]="a.disabled ?? false"
-              [tooltip]="a.ariaLabel || a.label"
-              (pressed)="onActionPressed(a, $event)">
-              {{ a.label }}
-            </gx-button>
-          }
-        </div>
-      </div>
+      @defer {
+        <ng-container [ngTemplateOutlet]="actionsTemplate"></ng-container>
+      }
     }
   }
 
@@ -183,3 +126,88 @@
     <ng-content></ng-content>
   }
 </article>
+
+<!-- 共用的 Header Template -->
+<ng-template #headerTemplate>
+  <div class="gx-card-header" 
+       [class.gx-header-clickable]="data()?.header?.href"
+       (click)="onHeaderClick($event)">
+    <ng-content select="[card-header]"></ng-content>
+    
+    <!-- Avatar -->
+    @if (data()?.header?.avatar?.src) {
+      <img class="gx-card-header-img"
+           [src]="data()!.header!.avatar!.src"
+           [alt]="data()!.header!.avatar!.alt || ''"
+           gxClickable
+           [gxClickableData]="data()?.header?.avatar"
+           [gxClickableClass]="'gx-clickable-avatar'"
+           (gxClick)="onAvatarClick($event)" />
+    }
+    
+    <!-- Header Info -->
+    <div class="gx-card-header-info">
+      @if (data()?.header?.title) { 
+        <h3 class="title" 
+            gxClickable
+            [gxClickableData]="data()!.header!.title"
+            [gxClickableClass]="'gx-clickable-text'"
+            (gxClick)="onTitleClick($event)">{{ data()!.header!.title }}</h3> 
+      }
+      @if (data()?.header?.subtitle && shouldShowContent().headerSubtitle) { 
+        <p class="subtitle" 
+           gxClickable
+           [gxClickableData]="data()!.header!.subtitle"
+           [gxClickableClass]="'gx-clickable-text'"
+           (gxClick)="onSubtitleClick($event)">{{ data()!.header!.subtitle }}</p> 
+      }
+    </div>
+  </div>
+</ng-template>
+
+<!-- 共用的 Actions Template -->
+<ng-template #actionsTemplate>
+  <div class="gx-card-footer">
+    <div class="gx-card-actions">
+      @for (a of visibleActions(); track a.id) {
+        <gx-button
+          [variant]="buttonVariant()"
+          [intent]="mapIntent(a.intent)"
+          [disabled]="a.disabled ?? false"
+          [tooltip]="a.ariaLabel || a.label"
+          (pressed)="onActionPressed(a, $event)">
+          {{ a.label }}
+        </gx-button>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<!-- Landscape 專用的 Header Content Template -->
+<ng-template #headerContentTemplate>
+  @if (data()?.header?.avatar?.src) {
+    <img class="gx-card-header-img"
+         [src]="data()!.header!.avatar!.src"
+         [alt]="data()!.header!.avatar!.alt || ''"
+         gxClickable
+         [gxClickableData]="data()?.header?.avatar"
+         [gxClickableClass]="'gx-clickable-avatar'"
+         (gxClick)="onAvatarClick($event)" />
+  }
+  <div class="gx-card-header-info">
+    @if (data()?.header?.title) { 
+      <h3 class="title" 
+          gxClickable
+          [gxClickableData]="data()!.header!.title"
+          [gxClickableClass]="'gx-clickable-text'"
+          (gxClick)="onTitleClick($event)">{{ data()!.header!.title }}</h3> 
+    }
+    @if (data()?.header?.subtitle && shouldShowContent().headerSubtitle) { 
+      <p class="subtitle" 
+         gxClickable
+         [gxClickableData]="data()!.header!.subtitle"
+         [gxClickableClass]="'gx-clickable-text'"
+         (gxClick)="onSubtitleClick($event)">{{ data()!.header!.subtitle }}</p> 
+    }
+  </div>
+</ng-template>
