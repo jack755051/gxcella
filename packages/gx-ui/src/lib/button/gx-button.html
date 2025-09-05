@@ -7,9 +7,17 @@
         [attr.aria-label]="computedAriaLabel()"
         (click)="onClick($event)"
 >
+    <span class="gx-btn-start">
+        <ng-content select="[start]"></ng-content>
+    </span>
+    
     @if (!action()?.label) {
         <ng-content></ng-content>
     } @else {
         {{ action()?.label || '' }}
     }
+
+    <span class="gx-btn-end">
+        <ng-content select="[end]"></ng-content>
+    </span>
 </button>

@@ -10,6 +10,7 @@ import {GxAction} from "../shared/model/action.model";
     styleUrls:['gx-button.css'],
 })
 export class GxButton {
+    iconOnly = input<boolean>(false);
     // 行為導向
     action = input<GxAction | undefined>(undefined);
     // 事件導向
@@ -37,8 +38,10 @@ export class GxButton {
     );
     /** 計算出的可存取名稱（aria-label）— 只有在 needsAriaLabel=true 時才提供 */
     readonly computedAriaLabel = computed<string | null>(() => {
-        if (!this.needsAriaLabel()) return null;
+    if (this.iconOnly() || this.needsAriaLabel()) {
         return this.action()?.label ?? this.tooltip() ?? 'button';
+    }
+    return null;
     });
 
     onClick(ev: MouseEvent) {
