@@ -1,0 +1,1 @@
+export type BuiltinIconDef = { vb?: string; paths: string[] };

@@ -1,0 +1,42 @@
+<span 
+    class="gx-icon" 
+    [style.width]="cssSize()"
+    [style.height]="cssSize()"
+    [style.display]="'inline-flex'"
+    [style.lineHeight]="0"
+    [attr.role]="role()"
+    [attr.aria-label]="ariaLabel() || null"
+>
+@if(hasBuiltin()){
+    <svg
+      [attr.viewBox]="builtinDef()?.vb || '0 0 24 24'"
+      [attr.width]="cssSize()"
+      [attr.height]="cssSize()"
+      fill="none"
+      stroke="currentColor"
+      [attr.stroke-width]="strokeWidth()"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      [style.color]="color() || null"
+      focusable="false"
+      aria-hidden="true"
+    >
+      @for (d of builtinDef()?.paths ?? []; track $index) {
+        <path [attr.d]="d"></path>
+      }
+    </svg>
+}
+@else(){
+        <!-- fallback：lucide-angular -->
+    <!-- 使用端需在 app.config.ts / AppModule 提供 provideIcons(...) 才會找到對應圖示 -->
+    <lucide-icon
+      [name]="name()"
+      [size]="numericSize()"
+      [strokeWidth]="strokeWidth()"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.role]="role()"
+      [style.color]="color() || null"
+    />
+}
+
+</span>

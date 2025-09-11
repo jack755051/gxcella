@@ -1,0 +1,6 @@
+.gx-icon {
+  color: currentColor; /* 預設繼承父層字色 */
+}
+.gx-icon svg {
+  display: block;
+}
