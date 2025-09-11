@@ -18,19 +18,33 @@
       @if (data()?.content?.tags) {
         <div class="gx-card-tags">
           @for (tag of data()!.content!.tags; track tag.id) {
-            <gx-tag
-              [intent]="tag.intent ?? 'info'"
-              [disabled]="tag.disabled ?? false"
-              [removable]="tag.removable ?? false"
-              (remove)="onTagRemove(tag)"
-              (onClick)="onTagClick(tag, $event)">
-              {{ tag.label }}
-            </gx-tag>
+            <div class="gx-tag-container">
+              <gx-button
+                [variant]="'tag'"
+                [intent]="tag.intent ?? 'info'"
+                [disabled]="tag.disabled ?? false"
+                (pressed)="onTagClick(tag, $event)">
+                {{ tag.label }}
+              </gx-button>
+              @if (tag.removable ?? false) {
+                <button
+                  class="gx-tag-remove"
+                  type="button"
+                  [disabled]="tag.disabled ?? false"
+                  (click)="onTagRemove(tag)"
+                  aria-label="Remove tag">
+                  <svg width="12" height="12" viewBox="0 0 12 12">
+                    <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                </button>
+              }
+            </div>
           }
         </div>
       }
       @if (data()?.content?.description) { 
         <div class="gx-card-description" 
+             #descriptionContainer
              [class.expanded]="expandableText().isExpanded"
              [style.--max-lines]="expandableText().maxLines">
           <p class="description-text">{{ displayText() }}</p>

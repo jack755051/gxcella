@@ -1,19 +1,20 @@
-import { GxButton, GxTag } from '@sanring/gx-ui';
+import { GxButton } from '@sanring/gx-ui';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, input, NgModule, output, signal } from '@angular/core';
+import { Component, computed, inject, input, NgModule, output, signal, viewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, GxMedia, IGxCard, IGxTag } from '../core/card.type';
 import { GxCardGroupContext } from '../core/group-context.service';
 import { GxCardConfigService } from '../core/card-config.service';
 import { GxClickableDirective, GxClickableEvent } from '../directives/gx-clickable.directive';
+import { HeightMeasurementService, HeightMeasurementResult } from '../core/height-measurement.service';
 
 @Component({
   selector: 'gx-card',
   standalone: true,
-  imports: [ CommonModule, GxButton, GxTag, GxClickableDirective],
+  imports: [ CommonModule, GxButton, GxClickableDirective],
   templateUrl: './gx-card.html',
   styleUrls: ['./gx-card.css']
 })
-export class GxCard {
+export class GxCard implements AfterViewInit, OnDestroy {
   /**
    * 1. 支援傳入完整的物件 (IGxCard)
    * 2. 支援投影插槽
@@ -68,9 +69,15 @@ export class GxCard {
 
   private group = inject(GxCardGroupContext, { optional: true });
   private cardConfig = inject(GxCardConfigService);
+  private heightMeasurement = inject(HeightMeasurementService);
+
+  // ViewChild 用於獲取描述文字容器的引用
+  descriptionContainer = viewChild<ElementRef<HTMLDivElement>>('descriptionContainer');
 
   // 展開/收起狀態管理
   private isExpanded = signal(false);
+  // 高度測量結果
+  private measurementResult = signal<HeightMeasurementResult | null>(null);
 
   readonly effectiveVariant = computed<GxCardVariant>(() =>
     this.variant() ?? this.group?.variant() ?? this.cardConfig.config.defaultVariant ?? 'elevated'
@@ -170,30 +177,56 @@ export class GxCard {
         truncatedText: description || '',
         shouldShowButton: false,
         isExpanded: this.isExpanded(),
-        maxLines: 0
+        maxLines: 0,
+        useRealMeasurement: false
       };
     }
 
     const maxLines = this.cardConfig.getExpandableLimit(shape);
+    const useRealMeasurement = this.cardConfig.isRealHeightMeasurementEnabled();
     
-    // 簡化邏輯：如果文字超過一定長度，就認為需要截斷
-    // 這裡使用字符數來估算，每行大約 50-60 個字符
-    const estimatedLines = Math.ceil(description.length / 55);
-    const shouldTruncate = estimatedLines > maxLines;
-    
-    // 計算截斷位置（大約每行 55 個字符）
-    const truncateLength = maxLines * 55;
-    const truncatedText = shouldTruncate ? 
-      description.substring(0, truncateLength) + '...' : 
-      description;
-    
-    return {
-      originalText: description,
-      truncatedText,
-      shouldShowButton: shouldTruncate,
-      isExpanded: this.isExpanded(),
-      maxLines
-    };
+    if (useRealMeasurement) {
+      // 使用實際高度測量
+      const measurement = this.measurementResult();
+      if (measurement) {
+        return {
+          originalText: description,
+          truncatedText: measurement.shouldTruncate ? this.truncateTextToLines(description, measurement.maxLines) : description,
+          shouldShowButton: measurement.shouldTruncate,
+          isExpanded: this.isExpanded(),
+          maxLines: measurement.maxLines,
+          useRealMeasurement: true,
+          measurementResult: measurement
+        };
+      } else {
+        // 測量尚未完成，使用原文字但不顯示按鈕
+        return {
+          originalText: description,
+          truncatedText: description,
+          shouldShowButton: false,
+          isExpanded: this.isExpanded(),
+          maxLines,
+          useRealMeasurement: true
+        };
+      }
+    } else {
+      // 使用舊的字符數估算方式（作為後備）
+      const estimatedLines = Math.ceil(description.length / 55);
+      const shouldTruncate = estimatedLines > maxLines;
+      const truncateLength = maxLines * 55;
+      const truncatedText = shouldTruncate ? 
+        description.substring(0, truncateLength) + '...' : 
+        description;
+      
+      return {
+        originalText: description,
+        truncatedText,
+        shouldShowButton: shouldTruncate,
+        isExpanded: this.isExpanded(),
+        maxLines,
+        useRealMeasurement: false
+      };
+    }
   });
 
   readonly displayText = computed(() => {
@@ -378,4 +411,87 @@ export class GxCard {
         default:          return 'info';
       }
     }
+
+  /**
+   * Angular 生命週期 - 視圖初始化後
+   */
+  ngAfterViewInit(): void {
+    // 如果啟用實際高度測量，開始測量
+    if (this.cardConfig.isRealHeightMeasurementEnabled()) {
+      this.setupHeightMeasurement();
+    }
+  }
+
+  /**
+   * Angular 生命週期 - 組件銷毀
+   */
+  ngOnDestroy(): void {
+    this.cleanupHeightMeasurement();
+  }
+
+  /**
+   * 設置高度測量
+   */
+  private setupHeightMeasurement(): void {
+    const container = this.descriptionContainer();
+    if (!container?.nativeElement) return;
+
+    const element = container.nativeElement;
+    const description = this.data()?.content?.description;
+    if (!description) return;
+
+    // 執行初始測量
+    this.performHeightMeasurement(element, description);
+
+    // 監聽容器大小變化
+    this.heightMeasurement.observeElementResize(element, () => {
+      this.performHeightMeasurement(element, description);
+    });
+  }
+
+  /**
+   * 執行高度測量
+   */
+  private performHeightMeasurement(element: HTMLElement, text: string): void {
+    const maxLines = this.cardConfig.getExpandableLimit(this.resolvedShape());
+    const lineHeight = this.cardConfig.getLineHeight();
+    const containerPadding = this.cardConfig.getContainerPadding();
+
+    const result = this.heightMeasurement.measureTextHeight(
+      text,
+      element,
+      maxLines,
+      lineHeight,
+      containerPadding
+    );
+
+    this.measurementResult.set(result);
+  }
+
+  /**
+   * 清理高度測量相關資源
+   */
+  private cleanupHeightMeasurement(): void {
+    const container = this.descriptionContainer();
+    if (container?.nativeElement) {
+      this.heightMeasurement.unobserveElementResize(container.nativeElement);
+    }
+  }
+
+  /**
+   * 根據行數截斷文字
+   */
+  private truncateTextToLines(text: string, maxLines: number): string {
+    // 這裡可以使用更精確的算法
+    // 暫時使用簡化版本，實際應該根據實際測量結果來截斷
+    const wordsPerLine = 15; // 估算每行字數
+    const maxWords = maxLines * wordsPerLine;
+    const words = text.split(/\s+/);
+    
+    if (words.length <= maxWords) {
+      return text;
+    }
+    
+    return words.slice(0, maxWords).join(' ') + '...';
+  }
 }

@@ -23,6 +23,12 @@ export interface GxCardGlobalConfig {
       square?: number;
     };
     
+    /** 行高設定 (px)，用於計算實際高度 */
+    lineHeight?: number;
+    
+    /** 容器邊距設定 (px)，用於精確計算 */
+    containerPadding?: number;
+    
     /** 動畫持續時間 (ms) */
     animationDuration?: number;
     
@@ -31,6 +37,9 @@ export interface GxCardGlobalConfig {
       expand?: string;
       collapse?: string;
     };
+    
+    /** 是否啟用實際高度測量 */
+    useRealHeightMeasurement?: boolean;
   };
   
   /** 動作按鈕配置 */
@@ -59,7 +68,10 @@ export const DEFAULT_CARD_CONFIG: GxCardGlobalConfig = {
       landscape: 2,
       square: 1
     },
+    lineHeight: 24, // 預設行高 24px
+    containerPadding: 0, // 預設無額外邊距
     animationDuration: 300,
+    useRealHeightMeasurement: true, // 預設啟用實際高度測量
     buttonText: {
       expand: '展開更多',
       collapse: '收起內容'
@@ -115,6 +127,30 @@ export class GxCardConfigService {
     return this.config.expandable?.shapeLimits?.[shape] || 
            this.config.expandable?.shapeLimits?.classic || 
            DEFAULT_CARD_CONFIG.expandable!.shapeLimits!.classic!;
+  }
+  
+  /**
+   * 獲取行高設定
+   */
+  getLineHeight(): number {
+    return this.config.expandable?.lineHeight || 
+           DEFAULT_CARD_CONFIG.expandable!.lineHeight!;
+  }
+  
+  /**
+   * 獲取容器邊距設定
+   */
+  getContainerPadding(): number {
+    return this.config.expandable?.containerPadding || 
+           DEFAULT_CARD_CONFIG.expandable!.containerPadding!;
+  }
+  
+  /**
+   * 是否啟用實際高度測量
+   */
+  isRealHeightMeasurementEnabled(): boolean {
+    return this.config.expandable?.useRealHeightMeasurement ?? 
+           DEFAULT_CARD_CONFIG.expandable!.useRealHeightMeasurement!;
   }
   
   /**

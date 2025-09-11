@@ -26,6 +26,9 @@
     --tags-gap: 12px;
     --tags-padding: 4px 8px;
 
+    --description-padding: 8px 4px;
+
+    --expand-button-container-padding: 8px;
     --expand-button-font-size: 14px;
     --expand-button-text-color: var(--gx-color-accent-500, #007acc);
     --expand-button-hover-text-color: var(--gx-color-accent-700, #005999);
@@ -61,6 +64,10 @@
 .gx-expand-button-container,
 .gx-card-tags {
     width: 100%;
+}
+
+.gx-card-actions{
+    justify-content: center;
 }
 
 /* Card shape styles */
@@ -222,10 +229,41 @@
     gap: var(--tags-gap, 12px);
 }
 
+/* Tag container for button + remove */
+.gx-tag-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Tag remove button styles */
+.gx-tag-remove {
+    appearance: none;
+    border: none;
+    background: none;
+    padding: 2px;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+    border-radius: 4px;
+}
+
+.gx-tag-remove:hover:not(:disabled) {
+    opacity: 1;
+    background: rgba(0,0,0,0.05);
+}
+
+.gx-tag-remove:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
 /* Text expand/collapse styles */
 .gx-card-description {
     position: relative;
     overflow: hidden;
+    padding: var(--description-padding);
 }
 
 .gx-card-description .description-text {
@@ -261,6 +299,7 @@
 
 .gx-expand-button-container{
     justify-content: flex-end;
+    padding-right: var(--expand-button-container-padding, 0 8px)  ;
 }
 
 .gx-expand-button:hover {
