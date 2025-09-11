@@ -1,314 +1,188 @@
+:host {
+  --compact-padding: 12px;
+  --compact-border-radius: 8px;
+  --compact-avatar-size: 32px;
 
-:host{
-    --square-padding: 8px;
-    --square-border-radius: 4px;
+  --classic-padding: 16px;
+  --classic-border-radius: 12px;
+  --classic-avatar-size: 56px;
+  --classic-max-width: 400px;
+  
+  --border-width: 1px;
+  --card-gap: 12px;
+  --tag-gap: 8px;
 
-    --landscape-padding: 12px;
-    --landscape-border-radius: 4px;
-
-    --horizontal-gap: 16px;
-    --vertical-gap: 16px;
-    --grid-gap: 16px;
-    
-
-    --border-width: 2px;
-
-
-    /* public */
-    --info-title-color: var(--gx-color-gray-800);
-    --info-title-font-size: 18px;
-    --info-title-font-weight: bold;
-    --info-subtitle-color: var(--gx-color-gray-600);
-    --info-subtitle-font-size: 12px;
-    --info-subtitle-font-weight: normal;
-    --info-footer-action-gap: 12px;
-
-    --tags-gap: 12px;
-    --tags-padding: 4px 8px;
-
-    --description-padding: 8px 4px;
-
-    --expand-button-container-padding: 8px;
-    --expand-button-font-size: 14px;
-    --expand-button-text-color: var(--gx-color-accent-500, #007acc);
-    --expand-button-hover-text-color: var(--gx-color-accent-700, #005999);
-    --expand-button-focus-outline-color: var(--gx-color-accent-500, #007acc);
-
-    /* classic */
-
-    --classic-background: var(--gx-color-accent-50);
-    --classic-max-width: 400px;
-    --classic-border-radius: 12px;
-    --classic-border: var(--border-width) solid var(--gx-color-accent-200);
-    --classic-padding-x: 16px;
-    --classic-avatar-size: 56px;
-    --classic-padding-y: 8px;
-      /* Hover 狀態 */
-    --classic-background-hover: var(--gx-color-accent-100); /* #D4E5ED */
-    --classic-border-hover: var(--border-width) solid var(--gx-color-accent-300); /* #7EB1C8 */
-    --classic-shadow-hover: 0 4px 12px rgba(68, 125, 155, 0.15); /* accent-500 with opacity */
-
-
+  /* Colors */
+  --card-background: #ffffff;
+  --card-border: #e5e5e5;
+  --card-hover-border: #d1d5db;
+  --card-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  --title-color: #374151;
+  --subtitle-color: #6b7280;
+  --description-color: #4b5563;
 }
 
-.gx-card,
-.gx-card-header,
-.gx-shape,
-.gx-card-header,
-.gx-card-header-info,
-.gx-card-actions,
-.gx-expand-button-container,
-.gx-card-tags {
-    display: flex;
-}
-.gx-expand-button-container,
-.gx-card-tags {
-    width: 100%;
+/* Base card styles */
+.gx-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-background);
+  border: var(--border-width) solid var(--card-border);
+  border-radius: var(--classic-border-radius);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.gx-card-actions{
-    justify-content: center;
+.gx-card:hover {
+  border-color: var(--card-hover-border);
+  box-shadow: var(--card-shadow-hover);
 }
 
-/* Card shape styles */
+/* Clickable state */
+.gx-card-clickable {
+  cursor: pointer;
+}
+
+/* Shape variants */
 .gx-shape-classic {
-    flex-direction: column;
-    width: auto;
-    max-width: var(--classic-max-width,400px);
-    background-color: var(--classic-background, gray);
-    border: var(--classic-border);
-    border-radius: var(--classic-border-radius, 12px);
-    padding: var(--classic-padding-x, 16px);
-    /* 基礎過渡效果 */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    /* 預設不顯示 pointer cursor，避免與內部按鈕衝突 */
+  max-width: var(--classic-max-width);
+  padding: var(--classic-padding);
 }
 
-/* 只有當卡片本身可點擊時才顯示 pointer cursor */
-.gx-shape-classic.gx-card-clickable {
-    cursor: pointer;
+.gx-shape-compact {
+  padding: var(--compact-padding);
+  border-radius: var(--compact-border-radius);
 }
 
-/* 在非互動區域顯示 pointer cursor（僅當卡片可點擊時） */
-.gx-shape-classic.gx-card-clickable .gx-card-header,
-.gx-shape-classic.gx-card-clickable .gx-card-content > :not(button):not(gx-button):not(gx-tag):not(.gx-card-tags):not(.gx-expand-button-container) {
-    cursor: pointer;
+/* Header */
+.gx-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--card-gap);
+  margin-bottom: var(--card-gap);
 }
 
-/* Header 可點擊樣式 - 現在由 directive 處理 */
-.gx-card-header.gx-header-clickable {
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    border-radius: 8px;
-    padding: 4px;
-    margin: -4px;
+.gx-card-avatar {
+  width: var(--classic-avatar-size);
+  height: var(--classic-avatar-size);
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-.gx-card-header.gx-header-clickable:hover {
-    background-color: var(--gx-color-accent-50, rgba(0, 122, 204, 0.05));
+.gx-shape-compact .gx-card-avatar {
+  width: var(--compact-avatar-size);
+  height: var(--compact-avatar-size);
 }
 
-.gx-shape-classic:hover{
-    /* background-color: var(--classic-background-hover, #D4E5ED); */
-    border: var(--classic-border-hover, 2px solid #7EB1C8);
-    box-shadow: var(--classic-shadow-hover, 0 4px 12px rgba(68, 125, 155, 0.15));
+.gx-card-header-info {
+  flex: 1;
+  min-width: 0;
 }
 
-.gx-shape-classic .gx-card-header,
-.gx-shape-classic .gx-card-content,
-.gx-shape-classic .gx-card-footer {
-    width: 100%;
-    padding: var(--classic-padding-y, 8px) 0;
+.gx-card-title {
+  margin: 0 0 4px 0;
+  color: var(--title-color);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
-.gx-shape-classic .gx-card-header .gx-card-header-img{
-    width: var(--classic-avatar-size, 40px);
-    height: var(--classic-avatar-size, 40px);
-    background-color: bisque;
-    aspect-ratio: 1 / 1;    
-    border-radius: 50%;
-    margin-right: 12px;
-    object-fit: cover;
+.gx-card-subtitle {
+  margin: 0;
+  color: var(--subtitle-color);
+  font-size: 14px;
+  line-height: 1.4;
 }
 
-.gx-shape-classic .gx-card-header .gx-card-header-info{
-    flex-direction: column;
-    justify-content: start;
+/* Content */
+.gx-card-content {
+  flex: 1;
 }
 
-.gx-shape-classic .gx-card-header .gx-card-header-info .title{
-    color: var(--info-title-color,#000000);
-    font-size: var(--info-title-font-size);
-    font-weight: var(--info-title-font-weight);
-}
-.gx-shape-classic .gx-card-header .gx-card-header-info .subtitle{
-    color: var(--info-subtitle-color,#676767);
-    font-size: var(--info-subtitle-font-size);
-    font-weight: var(--info-subtitle-font-weight);
+.gx-card-media {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: var(--card-gap);
+  object-fit: cover;
 }
 
-.gx-shape-classic .gx-card-footer .gx-card-actions{
-    gap:var(--info-footer-action-gap,12px);
+.gx-card-content-title {
+  margin: 0 0 8px 0;
+  color: var(--title-color);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
-/* 展開按鈕樣式 */
-.gx-expand-button {
-    background: none;
-    border: none;
-    color: var(--gx-color-accent-600, #447b9b);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 4px 0;
-    margin-top: 8px;
-    text-decoration: none;
-    transition: color 0.2s ease;
+.gx-card-description {
+  margin: 0 0 var(--card-gap) 0;
+  color: var(--description-color);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-.gx-expand-button:hover {
-    color: var(--gx-color-accent-700, #2e5a75);
-    text-decoration: underline;
+/* Tags */
+.gx-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tag-gap);
+  margin-bottom: var(--card-gap);
 }
 
-.gx-expand-button:focus {
-    outline: 2px solid var(--gx-color-accent-500, #5a92b3);
-    outline-offset: 2px;
-    border-radius: 2px;
-}
-
-
-.gx-shape-square {
-    flex-direction: column;
-    aspect-ratio: 1;
-    width: auto;
-    padding: var(--square-padding, 8px);
-    border-radius: var(--square-border-radius, 4px);
-    background: var(--gx-card-background, gray);
-}
-
-.gx-shape-landscape {
-    flex-direction: row;
-    width: 100%;
-    padding: var(--landscape-padding, 12px);
-    border-radius: var(--landscape-border-radius, 4px);
-    background: var(--gx-card-background, gray);
-}
-
-.gx-shape-landscape .gx-card-header {
-    flex-direction: column;
-    width: 30%;
-    margin-right: 16px;
-}
-
-.gx-shape-landscape .gx-card-content {
-    flex: 1;
-}
-
-/* Layout styles for card groups */
-.gx-layout-horizontal {
-    display: flex;
-    flex-direction: row;
-    gap: var(--horizontal-gap, 16px);
-}
-
-.gx-layout-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: var(--vertical-gap, 16px);
-}
-
-.gx-layout-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--grid-gap, 16px);
-}
-
-.gx-card-tags{
-    justify-content: start;
-    padding: var(--tags-padding, 4px 8px);
-    gap: var(--tags-gap, 12px);
-}
-
-/* Tag container for button + remove */
 .gx-tag-container {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-/* Tag remove button styles */
 .gx-tag-remove {
-    appearance: none;
-    border: none;
-    background: none;
-    padding: 2px;
-    cursor: pointer;
-    color: inherit;
-    opacity: 0.6;
-    transition: opacity 0.15s;
-    border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  font-size: 14px;
+  opacity: 0.6;
+  transition: opacity 0.15s;
 }
 
 .gx-tag-remove:hover:not(:disabled) {
-    opacity: 1;
-    background: rgba(0,0,0,0.05);
+  opacity: 1;
 }
 
 .gx-tag-remove:disabled {
-    cursor: not-allowed;
-    opacity: 0.3;
+  cursor: not-allowed;
+  opacity: 0.3;
 }
 
-/* Text expand/collapse styles */
-.gx-card-description {
-    position: relative;
-    overflow: hidden;
-    padding: var(--description-padding);
+/* Footer */
+.gx-card-footer {
+  margin-top: auto;
+  padding-top: var(--card-gap);
+  border-top: var(--border-width) solid var(--card-border);
 }
 
-.gx-card-description .description-text {
-    margin: 0;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--max-lines, 3);
-    line-clamp: var(--max-lines, 3);
-    overflow: hidden;
-    text-overflow: ellipsis;
+.gx-card-actions {
+  display: flex;
+  gap: var(--card-gap);
+  justify-content: flex-end;
 }
 
-.gx-card-description.expanded .description-text {
-    display: block;
-    -webkit-line-clamp: none;
-    line-clamp: none;
-    overflow: visible;
+/* Variant styles */
+.gx-variant-elevated {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: none;
 }
 
-.gx-expand-button {
-    background: none;
-    border: none;
-    color: var(--expand-button-text-color, #007acc);
-    cursor: pointer;
-    font-size: var(--expand-button-font-size, 14px);
-    font-weight: 500;
-    padding: 4px 0;
-    margin-top: 8px;
-    text-decoration: none;
-    transition: color 0.2s ease;
+.gx-variant-outlined {
+  box-shadow: none;
 }
 
-.gx-expand-button-container{
-    justify-content: flex-end;
-    padding-right: var(--expand-button-container-padding, 0 8px)  ;
-}
-
-.gx-expand-button:hover {
-    color: var(--expand-button-hover-text-color, #005999);
-    text-decoration: none;
-}
-
-.gx-expand-button:focus {
-    outline: 2px solid var(--expand-button-focus-outline-color, #007acc);
-    outline-offset: 2px;
-    border-radius: 2px;
+.gx-variant-flat {
+  box-shadow: none;
+  border: none;
+  background-color: transparent;
 }
