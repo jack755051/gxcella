@@ -224,40 +224,13 @@
 }
 
 .gx-card-tags{
+    display: flex;
+    flex-wrap: wrap;
     justify-content: start;
     padding: var(--tags-padding, 4px 8px);
-    gap: var(--tags-gap, 12px);
+    gap: var(--tags-gap, 8px);
 }
 
-/* Tag container for button + remove */
-.gx-tag-container {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
-
-/* Tag remove button styles */
-.gx-tag-remove {
-    appearance: none;
-    border: none;
-    background: none;
-    padding: 2px;
-    cursor: pointer;
-    color: inherit;
-    opacity: 0.6;
-    transition: opacity 0.15s;
-    border-radius: 4px;
-}
-
-.gx-tag-remove:hover:not(:disabled) {
-    opacity: 1;
-    background: rgba(0,0,0,0.05);
-}
-
-.gx-tag-remove:disabled {
-    cursor: not-allowed;
-    opacity: 0.3;
-}
 
 /* Text expand/collapse styles */
 .gx-card-description {
@@ -269,6 +242,12 @@
 .gx-card-description .description-text {
     margin: 0;
     line-height: 1.5;
+}
+
+/* 只有啟用收合功能時才應用截斷樣式 */
+.gx-card-description.collapsible .description-text {
+    font-size: var(--font-size, 14px);
+    line-height: var(--line-height, 20px);
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: var(--max-lines, 3);
@@ -277,7 +256,7 @@
     text-overflow: ellipsis;
 }
 
-.gx-card-description.expanded .description-text {
+.gx-card-description.collapsible.expanded .description-text {
     display: block;
     -webkit-line-clamp: none;
     line-clamp: none;

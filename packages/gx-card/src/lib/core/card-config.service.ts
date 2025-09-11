@@ -1,5 +1,5 @@
 import { Injectable, InjectionToken, inject } from '@angular/core';
-import { GxCardShape, GxCardVariant, GxCardLayout } from './card.type';
+import { GxCardShape, GxCardVariant, GxCardLayout } from '../model/card.type';
 
 /**
  * 卡片全域配置介面
@@ -21,6 +21,20 @@ export interface GxCardGlobalConfig {
       classic?: number;
       landscape?: number;
       square?: number;
+    };
+    
+    /** 預設收合配置 */
+    defaultCollapse?: {
+      /** 預設最大行數 */
+      maxLines?: number;
+      /** 預設字型大小 (px) */
+      fontSize?: number;
+      /** 預設行高 (px) */
+      lineHeight?: number;
+      /** 預設展開按鈕文字 */
+      expandText?: string;
+      /** 預設收起按鈕文字 */
+      collapseText?: string;
     };
     
     /** 行高設定 (px)，用於計算實際高度 */
@@ -67,6 +81,13 @@ export const DEFAULT_CARD_CONFIG: GxCardGlobalConfig = {
       classic: 3,
       landscape: 2,
       square: 1
+    },
+    defaultCollapse: {
+      maxLines: 3,
+      fontSize: 14,
+      lineHeight: 20, // fontSize * 1.4 ≈ 20px (1.4 line-height ratio)
+      expandText: '展開更多',
+      collapseText: '收起內容'
     },
     lineHeight: 24, // 預設行高 24px
     containerPadding: 0, // 預設無額外邊距
@@ -118,6 +139,14 @@ export class GxCardConfigService {
   constructor() {
     // 深度合併用戶配置和預設配置
     this.config = this.deepMerge(DEFAULT_CARD_CONFIG, this.userConfig || {});
+  }
+  
+  /**
+   * 獲取預設收合配置
+   */
+  getDefaultCollapseConfig() {
+    return this.config.expandable?.defaultCollapse || 
+           DEFAULT_CARD_CONFIG.expandable!.defaultCollapse!;
   }
   
   /**

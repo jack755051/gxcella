@@ -33,6 +33,7 @@
 }
 .show-shell-label.description{
   font-size:12px;
+  margin-bottom: 20px;
   color: var(--gx-color-gray-300);
 }
 .show-shell-content{

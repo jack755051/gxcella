@@ -1,5 +1,5 @@
 import { Injectable, signal } from "@angular/core";
-import { GxCardLayout, GxCardVariant } from "./card.type";
+import { GxCardLayout, GxCardVariant } from "../model/card.type";
 
 @Injectable()
 export class GxCardGroupContext { 

@@ -7,9 +7,10 @@
       </span>
     </div>
     <div class="show-shell-content show-shell-content-cards">
-      @for (card of cards; track card.id) {
+      @for(d of cardGroups; track d.card.id) {
+        <p>{{d.description}}</p>
         <gx-card
-          [data]="card"
+          [data]="d.card"
           (actions)="onCardAction($event)"
           (avatarClick)="onAvatarClick($event)"
           (titleClick)="onTitleClick($event)"
@@ -18,6 +19,7 @@
         </gx-card>
       }
     </div>
+
   </div>
 
   <div class="show-shell">

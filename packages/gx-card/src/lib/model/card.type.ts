@@ -61,7 +61,7 @@ export interface IGxCard extends IGxInteractive{
   id?: string;
   variant?: GxCardVariant;
   header?: IGxCardHeader;
-  content?: IGxCardContent; // ⚠️ 改成可選，因為 custom 時可能不需要
+  content: IGxCardContent; 
   footer?: IGxCardFooter;
   shape?: GxCardShape; // 卡片形狀
 }
@@ -83,10 +83,30 @@ export interface IGxCardHeader extends IGxInteractive{
   subtitle?: string;  // 副標題
 }
 
+/**
+ * 描述文字收合配置介面
+ */
+export interface IGxDescriptionCollapse {
+  /** 是否啟用收合功能 */
+  enabled: boolean;
+  /** 最大顯示行數 */
+  maxLines?: number;
+  /** 字型大小 (px) */
+  fontSize?: number;
+  /** 行高 (px) */
+  lineHeight?: number;
+  /** 展開按鈕文字 */
+  expandText?: string;
+  /** 收起按鈕文字 */
+  collapseText?: string;
+}
+
 export interface IGxCardContent {
   title?: string;
   subtitle?: string;
   description?: string;
+  /** 描述文字收合配置 */
+  descriptionCollapse?: IGxDescriptionCollapse;
   tags?: IGxTag[]; // 標籤
   image?: GxMedia;   // 內文中的插圖
 }
