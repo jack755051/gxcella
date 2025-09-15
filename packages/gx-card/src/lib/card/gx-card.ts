@@ -295,6 +295,21 @@ export class GxCard implements AfterViewInit, OnDestroy {
    */
   clickable = input<boolean>(false);
 
+  /**
+   * 是否啟用 Avatar 點擊功能
+   */
+  enableAvatarClick = input<boolean>(false);
+
+  /**
+   * 是否啟用 Title 點擊功能
+   */
+  enableTitleClick = input<boolean>(false);
+
+  /**
+   * 是否啟用 Subtitle 點擊功能
+   */
+  enableSubtitleClick = input<boolean>(false);
+
   get classes() {
     const baseClasses = [
       this.cardConfig.getCssClass('card'),

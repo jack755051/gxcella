@@ -11,7 +11,9 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./cards.css']
 })
 export class Cards {
+  /**Card 範例資料 */
   cards: IGxCard[] = [
+    //經典卡牌(簡單)
     {
       id: uuidv4(),
       shape: 'classic',
@@ -24,8 +26,9 @@ export class Cards {
         description: 'This is a custom card where you can put any content you want. It does not have an avatar or cover image, making it a versatile option for various use cases.',
       }
     },
+    // 經典卡牌(包含頭像)
     {
-      id: 'classic-card-1',
+      id: uuidv4(),
       shape: 'classic',
       variant: 'elevated',
       header: {
@@ -34,7 +37,25 @@ export class Cards {
           alt: 'Card avatar image',
           ratio: '16:9'
         },
-        title: 'Classic Card',
+        title: 'Classic Card With Avatar',
+        subtitle: 'Classic Card subtitle'
+      },
+      content: {
+        description: 'This is a custom card where you can put any content you want. It does not have an avatar or cover image, making it a versatile option for various use cases.',
+      }
+    },
+    // 經典卡牌(包含長內容+沒有收合配置+頭像)
+    {
+      id: uuidv4(),
+      shape: 'classic',
+      variant: 'elevated',
+      header: {
+        avatar: {
+          src: '/test_01.jpg',
+          alt: 'Card avatar image',
+          ratio: '16:9'
+        },
+        title: 'Classic Card With Avatar',
         subtitle: 'Classic Card subtitle'
       },
       content: {
@@ -46,7 +67,7 @@ export class Cards {
           { id: 'tag-2', label: '標籤', removable: false },
           { id: 'tag-2', label: '文章', removable: false },
           { id: 'tag-2', label: '按鈕', removable: false },
-        ]
+        ],
       },
       footer: {
         actions: [
@@ -63,8 +84,9 @@ export class Cards {
         ]
       }
     },
+    // 經典卡牌(包含長內容+啟用收合配置+頭像)
     {
-      id: 'classic-card-2',
+      id: uuidv4(),
       shape: 'classic',
       variant: 'outlined',
       header: {
@@ -78,7 +100,15 @@ export class Cards {
       },
       content: {
         title: 'Another Classic Card',
-        description: 'This card uses an avatar instead of a cover image and has an outlined variant style.'
+        description: 'This component represents a classic card style layout that is widely used in modern web applications and user interfaces. The card provides a clean and organized structure to display information in a compact yet visually appealing way. At the top of the card, there is typically an avatar or profile image, which helps to give context about the subject or the person represented in the card. Right next to or below the avatar, the card includes a main title that captures the user\'s attention, often used for names, product titles, or key identifiers. Beneath the title, a subtitle is displayed to provide supporting information or secondary context in a lighter tone. Following this, the card contains a description area, where additional details, explanatory text, or other relevant content can be written. The card also includes an expand/collapse button, which allows the user to toggle between a brief overview and more detailed information, improving readability and conserving space.',
+        descriptionCollapse: {
+          enabled: true,
+          maxLines: 3,
+          fontSize: 14,
+          lineHeight: 20,
+          expandText: '展開更多',
+          collapseText: '收起內容'
+        }
       },
       footer: {
         actions: [
@@ -100,43 +130,13 @@ export class Cards {
         ]
       }
     },
-    {
-      id: 'classic-card-3',
-      shape: 'classic',
-      variant: 'flat',
-      href: '#',
-      target: '_self',
-      ariaLabel: 'Navigate to product details',
-      header: {
-        avatar: {
-          src: '/test_02.jpg',
-          alt: 'Product image',
-          ratio: '1:1'
-        },
-        title: 'Interactive Card',
-        subtitle: 'Click to navigate'
-      },
-      content: {
-        title: 'Clickable Card',
-        description: 'This entire card is clickable and will navigate to another page. It uses the flat variant style.'
-      },
-      footer: {
-        actions: [
-          {
-            id: 'learn-more',
-            label: 'Learn More',
-            intent: 'primary'
-          }
-        ]
-      }
-    }
   ];
 
   description: string[] = [
-    '最簡單的卡片，僅有抬頭 + 簡易描述',
-    '經典卡片，有頭像 + 抬頭 + 標籤 + 文章 + 按鈕',
-    '經典卡片，有頭像 + 抬頭 + 文章 + 按鈕',
-    '最簡單的卡片',
+    '經典卡牌(簡單)',
+    '經典卡牌(包含頭像)',
+    '經典卡牌(包含長內容+沒有收合配置+頭像)',
+    '經典卡牌(包含長內容+啟用收合配置+頭像)',
   ]
 
   cardGroups:Array<{card:IGxCard,description:string}> = this.cards.map((card, index) => ({

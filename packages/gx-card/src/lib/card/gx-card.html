@@ -143,16 +143,18 @@
            [src]="data()!.header!.avatar!.src"
            [alt]="data()!.header!.avatar!.alt || ''"
            gxClickable
+           [gxClickableDisabled]="!enableAvatarClick()"
            [gxClickableData]="data()?.header?.avatar"
            [gxClickableClass]="'gx-clickable-avatar'"
            (gxClick)="onAvatarClick($event)" />
     }
     
-    <!-- Header Info -->
+
     <div class="gx-card-header-info">
       @if (data()?.header?.title) { 
         <h3 class="title" 
             gxClickable
+            [gxClickableDisabled]="!enableTitleClick()"
             [gxClickableData]="data()!.header!.title"
             [gxClickableClass]="'gx-clickable-text'"
             (gxClick)="onTitleClick($event)">{{ data()!.header!.title }}</h3> 
@@ -160,6 +162,7 @@
       @if (data()?.header?.subtitle && shouldShowContent().headerSubtitle) { 
         <p class="subtitle" 
            gxClickable
+           [gxClickableDisabled]="!enableSubtitleClick()"
            [gxClickableData]="data()!.header!.subtitle"
            [gxClickableClass]="'gx-clickable-text'"
            (gxClick)="onSubtitleClick($event)">{{ data()!.header!.subtitle }}</p> 
@@ -193,6 +196,7 @@
          [src]="data()!.header!.avatar!.src"
          [alt]="data()!.header!.avatar!.alt || ''"
          gxClickable
+         [gxClickableDisabled]="!enableAvatarClick()"
          [gxClickableData]="data()?.header?.avatar"
          [gxClickableClass]="'gx-clickable-avatar'"
          (gxClick)="onAvatarClick($event)" />
@@ -201,6 +205,7 @@
     @if (data()?.header?.title) { 
       <h3 class="title" 
           gxClickable
+          [gxClickableDisabled]="!enableTitleClick()"
           [gxClickableData]="data()!.header!.title"
           [gxClickableClass]="'gx-clickable-text'"
           (gxClick)="onTitleClick($event)">{{ data()!.header!.title }}</h3> 
@@ -208,6 +213,7 @@
     @if (data()?.header?.subtitle && shouldShowContent().headerSubtitle) { 
       <p class="subtitle" 
          gxClickable
+         [gxClickableDisabled]="!enableSubtitleClick()"
          [gxClickableData]="data()!.header!.subtitle"
          [gxClickableClass]="'gx-clickable-text'"
          (gxClick)="onSubtitleClick($event)">{{ data()!.header!.subtitle }}</p> 

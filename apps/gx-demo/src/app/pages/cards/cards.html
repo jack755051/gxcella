@@ -11,6 +11,9 @@
         <p>{{d.description}}</p>
         <gx-card
           [data]="d.card"
+          [enableAvatarClick]="false"
+          [enableTitleClick]="false"
+          [enableSubtitleClick]="false"
           (actions)="onCardAction($event)"
           (avatarClick)="onAvatarClick($event)"
           (titleClick)="onTitleClick($event)"
@@ -21,27 +24,64 @@
     </div>
 
   </div>
-
-  <div class="show-shell">
+  <!-- <div class="show-shell">
     <div class="show-shell-label">
-      <p class="show-shell-label title">卡片變體</p>
+      <p class="show-shell-label title">點擊功能控制</p>
       <span class="show-shell-label description">
-        展示不同的 variant: elevated、outlined、flat
+        展示如何透過 enableAvatarClick、enableTitleClick、enableSubtitleClick 來控制元素的點擊功能
       </span>
     </div>
-    <div class="card-variants-demo">
-      <div class="variant-info">
-        <h4>Elevated</h4>
-        <p>有陰影效果的卡片</p>
-      </div>
-      <div class="variant-info">
-        <h4>Outlined</h4>
-        <p>有邊框線的卡片</p>
-      </div>
-      <div class="variant-info">
-        <h4>Flat</h4>
-        <p>平面樣式的卡片</p>
-      </div>
+    <div class="show-shell-content show-shell-content-cards">
+      @for(d of cardGroups; track d.card.id) {
+        <div class="clickable-demo-card">
+          <p><strong>{{d.description}}</strong></p>
+
+          <!-- 預設：不啟用任何點擊功能 -->
+          <div class="demo-section">
+            <h5>預設（不啟用點擊功能）</h5>
+            <gx-card
+              [data]="d.card"
+              (actions)="onCardAction($event)"
+              (avatarClick)="onAvatarClick($event)"
+              (titleClick)="onTitleClick($event)"
+              (subtitleClick)="onSubtitleClick($event)"
+            >
+            </gx-card>
+          </div>
+
+          <!-- 啟用部分點擊功能 -->
+          <div class="demo-section">
+            <h5>啟用 Avatar 和 Title 點擊</h5>
+            <gx-card
+              [data]="d.card"
+              [enableAvatarClick]="true"
+              [enableTitleClick]="true"
+              [enableSubtitleClick]="false"
+              (actions)="onCardAction($event)"
+              (avatarClick)="onAvatarClick($event)"
+              (titleClick)="onTitleClick($event)"
+              (subtitleClick)="onSubtitleClick($event)"
+            >
+            </gx-card>
+          </div>
+
+          <!-- 啟用所有點擊功能 -->
+          <div class="demo-section">
+            <h5>啟用所有點擊功能</h5>
+            <gx-card
+              [data]="d.card"
+              [enableAvatarClick]="true"
+              [enableTitleClick]="true"
+              [enableSubtitleClick]="true"
+              (actions)="onCardAction($event)"
+              (avatarClick)="onAvatarClick($event)"
+              (titleClick)="onTitleClick($event)"
+              (subtitleClick)="onSubtitleClick($event)"
+            >
+            </gx-card>
+          </div>
+        </div>
+      }
     </div>
-  </div>
+  </div> -->
 </div>

@@ -116,3 +116,37 @@
 .demo-button.error{
   background-color: var(--gx-toast-error)
 }
+
+/* 點擊功能演示樣式 */
+.clickable-demo-card {
+  width: 100%;
+  margin-bottom: 40px;
+  border: 1px solid var(--gx-color-gray-200);
+  border-radius: 8px;
+  padding: 20px;
+  background-color: var(--gx-color-gray-50);
+}
+
+.demo-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid var(--gx-color-gray-100);
+  border-radius: 6px;
+  background-color: white;
+}
+
+.demo-section h5 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gx-color-gray-700);
+  border-bottom: 1px solid var(--gx-color-gray-200);
+  padding-bottom: 8px;
+}
+
+.clickable-demo-card > p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--gx-color-gray-800);
+}
