@@ -1,4 +1,4 @@
-import { GxCard, GxAction, IGxCard, GxMedia } from '@sanring/gx-card';
+import { GxCard, GxAction, IGxCard } from '@sanring/gx-card';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
@@ -132,15 +132,20 @@ export class Cards {
     },
   ];
 
+  title: string[] = [
+    '經典卡牌 - 簡單版'
+  ]
+
   description: string[] = [
-    '經典卡牌(簡單)',
+    '基礎卡片佈局，包含標題、副標題和描述內容',
     '經典卡牌(包含頭像)',
     '經典卡牌(包含長內容+沒有收合配置+頭像)',
     '經典卡牌(包含長內容+啟用收合配置+頭像)',
   ]
 
-  cardGroups:Array<{card:IGxCard,description:string}> = this.cards.map((card, index) => ({
+  cardGroups:Array<{card:IGxCard,description:string,title:string}> = this.cards.map((card, index) => ({
     card,
+    title: this.title[index],
     description: this.description[index]
   }));
 
@@ -149,18 +154,11 @@ export class Cards {
     alert(`Card action clicked: ${action.label} (${action.intent || 'default'})`);
   }
 
-  onAvatarClick(event: { avatarData: GxMedia | undefined, event: MouseEvent }) {
-    console.log(`Avatar clicked:`, event);
-    alert(`Avatar clicked: ${event.avatarData?.alt || 'No alt text'}`);
-  }
-
-  onTitleClick(event: { title: string, event: MouseEvent }) {
-    console.log(`Title clicked:`, event);
-    alert(`Title clicked: ${event.title}`);
-  }
-
-  onSubtitleClick(event: { subtitle: string, event: MouseEvent }) {
-    console.log(`Subtitle clicked:`, event);
-    alert(`Subtitle clicked: ${event.subtitle}`);
+  onHeaderItemClick(e: { part: 'avatar'|'title'|'subtitle'; value: any; event: MouseEvent }) {
+    console.log('Header item clicked:', e);
+    const label = e.part === 'avatar' ? (e.value?.alt || 'Avatar')
+                : e.part === 'title' ? e.value
+                : e.value;
+    alert(`${e.part} clicked: ${label}`);
   }
 }

@@ -1,5 +1,5 @@
-<div class="demo-actions">
-  <div class="show-shell">
+<div class="demo-actions w-full flex flex-col justify-center space-y-8">
+  <!-- <div class="show-shell">
     <div class="show-shell-label">
       <p class="show-shell-label title">Classic 卡牌展示</p>
       <span class="show-shell-label description">
@@ -35,8 +35,6 @@
       @for(d of cardGroups; track d.card.id) {
         <div class="clickable-demo-card">
           <p><strong>{{d.description}}</strong></p>
-
-          <!-- 預設：不啟用任何點擊功能 -->
           <div class="demo-section">
             <h5>預設（不啟用點擊功能）</h5>
             <gx-card
@@ -49,7 +47,6 @@
             </gx-card>
           </div>
 
-          <!-- 啟用部分點擊功能 -->
           <div class="demo-section">
             <h5>啟用 Avatar 和 Title 點擊</h5>
             <gx-card
@@ -65,7 +62,6 @@
             </gx-card>
           </div>
 
-          <!-- 啟用所有點擊功能 -->
           <div class="demo-section">
             <h5>啟用所有點擊功能</h5>
             <gx-card
@@ -83,5 +79,48 @@
         </div>
       }
     </div>
+  </div> -->
+<div class="demo-package-title w-full text-center py-8 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-2xl">
+  <div class="demo-package-name inline-flex space-x-6 items-baseline">
+    <span class="package-name text-[36px] font-bold">GX Card</span>
+    <span class="version text-[24px] text-white">v.0.0.0</span>
   </div>
+  <div class="demo-package-description mt-4 text-[16px]">
+    展示不同類型卡片的點擊功能控制選項
+  </div>
+</div>
+
+@for(d of cardGroups;track d.card.id) {
+  <div class="single-item w-full flex flex-col space-y-4 shadow-xl/30 pb-6 rounded-b-2xl">
+    <div class="item-header w-full px-8 py-4 text-white bg-gray-600 flex flex-col rounded-t-2xl">
+      <h3 class="item-title text-[30px] font-bold pb-2">{{ d.title }}</h3>
+      <p class="item-description">{{ d.description }}</p>
+    </div>
+    <div class="flex flex-col px-6 space-y-6 ">
+      <div class="relative px-8 py-4 rounded-[12px] overflow-hidden bg-blue-50
+                  before:absolute before:content-[''] before:w-3.5 before:h-full before:bg-blue-500 before:left-0 before:top-0 before:rounded-[12px] before:rotate-180">
+        <span>{{ d.description }}</span>
+      </div>
+      <div class="flex flex-col">
+        <div class="flex w-full justify-between py-4 rounded-t-xl bg-gray-200 text-gray-700 px-8 border-x-[2px] border-t-[2px] border-gray-300">
+          <span class="text-[18px] font-semibold">預設狀態</span>
+          <div></div>
+        </div>
+        <div class="rounded-b-xl p-6 bg-gray-50/95 border-[2px] border-gray-300">
+          <gx-card
+            [data]="d.card"
+            [headerClickable]="{ avatar: true, title: true, subtitle: true }"
+            (headerItemClick)="onHeaderItemClick($event)"
+            (actions)="onCardAction($event)"
+          >
+          </gx-card>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+<div class="single-item w-full">
+  <div class="item-header"></div>
+</div>
+
 </div>

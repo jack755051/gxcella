@@ -34,6 +34,14 @@ export class GxClickableDirective<T = any> implements OnChanges {
   gxClickableClass = input<string>('');
 
   /**
+   * 預設型別樣式，會自動套用對應類別
+   * - text -> gx-clickable-text
+   * - avatar -> gx-clickable-avatar
+   * - header -> gx-clickable-header
+   */
+  gxClickableType = input<'' | 'text' | 'avatar' | 'header'>('');
+
+  /**
    * 點擊事件輸出
    */
   gxClick = output<GxClickableEvent<T>>();
@@ -83,6 +91,9 @@ export class GxClickableDirective<T = any> implements OnChanges {
   private updateStyles() {
     const element = this.elementRef.nativeElement;
 
+    // 基礎可點擊類別（提供一致的焦點與游標行為）
+    this.renderer.addClass(element, 'gx-clickable');
+
     // 設置 cursor 樣式
     if (this.gxClickableShowCursor() && !this.gxClickableDisabled()) {
       this.renderer.setStyle(element, 'cursor', 'pointer');
@@ -90,10 +101,22 @@ export class GxClickableDirective<T = any> implements OnChanges {
       this.renderer.removeStyle(element, 'cursor');
     }
 
-    // 添加自定義類別
-    if (this.gxClickableClass()) {
-      this.renderer.addClass(element, this.gxClickableClass());
+    // 先移除已知的型別類別避免殘留
+    ['gx-clickable-text', 'gx-clickable-avatar', 'gx-clickable-header']
+      .forEach(cls => this.renderer.removeClass(element, cls));
+
+    // 套用型別類別（如有）
+    const type = this.gxClickableType();
+    if (type) {
+      const typeClass = type === 'text' ? 'gx-clickable-text'
+                       : type === 'avatar' ? 'gx-clickable-avatar'
+                       : type === 'header' ? 'gx-clickable-header'
+                       : '';
+      if (typeClass) this.renderer.addClass(element, typeClass);
     }
+
+    // 保留對舊 API 的支援：自定義類別
+    if (this.gxClickableClass()) this.renderer.addClass(element, this.gxClickableClass());
 
     // 設置過渡效果
     this.renderer.setStyle(element, 'transition', 'all 0.2s ease');

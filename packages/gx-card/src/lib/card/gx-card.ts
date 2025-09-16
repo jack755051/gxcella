@@ -12,7 +12,7 @@ import { HeightMeasurementService, HeightMeasurementResult } from '../core/heigh
   standalone: true,
   imports: [ CommonModule, GxButton, GxClickableDirective],
   templateUrl: './gx-card.html',
-  styleUrls: ['./gx-card.css']
+  styleUrls: ['./gx-card.css', '../directives/gx-clickable.css']
 })
 export class GxCard implements AfterViewInit, OnDestroy {
   /**
@@ -46,25 +46,7 @@ export class GxCard implements AfterViewInit, OnDestroy {
    */
   tagClick = output<{ tag: IGxTag, event: MouseEvent }>();
 
-  /**
-   * Header 點擊事件
-   */
-  headerClick = output<{ headerData: IGxCard['header'], event: MouseEvent }>();
-
-  /**
-   * Avatar 點擊事件
-   */
-  avatarClick = output<{ avatarData: GxMedia | undefined, event: MouseEvent }>();
-
-  /**
-   * Title 點擊事件
-   */
-  titleClick = output<{ title: string, event: MouseEvent }>();
-
-  /**
-   * Subtitle 點擊事件
-   */
-  subtitleClick = output<{ subtitle: string, event: MouseEvent }>();
+  // 舊的 avatar/title/subtitle 事件已移除，統一用 headerItemClick
 
   private group = inject(GxCardGroupContext, { optional: true });
   private cardConfig = inject(GxCardConfigService);
@@ -295,20 +277,18 @@ export class GxCard implements AfterViewInit, OnDestroy {
    */
   clickable = input<boolean>(false);
 
-  /**
-   * 是否啟用 Avatar 點擊功能
-   */
-  enableAvatarClick = input<boolean>(false);
+  // 舊的 enableAvatarClick/enableTitleClick/enableSubtitleClick 已移除，改用 headerClickable
 
   /**
-   * 是否啟用 Title 點擊功能
+   * 新：合併 Header 點擊設定（可布林或細粒度設定）
+   * 後續可逐步取代 enableAvatar/Title/Subtitle
    */
-  enableTitleClick = input<boolean>(false);
+  headerClickable = input<boolean | { avatar?: boolean; title?: boolean; subtitle?: boolean }>(false);
 
   /**
-   * 是否啟用 Subtitle 點擊功能
+   * 新：單一 Header 點擊事件（保留舊事件並行一段時間）
    */
-  enableSubtitleClick = input<boolean>(false);
+  headerItemClick = output<{ part: 'avatar'|'title'|'subtitle'; value: any; event: MouseEvent }>();
 
   get classes() {
     const baseClasses = [
@@ -346,36 +326,11 @@ export class GxCard implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * 處理 Header 點擊事件
-   */
-  onHeaderClick(event: MouseEvent) {
-    const headerData = this.data()?.header;
-    
-    if (!headerData?.href) return;
-    
-    event.stopPropagation(); // 防止觸發卡片點擊
-    
-    // 如果有 href，進行路由導航
-    if (headerData.href) {
-      if (headerData.target === '_blank') {
-        window.open(headerData.href, '_blank');
-      } else {
-        // 這裡可以使用 Router 進行內部路由導航
-        // 或者觸發事件讓父組件處理
-        window.location.href = headerData.href;
-      }
-    }
-    
-    // 發送點擊事件給父組件
-    this.headerClick.emit({ headerData, event });
-  }
-
-  /**
    * 處理 Avatar 點擊事件
    */
   onAvatarClick(event: GxClickableEvent<GxMedia>) {
     event.event.stopPropagation();
-    this.avatarClick.emit({ avatarData: event.data, event: event.event });
+    this.emitHeaderItemClick('avatar', event.data, event.event);
   }
 
   /**
@@ -385,7 +340,7 @@ export class GxCard implements AfterViewInit, OnDestroy {
     event.event.stopPropagation();
     const title = event.data;
     if (title) {
-      this.titleClick.emit({ title, event: event.event });
+      this.emitHeaderItemClick('title', title, event.event);
     }
   }
 
@@ -396,7 +351,7 @@ export class GxCard implements AfterViewInit, OnDestroy {
     event.event.stopPropagation();
     const subtitle = event.data;
     if (subtitle) {
-      this.subtitleClick.emit({ subtitle, event: event.event });
+      this.emitHeaderItemClick('subtitle', subtitle, event.event);
     }
   }
 
@@ -405,7 +360,7 @@ export class GxCard implements AfterViewInit, OnDestroy {
    */
   onCardClick(event: MouseEvent) {
     // 只有在可點擊且點擊的不是互動元素時才觸發
-    if (this.clickable() && !this.isInteractiveElement(event.target as Element)) {
+    if (this.clickable() && !this.isInteractiveEvent(event)) {
       this.cardClick.emit(event);
     }
   }
@@ -424,35 +379,50 @@ export class GxCard implements AfterViewInit, OnDestroy {
     'subtitle'
   ];
 
-  private isInteractiveElement(target: Element): boolean {
-    if (!target) return false;
-    
-    let current: Element | null = target;
-    while (current) {
-      const tagName = current.tagName.toLowerCase();
-      
-      // 檢查標籤名稱
-      if (this.interactiveSelectors.includes(tagName)) {
-        return true;
-      }
-      
-      // 檢查類別名稱
-      if (this.interactiveClasses.some(className => 
-        current!.classList.contains(className))) {
-        return true;
-      }
-      
-      // 檢查是否有點擊處理器
-      if (current.hasAttribute('gxClickable') || 
-          current.hasAttribute('(click)') || 
-          current.hasAttribute('ng-click')) {
-        return true;
-      }
-      
-      current = current.parentElement;
+  private isInteractiveEvent(event: MouseEvent): boolean {
+    const TAGS = ['button', 'a', 'input', 'select', 'textarea', 'gx-button', 'gx-tag'];
+    const path = (event as any).composedPath?.() as Array<EventTarget> | undefined;
+    const chain: Element[] = path
+      ? (path.filter((n): n is Element => (n as Element)?.nodeType === 1))
+      : this.upChain(event.target as Element);
+    return chain.some(el =>
+      TAGS.includes(el.tagName?.toLowerCase()) ||
+      el.classList?.contains('gx-expand-button') ||
+      el.closest?.('[data-interactive="true"]')
+    );
+  }
+  private upChain(node: Element) {
+  const chain: Element[] = [];
+  for (let cur: Element | null = node; cur; cur = cur.parentElement) chain.push(cur);
+  return chain;
+}
+
+  /** 是否啟用指定 header 區塊的點擊（合併新舊設定） */
+  isHeaderClickEnabledFor(part: 'avatar'|'title'|'subtitle'): boolean {
+    const cfg = this.headerClickable();
+    if (typeof cfg === 'boolean') return cfg;
+    return Boolean(cfg?.[part]);
+  }
+
+  /** 統一發送 header 子項點擊事件 */
+  private emitHeaderItemClick(part: 'avatar'|'title'|'subtitle', value: any, ev: MouseEvent) {
+    this.headerItemClick.emit({ part, value, event: ev });
+  }
+
+  /** Header 容器點擊（用於 href 導向） */
+  onHeaderContainerClick(e: GxClickableEvent) {
+    this.onHeaderClick(e.event);
+  }
+
+  onHeaderClick(event: MouseEvent) {
+    const href = this.data()?.header?.href;
+    const target = this.data()?.header?.target || '_self';
+    if (!href) return;
+    if (this.isInteractiveEvent(event)) return;
+    event.stopPropagation();
+    if (typeof window !== 'undefined') {
+      try { window.open(href, target); } catch {}
     }
-    
-    return false;
   }
 
     /** 可選：把 GxActionIntent -> GxButtonIntent 的映射（如果色系想對齊） */

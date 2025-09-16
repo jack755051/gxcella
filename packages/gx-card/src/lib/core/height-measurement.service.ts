@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Injectable, signal, computed } from '@angular/core';
 
 /**
@@ -24,8 +25,10 @@ export interface HeightMeasurementResult {
   providedIn: 'root'
 })
 export class HeightMeasurementService {
-  private measurementCache = new Map<string, HeightMeasurementResult>();
-  private resizeObservers = new Map<Element, ResizeObserver>();
+private measurementCache = new Map<string, HeightMeasurementResult>();
+private resizeObservers = new Map<Element, ResizeObserver>();
+private hash(s: string){ let h=0; for (let c of s) h=(h*31 + c.charCodeAt(0))|0; return h; }
+    
 
   /**
    * 測量文字內容的實際高度
@@ -184,8 +187,8 @@ export class HeightMeasurementService {
       computedStyle.wordBreak,
       computedStyle.whiteSpace
     ].join('|');
-    
-    return `${text.length}-${styleFingerprint}-${maxLines}-${lineHeight}-${containerPadding}`;
+
+    return `${this.hash(text)}-${styleFingerprint}-${maxLines}-${lineHeight}-${containerPadding}`;
   }
 
   /**
