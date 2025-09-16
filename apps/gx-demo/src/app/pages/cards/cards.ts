@@ -133,7 +133,10 @@ export class Cards {
   ];
 
   title: string[] = [
-    '經典卡牌 - 簡單版'
+    '經典卡牌 - 簡單版',
+    '經典卡牌 - 頭像版',
+    '經典卡牌 - 完整版',
+    '經典卡牌 - 摺疊版'
   ]
 
   description: string[] = [
@@ -143,10 +146,18 @@ export class Cards {
     '經典卡牌(包含長內容+啟用收合配置+頭像)',
   ]
 
-  cardGroups:Array<{card:IGxCard,description:string,title:string}> = this.cards.map((card, index) => ({
+  stateLabels: string[] = [
+    '基本狀態',
+    '頭像模式',
+    '詳細內容',
+    '摺疊功能'
+  ]
+
+  cardGroups:Array<{card:IGxCard,description:string,title:string,stateLabel:string}> = this.cards.map((card, index) => ({
     card,
     title: this.title[index],
-    description: this.description[index]
+    description: this.description[index],
+    stateLabel: this.stateLabels[index]
   }));
 
   onCardAction(action: GxAction) {
