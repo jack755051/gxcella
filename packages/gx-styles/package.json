@@ -2,8 +2,12 @@
   "name": "@sanring/gx-styles",
   "version": "0.0.1",
   "private": true,
-  "files": ["src/lib"],
-  "sideEffects": ["**/*.css"],
+  "files": [
+    "src/lib"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "build": "echo \"gx-styles (css only): nothing to build\""
   },
