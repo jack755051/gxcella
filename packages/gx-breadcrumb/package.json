@@ -19,7 +19,7 @@
   "peerDependencies": {
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",
-    "@sanring/gx-styles": "workspace:^",
+    "@sanring/gx-styles": "1.0.0",
     "lucide-angular": "^0.539.0",
     "tailwindcss": "^4.1.11"
   },

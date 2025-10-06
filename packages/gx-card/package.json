@@ -12,13 +12,13 @@
   "peerDependencies": {
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",
-    "@sanring/gx-styles": "^0.1.0",
-    "@sanring/gx-ui": "^0.1.0",
+    "@sanring/gx-styles": "^1.0.0",
+    "@sanring/gx-ui": "^1.0.0",
     "lucide-angular": "^0.539.0"
   },
   "devDependencies": {
-    "@sanring/gx-styles": "^0.1.0",
-    "@sanring/gx-ui": "^0.1.0",
+    "@sanring/gx-styles": "1.0.0",
+    "@sanring/gx-ui": "1.0.0",
     "lucide-angular": "^0.539.0",
     "ng-packagr": "^20.1.0",
     "tslib": "^2.3.0",
