@@ -1,6 +1,11 @@
 {
   "name": "@sanring/gx-card",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jack755051/gxcella",
+    "directory": "packages/gx-card"
+  },
   "scripts": {
     "build": "ng-packagr -p ng-package.json"
   },

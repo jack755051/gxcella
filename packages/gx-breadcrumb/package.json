@@ -1,6 +1,11 @@
 {
   "name": "@sanring/gx-breadcrumb",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jack755051/gxcella",
+    "directory": "packages/gx-breadcrumb"
+  },
   "scripts": {
     "build": "ng-packagr -p ng-package.json"
   },

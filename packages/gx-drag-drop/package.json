@@ -1,6 +1,11 @@
 {
   "name": "@sanring/gx-drag-drop",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jack755051/gxcella",
+    "directory": "packages/gx-drag-drop"
+  },
   "description": "Lightweight drag & drop utilities (native + CDK helpers) for Angular",
   "license": "MIT",
   "scripts": {
