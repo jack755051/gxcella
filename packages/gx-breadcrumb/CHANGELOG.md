@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 1.0.1
+
+### Patch Changes
+
+- [`24676c0`](https://github.com/jack755051/gxcella/commit/24676c08363d84dba0374d0339e3d1ff1a225d72) Thanks [@charlie-tai](https://github.com/charlie-tai)! - republish breadcrumb
+
 ## 1.0.0
 
 ### Minor Changes

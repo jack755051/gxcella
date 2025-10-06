@@ -1,5 +1,12 @@
 # @sanring/gx-card
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @sanring/gx-ui@1.0.1
+
 ## 1.0.0
 
 ### Minor Changes
