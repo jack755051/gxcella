@@ -42,7 +42,7 @@ jobs:
         id: cs
         run: |
           set -e
-          yarn changeset status --since=origin/develop > /tmp/cs.txt || true
+          yarn changeset status > /tmp/cs.txt || true
           echo "==== changeset status ===="
           cat /tmp/cs.txt || true
           if grep -q "No unreleased changesets found" /tmp/cs.txt; then
