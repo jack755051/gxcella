@@ -1,6 +1,6 @@
 {
   "name": "@sanring/gx-drag-drop",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Lightweight drag & drop utilities (native + CDK helpers) for Angular",
   "license": "MIT",
   "scripts": {
