@@ -6,11 +6,11 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run -ws build",
+    "build": "npm run -ws --if-present build",
     "build:styles": "npm --workspace @sanring/gx-styles run build",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "publish-packages": "changeset publish"
+    "release": "changeset publish"
   },
   "version": "1.0.0",
   "license": "MIT",
