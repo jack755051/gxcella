@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 1.0.6
+
+### Patch Changes
+
+- ed9602a: republish breadcrumb with synced dist version
+
 ## 1.0.5
 
 ### Patch Changes
