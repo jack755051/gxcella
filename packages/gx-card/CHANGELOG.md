@@ -1,5 +1,14 @@
 # @sanring/gx-card
 
+## 1.0.4
+
+### Patch Changes
+
+- [`b0f8f3c`](https://github.com/jack755051/gxcella/commit/b0f8f3cb0962a17b5e9035dfc9602f73688268e1) Thanks [@charlie-tai](https://github.com/charlie-tai)! - sync dist package.json version & republish
+
+- Updated dependencies [[`b0f8f3c`](https://github.com/jack755051/gxcella/commit/b0f8f3cb0962a17b5e9035dfc9602f73688268e1)]:
+  - @sanring/gx-ui@1.0.4
+
 ## 1.0.3
 
 ### Patch Changes
