@@ -4,7 +4,7 @@
   "repository": {
   "type": "git",
   "url": "git+https://github.com/jack755051/gxcella.git"
-},
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
