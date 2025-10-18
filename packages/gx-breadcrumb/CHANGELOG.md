@@ -1,5 +1,18 @@
 # @sanring/gx-breadcrumb
 
+## 1.0.2
+
+### Patch Changes
+
+- [`d4958dc`](https://github.com/jack755051/gxcella/commit/d4958dc6741d299eaef81eaba0186501400fd603) Thanks [@charlie-tai](https://github.com/charlie-tai)! - bump dependencies and update internal references
+
+- [`323f0d1`](https://github.com/jack755051/gxcella/commit/323f0d18ca03d68acbce615f09892532b841d359) Thanks [@charlie-tai](https://github.com/charlie-tai)! - upload card
+
+- [`21c7b36`](https://github.com/jack755051/gxcella/commit/21c7b36191da80dd41af32085df4c5e301b1bd2a) Thanks [@charlie-tai](https://github.com/charlie-tai)! - upload breadcrumb && card
+
+- Updated dependencies [[`d4958dc`](https://github.com/jack755051/gxcella/commit/d4958dc6741d299eaef81eaba0186501400fd603), [`323f0d1`](https://github.com/jack755051/gxcella/commit/323f0d18ca03d68acbce615f09892532b841d359)]:
+  - @sanring/gx-styles@1.0.1
+
 ## 1.0.1
 
 ### Patch Changes
