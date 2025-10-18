@@ -7,7 +7,8 @@
     "directory": "packages/gx-card"
   },
   "scripts": {
-    "build": "ng-packagr -p ng-package.json"
+    "build": "ng-packagr -p ng-package.json",
+    "prepublishOnly": "npm run build && node ../../scripts/sync-version-to-dist.js package.json dist"
   },
   "publishConfig": {
     "directory": "dist",
