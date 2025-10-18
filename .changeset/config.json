@@ -1,13 +1,20 @@
 {
   "$schema": "https://unpkg.com/@changesets/config/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "jack755051/gxcella" }],
+  "changelog": "@changesets/changelog-git",
   "commit": true,
   "fixed": [
-    ["@sanring/gx-breadcrumb", "@sanring/gx-card", "@sanring/gx-ui"]
+    [
+      "@sanring/gx-breadcrumb",
+      "@sanring/gx-card",
+      "@sanring/gx-ui"
+    ]
   ],
   "linked": [],
   "access": "public",
   "baseBranch": "develop",
   "updateInternalDependencies": "patch",
-  "ignore": ["gx-demo", "@sanring/gx-drag-drop"]
+  "ignore": [
+    "gx-demo",
+    "@sanring/gx-drag-drop"
+  ]
 }
