@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn run build)",
+      "Bash(cat .changeset/*.md)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

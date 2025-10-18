@@ -9,6 +9,10 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.json"
   },
+  "publishConfig": {
+    "directory": "dist",
+    "access": "public"
+  },
   "peerDependencies": {
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",

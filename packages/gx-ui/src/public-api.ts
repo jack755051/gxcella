@@ -22,3 +22,8 @@ export * from './lib/button/gx-button';
 export * from './lib/button/model/button.types';
 // tag
 export * from './lib/tag/gx-tag';
+// icon
+export * from './lib/icon/gx-icon';
+export * from './lib/icon/model/icon.type';
+// overlay
+export * from './lib/overlay/gx-overlay';
