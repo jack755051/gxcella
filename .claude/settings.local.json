@@ -8,7 +8,8 @@
       "Bash(npm view @sanring/gx-card version)",
       "Bash(yarn build)",
       "Bash(npm view @sanring/gx-breadcrumb versions)",
-      "Bash(npm cache clean --force)"
+      "Bash(npm cache clean --force)",
+      "Bash(npm view @sanring/gx-card versions)"
     ],
     "deny": [],
     "ask": []
