@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 2.0.3
+
+### Patch Changes
+
+- f607f37: fix npm package missing dist files
+
 ## 2.0.2
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @sanring/gx-card
 
+## 2.0.3
+
+### Patch Changes
+
+- f607f37: fix npm package missing dist files
+  - @sanring/gx-ui@2.0.3
+
 ## 2.0.2
 
 ### Patch Changes
