@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 1.0.9
+
+### Patch Changes
+
+- b80e07d: bump to 1.0.9
+
 ## 1.0.8
 
 ### Patch Changes

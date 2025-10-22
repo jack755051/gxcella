@@ -1,5 +1,11 @@
 # @sanring/gx-card
 
+## 1.0.9
+
+### Patch Changes
+
+- @sanring/gx-ui@1.0.9
+
 ## 1.0.8
 
 ### Patch Changes
