@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 1.0.8
+
+### Patch Changes
+
+- d558dbc: chore: bump gx-breadcrumb to 1.0.8
+
 ## 1.0.7
 
 ## 1.0.6
