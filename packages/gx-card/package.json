@@ -39,8 +39,5 @@
       "default": "./dist/fesm2022/sanring-gx-card.mjs"
     }
   },
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ]
+  "types": "./dist/index.d.ts"
 }

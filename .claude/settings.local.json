@@ -20,7 +20,12 @@
       "Bash(cat /Users/charlie010583/Desktop/01_private/gxcella/packages/gx-breadcrumb/dist/package.json)",
       "Bash(node ../../scripts/sync-version-to-dist.js package.json dist)",
       "Bash(npm pack --dry-run)",
-      "Bash(cat /Users/charlie010583/Desktop/01_private/gxcella/packages/gx-card/dist/package.json)"
+      "Bash(cat /Users/charlie010583/Desktop/01_private/gxcella/packages/gx-card/dist/package.json)",
+      "Bash(npm view @sanring/gx-ui version)",
+      "Bash(npm pack @sanring/gx-breadcrumb@2.0.2)",
+      "Bash(tar -tzf sanring-gx-breadcrumb-2.0.2.tgz)",
+      "Bash(npm pack @sanring/gx-card@2.0.2)",
+      "Bash(tar -tzf sanring-gx-card-2.0.2.tgz)"
     ],
     "deny": [],
     "ask": []
