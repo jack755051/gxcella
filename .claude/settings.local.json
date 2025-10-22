@@ -9,7 +9,15 @@
       "Bash(yarn build)",
       "Bash(npm view @sanring/gx-breadcrumb versions)",
       "Bash(npm cache clean --force)",
-      "Bash(npm view @sanring/gx-card versions)"
+      "Bash(npm view @sanring/gx-card versions)",
+      "Bash(npm view @sanring/gx-breadcrumb@2.0.0 --json)",
+      "Bash(npm view @sanring/gx-card@2.0.0 --json)",
+      "Bash(npm view @sanring/gx-breadcrumb@2.0.0 dist.tarball)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Read(//private/tmp/**)",
+      "Bash(npm pack @sanring/gx-card@2.0.0)",
+      "Bash(tar -tzf sanring-gx-card-2.0.0.tgz)",
+      "Bash(cat /Users/charlie010583/Desktop/01_private/gxcella/packages/gx-breadcrumb/dist/package.json)"
     ],
     "deny": [],
     "ask": []
