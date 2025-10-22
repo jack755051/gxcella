@@ -1,5 +1,12 @@
 # @sanring/gx-card
 
+## 1.0.7
+
+### Patch Changes
+
+- be7e169: chore: release packages
+  - @sanring/gx-ui@1.0.7
+
 ## 1.0.6
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@sanring/gx-card",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/jack755051/gxcella",
@@ -18,12 +18,12 @@
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",
     "@sanring/gx-styles": "^1.0.2",
-    "@sanring/gx-ui": "^1.0.6",
+    "@sanring/gx-ui": "^1.0.7",
     "lucide-angular": "^0.539.0"
   },
   "devDependencies": {
     "@sanring/gx-styles": "1.0.2",
-    "@sanring/gx-ui": "1.0.6",
+    "@sanring/gx-ui": "1.0.7",
     "lucide-angular": "^0.539.0",
     "ng-packagr": "^20.1.0",
     "tslib": "^2.3.0",
@@ -33,6 +33,12 @@
     "tslib": "^2.3.0"
   },
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/fesm2022/sanring-gx-card.mjs"
+    }
+  },
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
