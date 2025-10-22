@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 2.0.0
+
+### Minor Changes
+
+- 1712402: chore: bump to 1.1.0
+
 ## 1.0.9
 
 ### Patch Changes

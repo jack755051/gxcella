@@ -1,5 +1,16 @@
 # @sanring/gx-card
 
+## 2.0.0
+
+### Minor Changes
+
+- 1712402: chore: bump to 1.1.0
+
+### Patch Changes
+
+- Updated dependencies [1712402]
+  - @sanring/gx-ui@2.0.0
+
 ## 1.0.9
 
 ### Patch Changes
