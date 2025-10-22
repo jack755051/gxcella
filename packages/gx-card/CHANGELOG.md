@@ -1,5 +1,12 @@
 # @sanring/gx-card
 
+## 2.0.2
+
+### Patch Changes
+
+- 7d7d820: fix: include all dist files in npm package
+  - @sanring/gx-ui@2.0.2
+
 ## 2.0.1
 
 ### Patch Changes

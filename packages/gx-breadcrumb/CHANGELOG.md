@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 2.0.2
+
+### Patch Changes
+
+- 7d7d820: fix: include all dist files in npm package
+
 ## 2.0.1
 
 ### Patch Changes
