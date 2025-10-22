@@ -3,7 +3,12 @@
     "allow": [
       "Bash(yarn run build)",
       "Bash(cat .changeset/*.md)",
-      "Bash(npm run build)"
+      "Bash(npm run build)",
+      "Bash(npm view @sanring/gx-breadcrumb version)",
+      "Bash(npm view @sanring/gx-card version)",
+      "Bash(yarn build)",
+      "Bash(npm view @sanring/gx-breadcrumb versions)",
+      "Bash(npm cache clean --force)"
     ],
     "deny": [],
     "ask": []
