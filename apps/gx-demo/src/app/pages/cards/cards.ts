@@ -130,13 +130,74 @@ export class Cards {
         ]
       }
     },
+    //產品卡片
+    {
+      id: uuidv4(),
+      shape: 'classic',
+      variant: 'elevated',
+      header: {
+        avatar: {
+          src: '/test_01.jpg',
+          alt: 'Card avatar image',
+          ratio: '16:9'
+        },
+        title: 'Classic Card With Avatar',
+        subtitle: 'Classic Card subtitle'
+      },
+      content: {
+        description: 'This is a custom card where you can put any content you want. It does not have an avatar or cover image, making it a versatile option for various use cases.',
+        tags: [
+          { id: 'tag-cat', label: '電子產品', removable: false },
+          { id: 'tag-price', label: 'NT$ 3,999', removable: false },
+          { id: 'tag-stock', label: '庫存充足', removable: false }
+        ]
+      }
+    },
+    //產品卡片+圖片
+    {
+      id: uuidv4(),
+      shape: 'classic',
+      variant: 'elevated',
+      header: {
+        title: 'Premium Wireless Headphones',
+        subtitle: 'High-Quality Audio | 30hrs Battery'
+      },
+      content: {
+        image: {
+          src: '/benjamin-lehman-1-3aIWkdN0U-unsplash.jpg',
+          alt: 'Premium Wireless Headphones Product Image'
+        },
+        description: 'Experience studio-quality sound with our premium wireless headphones. Features active noise cancellation, comfortable over-ear design, and long-lasting battery life. Perfect for music lovers and professionals.',
+        tags: [
+          { id: 'tag-cat', label: '電子產品', removable: false },
+          { id: 'tag-price', label: 'NT$ 3,999', removable: false },
+          { id: 'tag-stock', label: '現貨供應', removable: false }
+        ]
+      },
+      footer: {
+        actions: [
+          {
+            id: 'buy-now',
+            label: '立即購買',
+            intent: 'primary'
+          },
+          {
+            id: 'add-cart',
+            label: '加入購物車',
+            intent: 'secondary'
+          }
+        ]
+      }
+    },
   ];
 
   title: string[] = [
     '經典卡牌 - 簡單版',
     '經典卡牌 - 頭像版',
     '經典卡牌 - 完整版',
-    '經典卡牌 - 摺疊版'
+    '經典卡牌 - 摺疊版',
+    '產品卡片',
+    '產品卡片 - 含圖片'
   ]
 
   description: string[] = [
@@ -144,13 +205,17 @@ export class Cards {
     '經典卡牌(包含頭像)',
     '經典卡牌(包含長內容+沒有收合配置+頭像)',
     '經典卡牌(包含長內容+啟用收合配置+頭像)',
+    '產品展示卡片,包含產品圖片、名稱、描述和購買選項',
+    '產品展示卡片,包含 content 區域圖片、描述、標籤和操作按鈕'
   ]
 
   stateLabels: string[] = [
     '基本狀態',
     '頭像模式',
     '詳細內容',
-    '摺疊功能'
+    '摺疊功能',
+    '產品模式',
+    '產品+內容圖片'
   ]
 
   cardGroups:Array<{card:IGxCard,description:string,title:string,stateLabel:string}> = this.cards.map((card, index) => ({
