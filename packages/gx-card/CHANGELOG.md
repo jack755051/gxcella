@@ -4,7 +4,9 @@
 
 ### Patch Changes
 
+- 5b252bf: chore: bump all packages to 2.0.4 for consistency
 - 6f553d5: feat(gx-card): add image ratio support for card contentchore: bump all packages to 2.0.4 for consistency
+- Updated dependencies [5b252bf]
 - Updated dependencies [6f553d5]
   - @sanring/gx-ui@2.0.4
 
