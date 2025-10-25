@@ -1,5 +1,11 @@
 # @sanring/gx-ui
 
+## 2.0.4
+
+### Patch Changes
+
+- 6f553d5: feat(gx-card): add image ratio support for card contentchore: bump all packages to 2.0.4 for consistency
+
 ## 2.0.3
 
 ## 2.0.2
