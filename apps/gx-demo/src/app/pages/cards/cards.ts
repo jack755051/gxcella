@@ -165,7 +165,8 @@ export class Cards {
       content: {
         image: {
           src: '/benjamin-lehman-1-3aIWkdN0U-unsplash.jpg',
-          alt: 'Premium Wireless Headphones Product Image'
+          alt: 'Premium Wireless Headphones Product Image',
+          ratio: '1:1'  // 方形圖片
         },
         description: 'Experience studio-quality sound with our premium wireless headphones. Features active noise cancellation, comfortable over-ear design, and long-lasting battery life. Perfect for music lovers and professionals.',
         tags: [

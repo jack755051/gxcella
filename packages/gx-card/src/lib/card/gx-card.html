@@ -13,7 +13,8 @@
       @if (data()?.content?.image?.src) {
         <img class="gx-card-media"
              [src]="data()!.content!.image!.src"
-             [alt]="data()!.content!.image!.alt || ''" />
+             [alt]="data()!.content!.image!.alt || ''"
+             [attr.data-ratio]="data()!.content!.image!.ratio || '16:9'" />
       }
       @if (data()?.content?.tags) {
         <div class="gx-card-tags">
@@ -72,7 +73,8 @@
       @if (data()?.content?.image?.src && shouldShowContent().contentImage) {
         <img class="gx-card-media"
              [src]="data()!.content!.image!.src"
-             [alt]="data()!.content!.image!.alt || ''" />
+             [alt]="data()!.content!.image!.alt || ''"
+             [attr.data-ratio]="data()!.content!.image!.ratio || '16:9'" />
       }
       @if (data()?.content?.title) { 
         <h4>{{ data()!.content!.title }}</h4> 
