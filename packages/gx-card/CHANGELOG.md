@@ -1,5 +1,13 @@
 # @sanring/gx-card
 
+## 2.0.5
+
+### Patch Changes
+
+- chore: sync all packages to 2.0.5 and fix gx-card npm publish
+- Updated dependencies
+  - @sanring/gx-ui@2.0.5
+
 ## 2.0.4
 
 ### Patch Changes
