@@ -1,5 +1,13 @@
 # @sanring/gx-card
 
+## 2.0.6
+
+### Patch Changes
+
+- e9ab549: upgrade gx-ui
+- Updated dependencies [e9ab549]
+  - @sanring/gx-ui@2.0.6
+
 ## 2.0.5
 
 ### Patch Changes
