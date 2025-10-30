@@ -25,7 +25,13 @@
       "Bash(npm pack @sanring/gx-breadcrumb@2.0.2)",
       "Bash(tar -tzf sanring-gx-breadcrumb-2.0.2.tgz)",
       "Bash(npm pack @sanring/gx-card@2.0.2)",
-      "Bash(tar -tzf sanring-gx-card-2.0.2.tgz)"
+      "Bash(tar -tzf sanring-gx-card-2.0.2.tgz)",
+      "Bash(cat:*)",
+      "Bash(npm publish:*)",
+      "Bash(yarn changeset:*)",
+      "Bash(git push:*)",
+      "Bash(chmod:*)",
+      "Bash(bash -n:*)"
     ],
     "deny": [],
     "ask": []

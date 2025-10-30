@@ -159,8 +159,13 @@ export class Cards {
       shape: 'classic',
       variant: 'elevated',
       header: {
-        title: 'Premium Wireless Headphones',
-        subtitle: 'High-Quality Audio | 30hrs Battery'
+        avatar: {
+          src: '/test_01.jpg',
+          alt: 'User avatar',
+          ratio: '1:1'
+        },
+        title: 'Avatar Card',
+        subtitle: 'With user avatar in header'
       },
       content: {
         image: {
