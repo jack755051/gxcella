@@ -5,4 +5,6 @@ export interface GxButtonStyle {
     px?: number;      // paddingX
     py?: number;      // paddingY
     radius?: number;  // borderRadius
+    background?: string;
+    foreground?: string;
 }

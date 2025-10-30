@@ -1,10 +1,60 @@
+/* ===============================
+   Intent Variable Mapping
+   將 4 個 intent 映射到統一變數
+=============================== */
 :host {
     display: inline-flex;
     width: fit-content;
     inline-size: max-content;
     flex: 0 0 auto;
+
+    /* 預設 intent: info */
+    --intent-bg: var(--gx-intent-info-bg);
+    --intent-fg: var(--gx-intent-info-foreground);
+    --intent-hover: var(--gx-intent-info-hover);
+    --intent-active: var(--gx-intent-info-active);
+    --intent-border: var(--gx-intent-info-border);
+    --intent-soft-bg: var(--gx-intent-info-soft-bg);
+    --intent-soft-hover: var(--gx-color-info-100);
+    --intent-soft-active: var(--gx-color-info-200);
 }
 
+:host([intent="success"]) {
+    --intent-bg: var(--gx-intent-success-bg);
+    --intent-fg: var(--gx-intent-success-foreground);
+    --intent-hover: var(--gx-intent-success-hover);
+    --intent-active: var(--gx-intent-success-active);
+    --intent-border: var(--gx-intent-success-border);
+    --intent-soft-bg: var(--gx-intent-success-soft-bg);
+    --intent-soft-hover: var(--gx-color-success-100);
+    --intent-soft-active: var(--gx-color-success-200);
+}
+
+:host([intent="warning"]) {
+    --intent-bg: var(--gx-intent-warning-bg);
+    --intent-fg: var(--gx-intent-warning-foreground);
+    --intent-hover: var(--gx-intent-warning-hover);
+    --intent-active: var(--gx-intent-warning-active);
+    --intent-border: var(--gx-intent-warning-border);
+    --intent-soft-bg: var(--gx-intent-warning-soft-bg);
+    --intent-soft-hover: var(--gx-color-warning-100);
+    --intent-soft-active: var(--gx-color-warning-200);
+}
+
+:host([intent="error"]) {
+    --intent-bg: var(--gx-intent-error-bg);
+    --intent-fg: var(--gx-intent-error-foreground);
+    --intent-hover: var(--gx-intent-error-hover);
+    --intent-active: var(--gx-intent-error-active);
+    --intent-border: var(--gx-intent-error-border);
+    --intent-soft-bg: var(--gx-intent-error-soft-bg);
+    --intent-soft-hover: var(--gx-color-error-100);
+    --intent-soft-active: var(--gx-color-error-200);
+}
+
+/* ===============================
+   Base Button Styles
+=============================== */
 .gx-btn {
     /* 重置瀏覽器預設樣式 */
     appearance: none;
@@ -58,188 +108,73 @@
 }
 
 /* ===============================
-   Filled Variants
+   Filled Variant (統一使用 intent 變數)
 =============================== */
-.gx-btn.gx-variant-filled.gx-intent-info {
-    --gx-btn-bg: var(--gx-intent-info-bg);
-    --gx-btn-fg: var(--gx-intent-info-foreground);
-    --gx-btn-border: var(--gx-intent-info-bg);
+.gx-btn.gx-variant-filled {
+    --gx-btn-bg: var(--intent-bg);
+    --gx-btn-fg: var(--intent-fg);
+    --gx-btn-border: var(--intent-bg);
 }
-.gx-btn.gx-variant-filled.gx-intent-info:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-info-hover);
-    --gx-btn-border: var(--gx-intent-info-hover);
+.gx-btn.gx-variant-filled:hover:not(:disabled) {
+    --gx-btn-bg: var(--intent-hover);
+    --gx-btn-border: var(--intent-hover);
 }
-.gx-btn.gx-variant-filled.gx-intent-info:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-info-active);
-    --gx-btn-border: var(--gx-intent-info-active);
-}
-
-.gx-btn.gx-variant-filled.gx-intent-success {
-    --gx-btn-bg: var(--gx-intent-success-bg);
-    --gx-btn-fg: var(--gx-intent-success-foreground);
-    --gx-btn-border: var(--gx-intent-success-bg);
-}
-.gx-btn.gx-variant-filled.gx-intent-success:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-success-hover);
-    --gx-btn-border: var(--gx-intent-success-hover);
-}
-.gx-btn.gx-variant-filled.gx-intent-success:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-success-active);
-    --gx-btn-border: var(--gx-intent-success-active);
-}
-
-.gx-btn.gx-variant-filled.gx-intent-warning {
-    --gx-btn-bg: var(--gx-intent-warning-bg);
-    --gx-btn-fg: var(--gx-intent-warning-foreground);
-    --gx-btn-border: var(--gx-intent-warning-bg);
-}
-.gx-btn.gx-variant-filled.gx-intent-warning:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-warning-hover);
-    --gx-btn-border: var(--gx-intent-warning-hover);
-}
-.gx-btn.gx-variant-filled.gx-intent-warning:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-warning-active);
-    --gx-btn-border: var(--gx-intent-warning-active);
-}
-
-.gx-btn.gx-variant-filled.gx-intent-error {
-    --gx-btn-bg: var(--gx-intent-error-bg);
-    --gx-btn-fg: var(--gx-intent-error-foreground);
-    --gx-btn-border: var(--gx-intent-error-bg);
-}
-.gx-btn.gx-variant-filled.gx-intent-error:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-error-hover);
-    --gx-btn-border: var(--gx-intent-error-hover);
-}
-.gx-btn.gx-variant-filled.gx-intent-error:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-error-active);
-    --gx-btn-border: var(--gx-intent-error-active);
+.gx-btn.gx-variant-filled:active:not(:disabled) {
+    --gx-btn-bg: var(--intent-active);
+    --gx-btn-border: var(--intent-active);
 }
 
 /* ===============================
-   Outline Variants
+   Outline Variant (統一使用 intent 變數)
 =============================== */
-.gx-btn.gx-variant-outline.gx-intent-info {
+.gx-btn.gx-variant-outline {
     --gx-btn-bg: transparent;
-    --gx-btn-fg: var(--gx-intent-info-bg);
-    --gx-btn-border: var(--gx-intent-info-border);
+    --gx-btn-fg: var(--intent-bg);
+    --gx-btn-border: var(--intent-border);
 }
-.gx-btn.gx-variant-outline.gx-intent-info:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-info-soft-bg);
-    --gx-btn-fg: var(--gx-intent-info-hover);
-    --gx-btn-border: var(--gx-intent-info-hover);
+.gx-btn.gx-variant-outline:hover:not(:disabled) {
+    --gx-btn-bg: var(--intent-soft-bg);
+    --gx-btn-fg: var(--intent-hover);
+    --gx-btn-border: var(--intent-hover);
 }
-.gx-btn.gx-variant-outline.gx-intent-info:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-info-100);
-    --gx-btn-fg: var(--gx-intent-info-active);
-    --gx-btn-border: var(--gx-intent-info-active);
-}
-
-.gx-btn.gx-variant-outline.gx-intent-success {
-    --gx-btn-bg: transparent;
-    --gx-btn-fg: var(--gx-intent-success-bg);
-    --gx-btn-border: var(--gx-intent-success-border);
-}
-.gx-btn.gx-variant-outline.gx-intent-success:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-success-soft-bg);
-    --gx-btn-fg: var(--gx-intent-success-hover);
-    --gx-btn-border: var(--gx-intent-success-hover);
-}
-.gx-btn.gx-variant-outline.gx-intent-success:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-success-100);
-    --gx-btn-fg: var(--gx-intent-success-active);
-    --gx-btn-border: var(--gx-intent-success-active);
-}
-
-.gx-btn.gx-variant-outline.gx-intent-warning {
-    --gx-btn-bg: transparent;
-    --gx-btn-fg: var(--gx-intent-warning-bg);
-    --gx-btn-border: var(--gx-intent-warning-border);
-}
-.gx-btn.gx-variant-outline.gx-intent-warning:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-warning-soft-bg);
-    --gx-btn-fg: var(--gx-intent-warning-hover);
-    --gx-btn-border: var(--gx-intent-warning-hover);
-}
-.gx-btn.gx-variant-outline.gx-intent-warning:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-warning-100);
-    --gx-btn-fg: var(--gx-intent-warning-active);
-    --gx-btn-border: var(--gx-intent-warning-active);
-}
-
-.gx-btn.gx-variant-outline.gx-intent-error {
-    --gx-btn-bg: transparent;
-    --gx-btn-fg: var(--gx-intent-error-bg);
-    --gx-btn-border: var(--gx-intent-error-border);
-}
-.gx-btn.gx-variant-outline.gx-intent-error:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-intent-error-soft-bg);
-    --gx-btn-fg: var(--gx-intent-error-hover);
-    --gx-btn-border: var(--gx-intent-error-hover);
-}
-.gx-btn.gx-variant-outline.gx-intent-error:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-error-100);
-    --gx-btn-fg: var(--gx-intent-error-active);
-    --gx-btn-border: var(--gx-intent-error-active);
+.gx-btn.gx-variant-outline:active:not(:disabled) {
+    --gx-btn-bg: var(--intent-soft-hover);
+    --gx-btn-fg: var(--intent-active);
+    --gx-btn-border: var(--intent-active);
 }
 
 /* ===============================
-   Soft Variants
+   Soft Variant (統一使用 intent 變數)
 =============================== */
-.gx-btn.gx-variant-soft.gx-intent-info {
-    --gx-btn-bg: var(--gx-intent-info-soft-bg);
-    --gx-btn-fg: var(--gx-intent-info-bg);
+.gx-btn.gx-variant-soft {
+    --gx-btn-bg: var(--intent-soft-bg);
+    --gx-btn-fg: var(--intent-bg);
     --gx-btn-border: transparent;
 }
-.gx-btn.gx-variant-soft.gx-intent-info:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-info-100);
-    --gx-btn-fg: var(--gx-intent-info-hover);
+.gx-btn.gx-variant-soft:hover:not(:disabled) {
+    --gx-btn-bg: var(--intent-soft-hover);
+    --gx-btn-fg: var(--intent-hover);
 }
-.gx-btn.gx-variant-soft.gx-intent-info:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-info-200);
-    --gx-btn-fg: var(--gx-intent-info-active);
+.gx-btn.gx-variant-soft:active:not(:disabled) {
+    --gx-btn-bg: var(--intent-soft-active);
+    --gx-btn-fg: var(--intent-active);
 }
 
-.gx-btn.gx-variant-soft.gx-intent-success {
-    --gx-btn-bg: var(--gx-intent-success-soft-bg);
-    --gx-btn-fg: var(--gx-intent-success-bg);
+/* ===============================
+   Ghost Variant (透明背景，主色文字)
+=============================== */
+.gx-btn.gx-variant-ghost {
+    --gx-btn-bg: transparent;
+    --gx-btn-fg: var(--intent-bg);
     --gx-btn-border: transparent;
 }
-.gx-btn.gx-variant-soft.gx-intent-success:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-success-100);
-    --gx-btn-fg: var(--gx-intent-success-hover);
+.gx-btn.gx-variant-ghost:hover:not(:disabled) {
+    --gx-btn-bg: var(--intent-soft-bg);
+    --gx-btn-fg: var(--intent-hover);
 }
-.gx-btn.gx-variant-soft.gx-intent-success:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-success-200);
-    --gx-btn-fg: var(--gx-intent-success-active);
-}
-
-.gx-btn.gx-variant-soft.gx-intent-warning {
-    --gx-btn-bg: var(--gx-intent-warning-soft-bg);
-    --gx-btn-fg: var(--gx-intent-warning-bg);
-    --gx-btn-border: transparent;
-}
-.gx-btn.gx-variant-soft.gx-intent-warning:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-warning-100);
-    --gx-btn-fg: var(--gx-intent-warning-hover);
-}
-.gx-btn.gx-variant-soft.gx-intent-warning:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-warning-200);
-    --gx-btn-fg: var(--gx-intent-warning-active);
-}
-
-.gx-btn.gx-variant-soft.gx-intent-error {
-    --gx-btn-bg: var(--gx-intent-error-soft-bg);
-    --gx-btn-fg: var(--gx-intent-error-bg);
-    --gx-btn-border: transparent;
-}
-.gx-btn.gx-variant-soft.gx-intent-error:hover:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-error-100);
-    --gx-btn-fg: var(--gx-intent-error-hover);
-}
-.gx-btn.gx-variant-soft.gx-intent-error:active:not(:disabled) {
-    --gx-btn-bg: var(--gx-color-error-200);
-    --gx-btn-fg: var(--gx-intent-error-active);
+.gx-btn.gx-variant-ghost:active:not(:disabled) {
+    --gx-btn-bg: var(--intent-soft-hover);
+    --gx-btn-fg: var(--intent-active);
 }
 
 /* ===============================
