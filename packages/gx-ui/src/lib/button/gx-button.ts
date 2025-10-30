@@ -1,4 +1,4 @@
-import {Component, computed, HostBinding, input, output} from "@angular/core";
+import {Component, computed, input, output} from "@angular/core";
 import {GxButtonIntent, GxButtonStyle, GxButtonVariant} from "./model/button.types";
 import {GxAction} from "../shared/model/action.model";
 
@@ -23,12 +23,6 @@ export class GxButton {
     tooltip   = input<string | undefined>(undefined);   // 滑鼠 hover 顯示
     needsAriaLabel = input<boolean>(false);             // 若內容沒有可見文字時設 true
 
-    @HostBinding('style.--gx-btn-px.px') get _px() { return this.resolveStyle('px', 12); }
-    @HostBinding('style.--gx-btn-py.px') get _py() { return this.resolveStyle('py', 8); }
-    @HostBinding('style.--gx-btn-radius.px') get _r() { return this.resolveStyle('radius', 8); }
-    @HostBinding('style.--gx-btn-bg') get _bg() { return this.resolveStyle('background', '#1677ff'); }
-    @HostBinding('style.--gx-btn-fg') get _fg() { return this.resolveStyle('foreground', '#ffffff'); }
-
     /** 單一資訊來源：是否停用 */
     readonly isDisabled = computed(
         () => !!this.disabled() || !!this.action()?.disabled
@@ -49,13 +43,5 @@ export class GxButton {
         if (this.isDisabled()) return;  // ✅ 使用統一的邏輯
         try { this.action()?.handler?.(); }
         finally { this.pressed.emit(ev); }
-    }
-
-        private resolveStyle<K extends keyof GxButtonStyle>(
-        key: K,
-        fallback: NonNullable<GxButtonStyle[K]>
-    ) {
-        const tokens = this.styleTokens();
-        return (tokens?.[key] ?? fallback)!;
     }
 }

@@ -5,6 +5,11 @@
         [attr.aria-disabled]="isDisabled() ? 'true' : null"
         [attr.title]="computedTitle()"
         [attr.aria-label]="computedAriaLabel()"
+        [style.--gx-btn-px.px]="styleTokens()?.px ?? 12"
+        [style.--gx-btn-py.px]="styleTokens()?.py ?? 8"
+        [style.--gx-btn-radius.px]="styleTokens()?.radius ?? 8"
+        [style.--gx-btn-bg]="styleTokens()?.background"
+        [style.--gx-btn-fg]="styleTokens()?.foreground"
         (click)="onClick($event)"
 >
     <span class="gx-btn-start">
