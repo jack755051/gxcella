@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 2.0.7
+
+### Patch Changes
+
+- 3bd14a0: chore: upgrade gx-ui
+
 ## 2.0.6
 
 ### Patch Changes
