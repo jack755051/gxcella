@@ -1,0 +1,22 @@
+.gx-table-header {
+  background-color: var(--gx-table-header-bg, #e6f8f9);
+}
+
+.gx-table-header-checkbox {
+  width: 3rem;
+  padding: 1rem 1.5rem;
+}
+
+.gx-checkbox {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 0.25rem;
+  border-color: var(--gx-table-checkbox-border, #d1d5db);
+  color: var(--gx-table-checkbox-color, #3b82f6);
+  cursor: pointer;
+}
+
+.gx-checkbox:focus {
+  ring: 2px;
+  ring-color: var(--gx-table-checkbox-focus, #3b82f6);
+}

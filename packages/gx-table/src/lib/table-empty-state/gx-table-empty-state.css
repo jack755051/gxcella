@@ -1,0 +1,24 @@
+.gx-table-empty-state {
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.gx-empty-icon {
+  margin: 0 auto;
+  height: 3rem;
+  width: 3rem;
+  color: var(--gx-table-empty-icon-color, #9ca3af);
+}
+
+.gx-empty-title {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gx-table-empty-title-color, #111827);
+}
+
+.gx-empty-description {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--gx-table-empty-description-color, #6b7280);
+}

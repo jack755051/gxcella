@@ -1,0 +1,6 @@
+<td [class]="alignClass()" [ngStyle]="columnStyle()" class="px-6 py-4 text-sm">
+  <!-- 優先使用 ng-content 插槽 -->
+  <ng-content>
+    {{ displayValue() }}
+  </ng-content>
+</td>

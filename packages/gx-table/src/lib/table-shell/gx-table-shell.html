@@ -1,0 +1,28 @@
+<div class="gx-table-shell">
+  <!-- Toolbar 插槽 -->
+  <div class="gx-table-toolbar">
+    <ng-content select="[toolbar]"></ng-content>
+  </div>
+
+  <!-- 表格容器 - 固定高度 + 滾動 -->
+  <div
+    class="gx-table-container"
+    [class.has-max-height]="!maxHeight()"
+    [style.max-height]="maxHeight()">
+    <table class="gx-table">
+      <ng-content></ng-content>
+    </table>
+  </div>
+
+  <!-- 空狀態 -->
+  @if (isEmpty()) {
+    <ng-content select="[empty]">
+      <gx-table-empty-state></gx-table-empty-state>
+    </ng-content>
+  }
+
+  <!-- Footer 插槽 (用於分頁等) -->
+  <div class="gx-table-footer">
+    <ng-content select="[footer]"></ng-content>
+  </div>
+</div>

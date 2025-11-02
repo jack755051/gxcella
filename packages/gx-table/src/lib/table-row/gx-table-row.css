@@ -1,0 +1,64 @@
+tr {
+  transition: background-color 0.2s;
+}
+
+.transition-colors {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.hover\:bg-gray-50:hover {
+  background-color: var(--gx-table-row-hover-bg, #f9fafb);
+}
+
+.bg-blue-50 {
+  background-color: var(--gx-table-row-selected-bg, #eff6ff);
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.h-4 {
+  height: 1rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.border-gray-300 {
+  border-color: var(--gx-table-checkbox-border, #d1d5db);
+}
+
+.text-blue-600 {
+  color: var(--gx-table-checkbox-color, #2563eb);
+}
+
+.focus\:ring-blue-500:focus {
+  --tw-ring-color: var(--gx-table-checkbox-focus, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}

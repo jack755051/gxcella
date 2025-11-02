@@ -1,0 +1,25 @@
+<thead class="gx-table-header">
+  <tr>
+    <!-- 全選 Checkbox -->
+    @if (selectable()) {
+      <th class="gx-table-header-checkbox">
+        <input
+          #checkboxRef
+          type="checkbox"
+          [checked]="isAllSelected()"
+          [indeterminate]="isIndeterminate()"
+          (change)="toggleSelectAll.emit()"
+          class="gx-checkbox" />
+      </th>
+    }
+
+    <!-- 欄位標題 -->
+    @for (column of columns(); track column.key) {
+      <gx-table-header-cell
+        [column]="column"
+        [sortConfig]="sortConfig()"
+        (sort)="sort.emit($event)">
+      </gx-table-header-cell>
+    }
+  </tr>
+</thead>

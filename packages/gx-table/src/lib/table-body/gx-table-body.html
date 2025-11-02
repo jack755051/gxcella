@@ -1,0 +1,15 @@
+<tbody class="divide-y divide-gray-200 bg-white">
+  @for (row of data(); track getRowKey(row, $index)) {
+    <gx-table-row
+      [row]="row"
+      [columns]="columns()"
+      [selectable]="selectable()"
+      [selected]="isRowSelected(row)"
+      [disabled]="checkRowDisabled(row)"
+      (select)="handleSelectRow(row)"
+    >
+      <!-- 傳遞所有插槽到 TableRow -->
+      <ng-content></ng-content>
+    </gx-table-row>
+  }
+</tbody>

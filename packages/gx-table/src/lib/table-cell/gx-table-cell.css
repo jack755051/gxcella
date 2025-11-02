@@ -1,0 +1,20 @@
+td {
+  padding: 1rem 1.5rem;
+  font-size: 0.875rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-gray-900 {
+  color: var(--gx-table-cell-text-color, #111827);
+}

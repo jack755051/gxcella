@@ -1,0 +1,34 @@
+/* Table Shell 容器 */
+.gx-table-shell {
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: var(--gx-table-bg, #ffffff);
+  box-shadow: var(--gx-table-shadow, 0 1px 3px 0 rgba(0, 0, 0, 0.1));
+}
+
+/* Toolbar 區域 */
+.gx-table-toolbar:not(:empty) {
+  border-bottom: 1px solid var(--gx-table-border-color, #e5e7eb);
+  padding: 1rem;
+}
+
+/* 表格容器 */
+.gx-table-container {
+  overflow: auto;
+}
+
+.gx-table-container.has-max-height {
+  max-height: 600px;
+}
+
+/* 表格 */
+.gx-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Footer 區域 */
+.gx-table-footer:not(:empty) {
+  border-top: 1px solid var(--gx-table-border-color, #e5e7eb);
+  padding: 1rem;
+}
