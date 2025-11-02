@@ -1,5 +1,16 @@
 # @sanring/gx-card
 
+## 3.0.0
+
+### Minor Changes
+
+- 2d9e3e0: refactor gx-card
+
+### Patch Changes
+
+- Updated dependencies [2d9e3e0]
+  - @sanring/gx-ui@3.0.0
+
 ## 2.0.7
 
 ### Patch Changes

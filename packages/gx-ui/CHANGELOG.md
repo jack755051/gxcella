@@ -1,5 +1,11 @@
 # @sanring/gx-ui
 
+## 3.0.0
+
+### Minor Changes
+
+- 2d9e3e0: refactor gx-card
+
 ## 2.0.7
 
 ### Patch Changes
