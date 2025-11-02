@@ -1,0 +1,34 @@
+<header [class]="headerClass()">
+  <!-- Icon 區域 -->
+  @if (showIcon()) {
+    <div class="wizard-header-icon">
+      <ng-content select="[icon]">
+        <!-- 預設圖標：步驟數字 -->
+        <span class="step-number">{{ step() }}</span>
+      </ng-content>
+    </div>
+  }
+
+  <!-- 標題區域 -->
+  <div class="wizard-header-content">
+    <ng-content select="[title]">
+      <h2 class="wizard-title">{{ defaultTitle() }}</h2>
+    </ng-content>
+
+    <!-- 描述區域 -->
+    @if (description()) {
+      <ng-content select="[description]">
+        <p class="wizard-description">{{ description() }}</p>
+      </ng-content>
+    }
+  </div>
+
+  <!-- 步驟指示器（右側） -->
+  @if (showStepIndicator()) {
+    <div class="wizard-header-indicator">
+      <ng-content select="[indicator]">
+        <span class="step-counter">{{ step() }} / {{ totalSteps() }}</span>
+      </ng-content>
+    </div>
+  }
+</header>

@@ -19,6 +19,9 @@
       ],
       "@sanring/gx-ui": [
         "../../packages/gx-ui/dist"
+      ],
+      "gx-table": [
+        "./dist/gx-table"
       ]
     },
     "noImplicitOverride": true,
@@ -82,6 +85,12 @@
     },
     {
       "path": "./projects/gx-card/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/gx-table/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/gx-table/tsconfig.spec.json"
     }
   ]
 }

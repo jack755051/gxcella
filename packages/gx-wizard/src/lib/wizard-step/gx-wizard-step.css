@@ -1,0 +1,17 @@
+.wizard-step-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-step-header {
+  /* Styles inherited from gx-wizard-header */
+}
+
+.wizard-step-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.w-full {
+  width: 100%;
+}

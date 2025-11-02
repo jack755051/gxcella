@@ -1,0 +1,54 @@
+<div [class]="containerClass()">
+  <!-- 步驟指示器（可選） -->
+  @if (showStepsIndicator()) {
+    <div class="wizard-steps-indicator flex justify-center">
+      <ng-content select="[indicator]">
+        <!-- 預設步驟指示器 -->
+        <div class="flex items-center justify-center gap-2 py-4">
+          @for (stepNum of stepNumbers(); track stepNum) {
+            <div class="flex items-center">
+              <!-- 步驟圓圈 -->
+              <div [class]="getStepClass(stepNum)">
+                @if (stepNum < currentStep()) {
+                  <!-- 已完成：顯示勾選圖標 -->
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                } @else {
+                  <!-- 當前或未完成：顯示步驟數字 -->
+                  <span class="font-semibold">{{ stepNum }}</span>
+                }
+              </div>
+
+              <!-- 連接線 -->
+              @if (stepNum < totalSteps()) {
+                <div [class]="getConnectorClass(stepNum)"></div>
+              }
+            </div>
+          }
+        </div>
+      </ng-content>
+    </div>
+  }
+
+  <!-- Wizard 內容區 -->
+  <div class="wizard-content">
+    <!-- 使用默認插槽或 step-content 插槽 -->
+    <ng-content>
+      <!-- 預設：渲染當前步驟 -->
+      <gx-wizard-step
+        [wizardId]="wizardId()"
+        [step]="currentStep()"
+        [totalSteps]="totalSteps()"
+        [title]="currentStepData()?.title"
+        [description]="currentStepData()?.description"
+        [customClass]="customClass()"
+        (next)="handleNext()"
+        (prev)="handlePrev()"
+        (finish)="handleFinish()">
+        <!-- 允許自定義步驟內容 -->
+        <ng-content select="[step-content]"></ng-content>
+      </gx-wizard-step>
+    </ng-content>
+  </div>
+</div>

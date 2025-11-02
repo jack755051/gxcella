@@ -1,0 +1,37 @@
+<div [class]="containerClass()">
+  <!-- 上一步按鈕 -->
+  @if (showPrev() && !isFirstStep()) {
+    <button
+      type="button"
+      [class]="prevButtonClass()"
+      (click)="handlePrev()">
+      <ng-content select="[prev-button]">
+        {{ prevLabel() }}
+      </ng-content>
+    </button>
+  }
+
+  <!-- 下一步按鈕 -->
+  @if (showNext() && !isLastStep()) {
+    <button
+      type="button"
+      [class]="nextButtonClass()"
+      (click)="handleNext()">
+      <ng-content select="[next-button]">
+        {{ nextLabel() }}
+      </ng-content>
+    </button>
+  }
+
+  <!-- 完成按鈕 -->
+  @if (showFinish() || isLastStep()) {
+    <button
+      type="button"
+      [class]="finishButtonClass()"
+      (click)="handleFinish()">
+      <ng-content select="[finish-button]">
+        {{ finishLabel() }}
+      </ng-content>
+    </button>
+  }
+</div>

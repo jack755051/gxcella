@@ -1,0 +1,122 @@
+.wizard-container {
+  background: var(--gx-wizard-bg, #ffffff);
+  border-radius: 0.5rem;
+  box-shadow: var(--gx-wizard-shadow, 0 1px 3px 0 rgba(0, 0, 0, 0.1));
+}
+
+.wizard-content {
+  min-height: 300px;
+}
+
+/* Step indicator styles */
+.wizard-steps-indicator {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--gx-wizard-border-color, #e5e7eb);
+}
+
+/* Primary color variants */
+.border-primary-500 {
+  border-color: var(--gx-wizard-primary-color, #3b82f6);
+}
+
+.bg-primary-500 {
+  background-color: var(--gx-wizard-primary-color, #3b82f6);
+}
+
+.text-primary-500 {
+  color: var(--gx-wizard-primary-color, #3b82f6);
+}
+
+/* Gray color variants */
+.border-gray-300 {
+  border-color: var(--gx-wizard-gray-300, #d1d5db);
+}
+
+.bg-gray-300 {
+  background-color: var(--gx-wizard-gray-300, #d1d5db);
+}
+
+.text-gray-400 {
+  color: var(--gx-wizard-gray-400, #9ca3af);
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+/* Utility classes */
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.h-10 {
+  height: 2.5rem;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
+.h-5 {
+  height: 1.25rem;
+}
+
+.w-5 {
+  width: 1.25rem;
+}
+
+.h-0\.5 {
+  height: 0.125rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.w-full {
+  width: 100%;
+}

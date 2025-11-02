@@ -1,0 +1,46 @@
+<div [class]="containerClass()">
+  <!-- Header 區域 -->
+  <header class="wizard-step-header" [class]="customClass().header">
+    <ng-content select="[header]">
+      <gx-wizard-header
+        [wizardId]="wizardId()"
+        [step]="step()"
+        [totalSteps]="totalSteps()"
+        [title]="title()"
+        [description]="description()">
+      </gx-wizard-header>
+    </ng-content>
+  </header>
+
+  <!-- Body/Content 區域 -->
+  <main class="wizard-step-body" [class]="customClass().body">
+    <ng-content select="[content]">
+      <gx-wizard-content
+        [wizardId]="wizardId()"
+        [step]="step()">
+        <!-- 允許進一步自定義內容 -->
+        <ng-content></ng-content>
+      </gx-wizard-content>
+    </ng-content>
+  </main>
+
+  <!-- Actions 區域 -->
+  <div [class]="customClass().actions">
+    <ng-content select="[actions]">
+      <gx-wizard-actions
+        [wizardId]="wizardId()"
+        [step]="step()"
+        [totalSteps]="totalSteps()"
+        [customClass]="{
+          container: customClass().actionContainer,
+          prevButton: customClass().prevButton,
+          nextButton: customClass().nextButton,
+          finishButton: customClass().finishButton
+        }"
+        (next)="handleNext()"
+        (prev)="handlePrev()"
+        (finish)="handleFinish()">
+      </gx-wizard-actions>
+    </ng-content>
+  </div>
+</div>
