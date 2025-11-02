@@ -1,33 +1,33 @@
-import { GxButton } from '@sanring/gx-ui';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, input, NgModule, output, signal, viewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, GxMedia, IGxCard, IGxTag, IGxDescriptionCollapse } from '../model/card.type';
+import { Component, computed, inject, input, output } from '@angular/core';
+import { ALLOWED, GxAction, GxCardLayout, GxCardShape, GxCardVariant, IGxCard, IGxCardColors, IGxTag } from '../model/card.type';
 import { GxCardGroupContext } from '../core/group-context.service';
 import { GxCardConfigService } from '../core/card-config.service';
-import { GxClickableDirective, GxClickableEvent } from '../directives/gx-clickable.directive';
-import { HeightMeasurementService, HeightMeasurementResult } from '../core/height-measurement.service';
+import { GxCardHeader } from '../card-header/gx-card-header';
+import { GxCardContent } from '../card-content/gx-card-content';
+import { GxCardFooter } from '../card-footer/gx-card-footer';
 
 @Component({
   selector: 'gx-card',
   standalone: true,
-  imports: [ CommonModule, GxButton, GxClickableDirective],
+  imports: [CommonModule, GxCardHeader, GxCardContent, GxCardFooter],
   templateUrl: './gx-card.html',
-  styleUrls: ['./gx-card.css', '../directives/gx-clickable.css']
+  styleUrls: ['./gx-card.css']
 })
-export class GxCard implements AfterViewInit, OnDestroy {
+export class GxCard {
   /**
-   * 1. 支援傳入完整的物件 (IGxCard)
-   * 2. 支援投影插槽
+   * 1. 支援傳入完整的物件 (IGxCard) - 向後兼容
+   * 2. 支援投影插槽 - 推薦使用方式
    * @memberof GxCard
    */
-  data   = input<IGxCard | undefined>(undefined);
+  data = input<IGxCard | undefined>(undefined);
 
   /**
-   * 覆蓋群組設定（不傳就繼承群組，群組沒有就 fallback） 
+   * 覆蓋群組設定（不傳就繼承群組，群組沒有就 fallback）
    * @memberof GxCard
    */
   variant = input<GxCardVariant | undefined>(undefined);
-  layout  = input<GxCardLayout  | undefined>(undefined);
+  layout = input<GxCardLayout | undefined>(undefined);
   shape = input<GxCardShape | undefined>(undefined);
 
   /**
@@ -46,19 +46,13 @@ export class GxCard implements AfterViewInit, OnDestroy {
    */
   tagClick = output<{ tag: IGxTag, event: MouseEvent }>();
 
-  // 舊的 avatar/title/subtitle 事件已移除，統一用 headerItemClick
+  /**
+   * Header 子項點擊事件
+   */
+  headerItemClick = output<{ part: 'avatar'|'title'|'subtitle'; value: any; event: MouseEvent }>();
 
   private group = inject(GxCardGroupContext, { optional: true });
   private cardConfig = inject(GxCardConfigService);
-  private heightMeasurement = inject(HeightMeasurementService);
-
-  // ViewChild 用於獲取描述文字容器的引用
-  descriptionContainer = viewChild<ElementRef<HTMLDivElement>>('descriptionContainer');
-
-  // 展開/收起狀態管理
-  private isExpanded = signal(false);
-  // 高度測量結果
-  private measurementResult = signal<HeightMeasurementResult | null>(null);
 
   readonly effectiveVariant = computed<GxCardVariant>(() =>
     this.variant() ?? this.group?.variant() ?? this.cardConfig.config.defaultVariant ?? 'elevated'
@@ -69,11 +63,7 @@ export class GxCard implements AfterViewInit, OnDestroy {
   );
 
   /**
-   * 形狀計算邏輯：
-   * 1. 單卡覆蓋（@Input shape）
-   * 2. data().shape
-   * 3. 群組不提供 shape（由 layout + allowed 決定）
-   * 4. 不相容就自動降級到 allowed 的第一個（你也可改成更聰明的策略）
+   * 形狀計算邏輯
    */
   private readonly rawShape = computed<GxCardShape>(() =>
     this.shape() ?? this.data()?.shape ?? this.cardConfig.config.defaultShape ?? 'classic'
@@ -86,209 +76,42 @@ export class GxCard implements AfterViewInit, OnDestroy {
     return (allowed as readonly string[]).includes(wanted) ? wanted : (allowed[0] as GxCardShape);
   });
 
-/**
-   * Square 卡片只顯示第一個（主要）動作
-   */
-  readonly primaryAction = computed<GxAction | undefined>(() => {
-    const actions = this.data()?.footer?.actions;
-    return actions && actions.length > 0 ? actions[0] : undefined;
-  });
-
   /**
-   * 優化的 computed - 快取常用的資料
+   * 是否為向後兼容模式（使用 data input）
    */
-  readonly headerData = computed(() => this.data()?.header);
-  readonly contentData = computed(() => this.data()?.content);
-  readonly footerData = computed(() => this.data()?.footer);
-
-  /**
-   * 優化的 computed - 避免重複計算
-   */
-  readonly hasAvatar = computed(() => !!this.headerData()?.avatar?.src);
-  readonly hasTitle = computed(() => !!this.headerData()?.title);
-  readonly hasSubtitle = computed(() => !!this.headerData()?.subtitle);
-  readonly hasContentImage = computed(() => !!this.contentData()?.image?.src);
-  readonly hasDescription = computed(() => !!this.contentData()?.description);
-  readonly hasTags = computed(() => !!this.contentData()?.tags?.length);
-  readonly hasActions = computed(() => !!this.footerData()?.actions?.length);
-  /**
-   * 根據 shape 決定是否顯示特定內容
-   */
-  readonly shouldShowContent = computed(() => {
-    const shape = this.resolvedShape();
-    return {
-      avatar: true, // 所有 shape 都顯示頭像
-      headerSubtitle: shape !== 'square', // square 不顯示 header subtitle
-      contentImage: shape === 'classic', // 只有 classic 顯示內容圖片
-      contentSubtitle: shape !== 'square', // square 不顯示 content subtitle  
-      contentDescription: shape !== 'square', // square 不顯示描述
-      allActions: shape === 'classic', // 只有 classic 顯示所有動作
-      limitedActions: shape === 'landscape' // landscape 限制動作數量
-    };
-  });
-
-  /**
-   * 根據配置服務獲取按鈕變體
-   */
-  readonly buttonVariant = computed(() => {
-    return this.cardConfig.getButtonVariant(this.resolvedShape());
-  });
-
-  /**
-   * 根據配置服務限制動作數量
-   */
-  readonly visibleActions = computed(() => {
-    const actions = this.data()?.footer?.actions || [];
-    const shape = this.resolvedShape();
-    const maxActions = this.cardConfig.getMaxActions(shape);
-    
-    return maxActions === Infinity ? actions : actions.slice(0, maxActions);
-  });
-
-  /**
-   * 收合配置計算屬性
-   */
-  readonly collapseConfig = computed(() => {
-    const contentData = this.contentData();
-    const userConfig = contentData?.descriptionCollapse;
-    
-    // 如果用戶明確設定 enabled: false，則不啟用收合功能
-    if (userConfig && userConfig.enabled === false) {
-      return null;
-    }
-    
-    // 如果沒有 description，則不啟用收合功能
-    if (!contentData?.description) {
-      return null;
-    }
-    
-    // 如果用戶設定 enabled: true 或提供了收合配置，則啟用
-    if (userConfig?.enabled === true || userConfig) {
-      const defaultConfig = this.cardConfig.getDefaultCollapseConfig();
-      return {
-        enabled: true,
-        maxLines: userConfig.maxLines ?? defaultConfig.maxLines ?? 3,
-        fontSize: userConfig.fontSize ?? defaultConfig.fontSize ?? 14,
-        lineHeight: userConfig.lineHeight ?? defaultConfig.lineHeight ?? 20,
-        expandText: userConfig.expandText ?? defaultConfig.expandText ?? '展開更多',
-        collapseText: userConfig.collapseText ?? defaultConfig.collapseText ?? '收起內容'
-      } as Required<IGxDescriptionCollapse>;
-    }
-    
-    return null;
-  });
-
-  /**
-   * 文字展開/收起相關計算屬性
-   */
-  readonly expandableText = computed(() => {
-    const description = this.data()?.content?.description;
-    const shape = this.resolvedShape();
-    const collapseConfig = this.collapseConfig();
-    
-    // 如果沒有描述文字或沒有收合配置，則不顯示收合功能
-    if (!description || !collapseConfig) {
-      return {
-        originalText: description || '',
-        truncatedText: description || '',
-        shouldShowButton: false,
-        isExpanded: this.isExpanded(),
-        maxLines: 0,
-        useRealMeasurement: false,
-        collapseConfig: null
-      };
-    }
-
-    const maxLines = collapseConfig.maxLines;
-    const useRealMeasurement = this.cardConfig.isRealHeightMeasurementEnabled();
-    
-    if (useRealMeasurement) {
-      // 使用實際高度測量
-      const measurement = this.measurementResult();
-      if (measurement) {
-        return {
-          originalText: description,
-          truncatedText: measurement.shouldTruncate ? this.truncateTextToLines(description, measurement.maxLines) : description,
-          shouldShowButton: measurement.shouldTruncate,
-          isExpanded: this.isExpanded(),
-          maxLines: measurement.maxLines,
-          useRealMeasurement: true,
-          measurementResult: measurement,
-          collapseConfig
-        };
-      } else {
-        // 測量尚未完成，使用原文字但不顯示按鈕
-        return {
-          originalText: description,
-          truncatedText: description,
-          shouldShowButton: false,
-          isExpanded: this.isExpanded(),
-          maxLines,
-          useRealMeasurement: true,
-          collapseConfig
-        };
-      }
-    } else {
-      // 使用舊的字符數估算方式（作為後備）
-      const estimatedLines = Math.ceil(description.length / 55);
-      const shouldTruncate = estimatedLines > maxLines;
-      const truncateLength = maxLines * 55;
-      const truncatedText = shouldTruncate ? 
-        description.substring(0, truncateLength) + '...' : 
-        description;
-      
-      return {
-        originalText: description,
-        truncatedText,
-        shouldShowButton: shouldTruncate,
-        isExpanded: this.isExpanded(),
-        maxLines,
-        useRealMeasurement: false,
-        collapseConfig
-      };
-    }
-  });
-
-  readonly displayText = computed(() => {
-    const { originalText, truncatedText, isExpanded } = this.expandableText();
-    return isExpanded ? originalText : truncatedText;
-  });
-
-  readonly expandButtonText = computed(() => {
-    const isExpanded = this.isExpanded();
-    const collapseConfig = this.collapseConfig();
-    
-    if (collapseConfig) {
-      return isExpanded ? collapseConfig.collapseText : collapseConfig.expandText;
-    }
-    
-    // 後備方案
-    const config = this.cardConfig.config.expandable?.buttonText;
-    return isExpanded ? 
-      (config?.collapse || '收起內容') : 
-      (config?.expand || '展開更多');
-  });
-
-
-  readonly isCustom = computed(() => this.resolvedShape() === 'custom');
+  readonly isLegacyMode = computed(() => !!this.data());
 
   /**
    * 是否可點擊（用於控制 cursor 和樣式）
    */
   clickable = input<boolean>(false);
 
-  // 舊的 enableAvatarClick/enableTitleClick/enableSubtitleClick 已移除，改用 headerClickable
-
   /**
-   * 新：合併 Header 點擊設定（可布林或細粒度設定）
-   * 後續可逐步取代 enableAvatar/Title/Subtitle
+   * Header 點擊設定（傳遞給子組件）
    */
   headerClickable = input<boolean | { avatar?: boolean; title?: boolean; subtitle?: boolean }>(false);
 
   /**
-   * 新：單一 Header 點擊事件（保留舊事件並行一段時間）
+   * 顏色配置
    */
-  headerItemClick = output<{ part: 'avatar'|'title'|'subtitle'; value: any; event: MouseEvent }>();
+  colors = input<IGxCardColors | undefined>(undefined);
+
+  /**
+   * CSS 樣式綁定（用於動態顏色）
+   */
+  get cardStyles() {
+    const colors = this.colors();
+    if (!colors) return {};
+
+    return {
+      '--gx-card-background': colors.background,
+      '--gx-card-text-color': colors.textColor,
+      '--gx-card-border-color': colors.borderColor,
+      '--gx-card-title-color': colors.titleColor,
+      '--gx-card-subtitle-color': colors.subtitleColor,
+      '--gx-card-hover-background': colors.hoverBackground
+    };
+  }
 
   get classes() {
     const baseClasses = [
@@ -297,7 +120,6 @@ export class GxCard implements AfterViewInit, OnDestroy {
       this.cardConfig.getCssClass(`shape-${this.resolvedShape()}`)
     ];
 
-    // 如果卡片可點擊，添加可點擊類別
     if (this.clickable()) {
       baseClasses.push('gx-card-clickable');
     }
@@ -305,80 +127,39 @@ export class GxCard implements AfterViewInit, OnDestroy {
     return baseClasses.join(' ');
   }
 
-  onActionPressed(action: GxAction, ev: MouseEvent) {
-    ev.stopPropagation();
-    if (action.disabled) return; // 雙保險
+  /**
+   * 處理動作點擊事件（從子組件冒泡）
+   */
+  onActionPressed(action: GxAction) {
     this.actions.emit(action);
   }
 
   /**
-   * 切換文字展開/收起狀態
+   * 處理 Tag 點擊事件（從子組件冒泡）
    */
-  toggleExpand() {
-    this.isExpanded.update(value => !value);
+  onTagClick(event: { tag: IGxTag, event: MouseEvent }) {
+    this.tagClick.emit(event);
   }
 
   /**
-   * 處理 Tag 點擊事件
+   * 處理 Header 子項點擊事件（從子組件冒泡）
    */
-  onTagClick(tag: IGxTag, event: MouseEvent) {
-    this.tagClick.emit({ tag, event });
-  }
-
-  /**
-   * 處理 Avatar 點擊事件
-   */
-  onAvatarClick(event: GxClickableEvent<GxMedia>) {
-    event.event.stopPropagation();
-    this.emitHeaderItemClick('avatar', event.data, event.event);
-  }
-
-  /**
-   * 處理 Title 點擊事件
-   */
-  onTitleClick(event: GxClickableEvent<string>) {
-    event.event.stopPropagation();
-    const title = event.data;
-    if (title) {
-      this.emitHeaderItemClick('title', title, event.event);
-    }
-  }
-
-  /**
-   * 處理 Subtitle 點擊事件
-   */
-  onSubtitleClick(event: GxClickableEvent<string>) {
-    event.event.stopPropagation();
-    const subtitle = event.data;
-    if (subtitle) {
-      this.emitHeaderItemClick('subtitle', subtitle, event.event);
-    }
+  onHeaderItemClick(event: { part: 'avatar'|'title'|'subtitle'; value: any; event: MouseEvent }) {
+    this.headerItemClick.emit(event);
   }
 
   /**
    * 處理卡片點擊事件
    */
   onCardClick(event: MouseEvent) {
-    // 只有在可點擊且點擊的不是互動元素時才觸發
     if (this.clickable() && !this.isInteractiveEvent(event)) {
       this.cardClick.emit(event);
     }
   }
 
   /**
-   * 檢查點擊的元素是否為互動元素 - 優化版本
+   * 檢查是否為互動元素
    */
-  private readonly interactiveSelectors = [
-    'button', 'gx-button', 'gx-tag', 'a', 'input', 'select', 'textarea'
-  ];
-
-  private readonly interactiveClasses = [
-    'gx-expand-button',
-    'gx-card-header-img', 
-    'title',
-    'subtitle'
-  ];
-
   private isInteractiveEvent(event: MouseEvent): boolean {
     const TAGS = ['button', 'a', 'input', 'select', 'textarea', 'gx-button', 'gx-tag'];
     const path = (event as any).composedPath?.() as Array<EventTarget> | undefined;
@@ -391,132 +172,10 @@ export class GxCard implements AfterViewInit, OnDestroy {
       el.closest?.('[data-interactive="true"]')
     );
   }
+
   private upChain(node: Element) {
-  const chain: Element[] = [];
-  for (let cur: Element | null = node; cur; cur = cur.parentElement) chain.push(cur);
-  return chain;
-}
-
-  /** 是否啟用指定 header 區塊的點擊（合併新舊設定） */
-  isHeaderClickEnabledFor(part: 'avatar'|'title'|'subtitle'): boolean {
-    const cfg = this.headerClickable();
-    if (typeof cfg === 'boolean') return cfg;
-    return Boolean(cfg?.[part]);
-  }
-
-  /** 統一發送 header 子項點擊事件 */
-  private emitHeaderItemClick(part: 'avatar'|'title'|'subtitle', value: any, ev: MouseEvent) {
-    this.headerItemClick.emit({ part, value, event: ev });
-  }
-
-  /** Header 容器點擊（用於 href 導向） */
-  onHeaderContainerClick(e: GxClickableEvent) {
-    this.onHeaderClick(e.event);
-  }
-
-  onHeaderClick(event: MouseEvent) {
-    const href = this.data()?.header?.href;
-    const target = this.data()?.header?.target || '_self';
-    if (!href) return;
-    if (this.isInteractiveEvent(event)) return;
-    event.stopPropagation();
-    if (typeof window !== 'undefined') {
-      try { window.open(href, target); } catch {}
-    }
-  }
-
-    /** 可選：把 GxActionIntent -> GxButtonIntent 的映射（如果色系想對齊） */
-    mapIntent(intent?: 'primary'|'secondary'|'danger'): 'info'|'success'|'warning'|'error' {
-      switch (intent) {
-        case 'primary':   return 'info';
-        case 'secondary': return 'success';
-        case 'danger':    return 'error';
-        default:          return 'info';
-      }
-    }
-
-  /**
-   * Angular 生命週期 - 視圖初始化後
-   */
-  ngAfterViewInit(): void {
-    // 如果啟用實際高度測量，開始測量
-    if (this.cardConfig.isRealHeightMeasurementEnabled()) {
-      this.setupHeightMeasurement();
-    }
-  }
-
-  /**
-   * Angular 生命週期 - 組件銷毀
-   */
-  ngOnDestroy(): void {
-    this.cleanupHeightMeasurement();
-  }
-
-  /**
-   * 設置高度測量
-   */
-  private setupHeightMeasurement(): void {
-    const container = this.descriptionContainer();
-    const collapseConfig = this.collapseConfig();
-    
-    if (!container?.nativeElement || !collapseConfig) return;
-
-    const element = container.nativeElement;
-    const description = this.data()?.content?.description;
-    if (!description) return;
-
-    // 執行初始測量
-    this.performHeightMeasurement(element, description, collapseConfig);
-
-    // 監聽容器大小變化
-    this.heightMeasurement.observeElementResize(element, () => {
-      this.performHeightMeasurement(element, description, collapseConfig);
-    });
-  }
-
-  /**
-   * 執行高度測量
-   */
-  private performHeightMeasurement(element: HTMLElement, text: string, collapseConfig: Required<IGxDescriptionCollapse>): void {
-    const maxLines = collapseConfig.maxLines;
-    const lineHeight = collapseConfig.lineHeight;
-    const containerPadding = this.cardConfig.getContainerPadding();
-
-    const result = this.heightMeasurement.measureTextHeight(
-      text,
-      element,
-      maxLines,
-      lineHeight,
-      containerPadding
-    );
-
-    this.measurementResult.set(result);
-  }
-
-  /**
-   * 清理高度測量相關資源
-   */
-  private cleanupHeightMeasurement(): void {
-    const container = this.descriptionContainer();
-    if (container?.nativeElement) {
-      this.heightMeasurement.unobserveElementResize(container.nativeElement);
-    }
-  }
-
-  /**
-   * 根據行數截斷文字
-   */
-  private truncateTextToLines(text: string, maxLines: number): string {
-    // 這裡可以使用更精確的算法
-    // 暫時使用簡化版本，實際應該根據實際測量結果來截斷
-    const wordsPerLine = 15; // 估算每行字數
-    const maxWords = maxLines * wordsPerLine;
-    const words = text.split(/\s+/);
-    
-    if (words.length <= maxWords) {
-      return text;
-    }
-    
-    return words.slice(0, maxWords).join(' ') + '...';
+    const chain: Element[] = [];
+    for (let cur: Element | null = node; cur; cur = cur.parentElement) chain.push(cur);
+    return chain;
   }
 }

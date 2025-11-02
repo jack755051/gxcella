@@ -1,0 +1,20 @@
+<div class="gx-card-footer">
+  <!-- 投影插槽優先 -->
+  <ng-content></ng-content>
+
+  <!-- 動作按鈕 -->
+  @if (actionsData.length > 0) {
+    <div class="gx-card-actions">
+      @for (action of visibleActions(); track action.id) {
+        <gx-button
+          [variant]="effectiveButtonVariant()"
+          [intent]="mapIntent(action.intent)"
+          [disabled]="action.disabled ?? false"
+          [tooltip]="action.ariaLabel || action.label"
+          (pressed)="onActionPressed(action, $event)">
+          {{ action.label }}
+        </gx-button>
+      }
+    </div>
+  }
+</div>

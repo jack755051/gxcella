@@ -1,0 +1,77 @@
+.gx-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.gx-card-header-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.gx-card-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.gx-card-header-info .title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--gx-card-title-color, #1a1a1a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gx-card-header-info .subtitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--gx-card-subtitle-color, #666);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 點擊態 */
+.gx-card-header[data-clickable="true"] {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.gx-card-header[data-clickable="true"]:hover {
+  background-color: var(--gx-card-hover-bg, rgba(0, 0, 0, 0.04));
+}
+
+.gx-card-header-img[data-clickable="true"] {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.gx-card-header-img[data-clickable="true"]:hover {
+  opacity: 0.8;
+}
+
+.title[data-clickable="true"],
+.subtitle[data-clickable="true"] {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.title[data-clickable="true"]:hover {
+  color: var(--gx-card-title-hover-color, #0066cc);
+}
+
+.subtitle[data-clickable="true"]:hover {
+  color: var(--gx-card-subtitle-hover-color, #333);
+}

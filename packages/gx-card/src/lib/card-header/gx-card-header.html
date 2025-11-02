@@ -1,0 +1,43 @@
+<div class="gx-card-header"
+     gxClickable
+     gxClickableType="header"
+     [gxClickableDisabled]="!hrefUrl"
+     (gxClick)="onHeaderContainerClick($event)">
+
+  <!-- 投影插槽優先 -->
+  <ng-content></ng-content>
+
+  <!-- Avatar -->
+  @if (avatarData) {
+    <img class="gx-card-header-img"
+         [src]="avatarData.src"
+         [alt]="avatarData.alt || ''"
+         gxClickable
+         [gxClickableDisabled]="!isHeaderClickEnabledFor('avatar')"
+         [gxClickableData]="avatarData"
+         gxClickableType="avatar"
+         (gxClick)="onAvatarClick($event)" />
+  }
+
+  <div class="gx-card-header-info">
+    <!-- Title -->
+    @if (titleText) {
+      <h3 class="title"
+          gxClickable
+          [gxClickableDisabled]="!isHeaderClickEnabledFor('title')"
+          [gxClickableData]="titleText"
+          gxClickableType="text"
+          (gxClick)="onTitleClick($event)">{{ titleText }}</h3>
+    }
+
+    <!-- Subtitle -->
+    @if (subtitleText) {
+      <p class="subtitle"
+         gxClickable
+         [gxClickableDisabled]="!isHeaderClickEnabledFor('subtitle')"
+         [gxClickableData]="subtitleText"
+         gxClickableType="text"
+         (gxClick)="onSubtitleClick($event)">{{ subtitleText }}</p>
+    }
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="gx-card-content">
+  <!-- 投影插槽優先 -->
+  <ng-content></ng-content>
+
+  <!-- 圖片 -->
+  @if (imageData) {
+    <img class="gx-card-media"
+         [src]="imageData.src"
+         [alt]="imageData.alt || ''"
+         [attr.data-ratio]="imageData.ratio || '16:9'" />
+  }
+
+  <!-- 標題 -->
+  @if (titleText) {
+    <h4 class="gx-card-content-title">{{ titleText }}</h4>
+  }
+
+  <!-- 副標題 -->
+  @if (subtitleText) {
+    <p class="gx-card-content-subtitle">{{ subtitleText }}</p>
+  }
+
+  <!-- 標籤 -->
+  @if (tagsData && tagsData.length > 0) {
+    <div class="gx-card-tags">
+      @for (tag of tagsData; track tag.id) {
+        <gx-button
+          [variant]="'tag'"
+          [intent]="tag.intent ?? 'info'"
+          [disabled]="tag.disabled ?? false"
+          (pressed)="onTagClick(tag, $event)">
+          {{ tag.label }}
+        </gx-button>
+      }
+    </div>
+  }
+
+  <!-- 描述文字 -->
+  @if (descriptionText) {
+    <div class="gx-card-description"
+         #descriptionContainer
+         [class.expanded]="expandableText().isExpanded"
+         [class.collapsible]="expandableText().collapseConfig"
+         [style.--max-lines]="expandableText().maxLines"
+         [style.--font-size]="expandableText().collapseConfig?.fontSize ? expandableText().collapseConfig.fontSize + 'px' : null"
+         [style.--line-height]="expandableText().collapseConfig?.lineHeight ? expandableText().collapseConfig.lineHeight + 'px' : null">
+      <p class="description-text">{{ displayText() }}</p>
+    </div>
+    @if (expandableText().shouldShowButton) {
+      <div class="gx-expand-button-container">
+        <button
+          type="button"
+          class="gx-expand-button"
+          (click)="toggleExpand()">
+          {{ expandButtonText() }}
+        </button>
+      </div>
+    }
+  }
+</div>

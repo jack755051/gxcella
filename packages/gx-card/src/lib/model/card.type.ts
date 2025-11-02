@@ -12,6 +12,24 @@ export interface IGxTag {
 }
 
 export type GxCardVariant = 'elevated' | 'outlined' | 'flat';
+
+/**
+ * 卡片顏色配置介面
+ */
+export interface IGxCardColors {
+  /** 背景色 */
+  background?: string;
+  /** 文字顏色 */
+  textColor?: string;
+  /** 邊框顏色 */
+  borderColor?: string;
+  /** 標題顏色 */
+  titleColor?: string;
+  /** 副標題顏色 */
+  subtitleColor?: string;
+  /** 懸停背景色 */
+  hoverBackground?: string;
+}
 /**
  * 卡片群組的排列方式
  * grid（網格排列）

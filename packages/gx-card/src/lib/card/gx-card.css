@@ -1,331 +1,348 @@
+/* ============================================
+   GX-CARD STYLES
+   ============================================ */
 
-:host{
-    --square-padding: 8px;
-    --square-border-radius: 4px;
+/* --------------------------------------------
+   1. CSS 變數定義
+   -------------------------------------------- */
+:host {
+  /* === 顏色自定義變數（可被外部覆蓋） === */
+  --gx-card-background: var(--gx-color-accent-50, #f0f8ff);
+  --gx-card-text-color: var(--gx-color-gray-900, #1a1a1a);
+  --gx-card-border-color: var(--gx-color-accent-200, #b3d9ed);
+  --gx-card-title-color: var(--gx-color-gray-800, #333);
+  --gx-card-subtitle-color: var(--gx-color-gray-600, #666);
+  --gx-card-hover-background: var(--gx-color-accent-100, #d4e5ed);
 
-    --landscape-padding: 12px;
-    --landscape-border-radius: 4px;
+  /* === 間距與尺寸 === */
+  --border-width: 2px;
+  --horizontal-gap: 16px;
+  --vertical-gap: 16px;
+  --grid-gap: 16px;
 
-    --horizontal-gap: 16px;
-    --vertical-gap: 16px;
-    --grid-gap: 16px;
-    
+  /* === Square 卡片樣式 === */
+  --square-padding: 8px;
+  --square-border-radius: 4px;
 
-    --border-width: 2px;
+  /* === Landscape 卡片樣式 === */
+  --landscape-padding: 12px;
+  --landscape-border-radius: 4px;
 
+  /* === Classic 卡片樣式 === */
+  --classic-max-width: 400px;
+  --classic-border-radius: 12px;
+  --classic-padding-x: 16px;
+  --classic-padding-y: 8px;
+  --classic-avatar-size: 56px;
+  --classic-shadow-hover: 0 4px 12px rgba(68, 125, 155, 0.15);
 
-    /* public */
-    --info-title-color: var(--gx-color-gray-800);
-    --info-title-font-size: 18px;
-    --info-title-font-weight: bold;
-    --info-subtitle-color: var(--gx-color-gray-600);
-    --info-subtitle-font-size: 12px;
-    --info-subtitle-font-weight: normal;
-    --info-footer-action-gap: 12px;
+  /* === Header 樣式 === */
+  --info-title-font-size: 18px;
+  --info-title-font-weight: bold;
+  --info-subtitle-font-size: 12px;
+  --info-subtitle-font-weight: normal;
 
-    --tags-gap: 12px;
-    --tags-padding: 4px 8px;
+  /* === Footer 樣式 === */
+  --info-footer-action-gap: 12px;
 
-    --description-padding: 8px 4px;
+  /* === Tags 樣式 === */
+  --tags-gap: 12px;
+  --tags-padding: 4px 8px;
 
-    --expand-button-container-padding: 8px;
-    --expand-button-font-size: 14px;
-    --expand-button-text-color: var(--gx-color-accent-500, #007acc);
-    --expand-button-hover-text-color: var(--gx-color-accent-700, #005999);
-    --expand-button-focus-outline-color: var(--gx-color-accent-500, #007acc);
+  /* === Description 樣式 === */
+  --description-padding: 8px 4px;
 
-    /* classic */
-
-    --classic-background: var(--gx-color-accent-50);
-    --classic-max-width: 400px;
-    --classic-border-radius: 12px;
-    --classic-border: var(--border-width) solid var(--gx-color-accent-200);
-    --classic-padding-x: 16px;
-    --classic-avatar-size: 56px;
-    --classic-padding-y: 8px;
-      /* Hover 狀態 */
-    --classic-background-hover: var(--gx-color-accent-100); /* #D4E5ED */
-    --classic-border-hover: var(--border-width) solid var(--gx-color-accent-300); /* #7EB1C8 */
-    --classic-shadow-hover: 0 4px 12px rgba(68, 125, 155, 0.15); /* accent-500 with opacity */
-
-
+  /* === 展開按鈕樣式 === */
+  --expand-button-container-padding: 8px;
+  --expand-button-font-size: 14px;
+  --expand-button-text-color: var(--gx-color-accent-500, #007acc);
+  --expand-button-hover-text-color: var(--gx-color-accent-700, #005999);
+  --expand-button-focus-outline-color: var(--gx-color-accent-500, #007acc);
 }
 
+/* --------------------------------------------
+   2. 基礎佈局
+   -------------------------------------------- */
 .gx-card,
 .gx-card-header,
 .gx-shape,
-.gx-card-header,
 .gx-card-header-info,
 .gx-card-actions,
 .gx-expand-button-container,
 .gx-card-tags {
-    display: flex;
+  display: flex;
 }
+
 .gx-expand-button-container,
 .gx-card-tags {
-    width: 100%;
+  width: 100%;
 }
 
-.gx-card-actions{
-    justify-content: center;
+.gx-card-actions {
+  justify-content: center;
 }
 
-/* Card shape styles */
+/* --------------------------------------------
+   3. Classic Shape 樣式
+   -------------------------------------------- */
 .gx-shape-classic {
-    flex-direction: column;
-    width: auto;
-    max-width: var(--classic-max-width,400px);
-    background-color: var(--classic-background, gray);
-    border: var(--classic-border);
-    border-radius: var(--classic-border-radius, 12px);
-    padding: var(--classic-padding-x, 16px);
-    /* 基礎過渡效果 */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    /* 預設不顯示 pointer cursor，避免與內部按鈕衝突 */
+  flex-direction: column;
+  width: auto;
+  max-width: var(--classic-max-width);
+  background-color: var(--gx-card-background);
+  color: var(--gx-card-text-color);
+  border: var(--border-width) solid var(--gx-card-border-color);
+  border-radius: var(--classic-border-radius);
+  padding: var(--classic-padding-x);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 只有當卡片本身可點擊時才顯示 pointer cursor */
+/* Classic - 可點擊狀態 */
 .gx-shape-classic.gx-card-clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-/* 在非互動區域顯示 pointer cursor（僅當卡片可點擊時） */
 .gx-shape-classic.gx-card-clickable .gx-card-header,
 .gx-shape-classic.gx-card-clickable .gx-card-content > :not(button):not(gx-button):not(gx-tag):not(.gx-card-tags):not(.gx-expand-button-container) {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-/* Header 可點擊樣式 - 現在由 directive 處理 */
-.gx-card-header.gx-header-clickable {
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    border-radius: 8px;
-    padding: 4px;
-    margin: -4px;
+/* Classic - 懸停狀態 */
+.gx-shape-classic:hover {
+  border-color: var(--gx-color-accent-300, #7eb1c8);
+  box-shadow: var(--classic-shadow-hover);
 }
 
-.gx-card-header.gx-header-clickable:hover {
-    background-color: var(--gx-color-accent-50, rgba(0, 122, 204, 0.05));
-}
-
-.gx-shape-classic:hover{
-    /* background-color: var(--classic-background-hover, #D4E5ED); */
-    border: var(--classic-border-hover, 2px solid #7EB1C8);
-    box-shadow: var(--classic-shadow-hover, 0 4px 12px rgba(68, 125, 155, 0.15));
-}
-
+/* Classic - 內部區塊 */
 .gx-shape-classic .gx-card-header,
 .gx-shape-classic .gx-card-content,
 .gx-shape-classic .gx-card-footer {
-    width: 100%;
-    padding: var(--classic-padding-y, 8px) 0;
+  width: 100%;
+  padding: var(--classic-padding-y) 0;
 }
 
-.gx-shape-classic .gx-card-header .gx-card-header-img{
-    width: var(--classic-avatar-size, 40px);
-    height: var(--classic-avatar-size, 40px);
-    background-color: bisque;
-    aspect-ratio: 1 / 1;    
-    border-radius: 50%;
-    margin-right: 12px;
-    object-fit: cover;
+/* Classic - Header 圖片 */
+.gx-shape-classic .gx-card-header .gx-card-header-img {
+  width: var(--classic-avatar-size);
+  height: var(--classic-avatar-size);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+  background-color: bisque;
 }
 
-.gx-shape-classic .gx-card-header .gx-card-header-info{
-    flex-direction: column;
-    justify-content: start;
+/* Classic - Header Info */
+.gx-shape-classic .gx-card-header .gx-card-header-info {
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.gx-shape-classic .gx-card-header .gx-card-header-info .title{
-    color: var(--info-title-color,#000000);
-    font-size: var(--info-title-font-size);
-    font-weight: var(--info-title-font-weight);
-}
-.gx-shape-classic .gx-card-header .gx-card-header-info .subtitle{
-    color: var(--info-subtitle-color,#676767);
-    font-size: var(--info-subtitle-font-size);
-    font-weight: var(--info-subtitle-font-weight);
+.gx-shape-classic .gx-card-header .gx-card-header-info .title {
+  color: var(--gx-card-title-color);
+  font-size: var(--info-title-font-size);
+  font-weight: var(--info-title-font-weight);
+  margin: 0;
 }
 
-.gx-shape-classic .gx-card-footer .gx-card-actions{
-    gap:var(--info-footer-action-gap,12px);
+.gx-shape-classic .gx-card-header .gx-card-header-info .subtitle {
+  color: var(--gx-card-subtitle-color);
+  font-size: var(--info-subtitle-font-size);
+  font-weight: var(--info-subtitle-font-weight);
+  margin: 0;
 }
 
-/* 展開按鈕樣式 */
-.gx-expand-button {
-    background: none;
-    border: none;
-    color: var(--gx-color-accent-600, #447b9b);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 4px 0;
-    margin-top: 8px;
-    text-decoration: none;
-    transition: color 0.2s ease;
+/* Classic - Footer Actions */
+.gx-shape-classic .gx-card-footer .gx-card-actions {
+  gap: var(--info-footer-action-gap);
 }
 
-.gx-expand-button:hover {
-    color: var(--gx-color-accent-700, #2e5a75);
-    text-decoration: underline;
-}
-
-.gx-expand-button:focus {
-    outline: 2px solid var(--gx-color-accent-500, #5a92b3);
-    outline-offset: 2px;
-    border-radius: 2px;
-}
-
-
+/* --------------------------------------------
+   4. Square Shape 樣式
+   -------------------------------------------- */
 .gx-shape-square {
-    flex-direction: column;
-    aspect-ratio: 1;
-    width: auto;
-    padding: var(--square-padding, 8px);
-    border-radius: var(--square-border-radius, 4px);
-    background: var(--gx-card-background, gray);
+  flex-direction: column;
+  aspect-ratio: 1;
+  width: auto;
+  padding: var(--square-padding);
+  border-radius: var(--square-border-radius);
+  background: var(--gx-card-background);
+  color: var(--gx-card-text-color);
+  border: var(--border-width) solid var(--gx-card-border-color);
 }
 
+/* --------------------------------------------
+   5. Landscape Shape 樣式
+   -------------------------------------------- */
 .gx-shape-landscape {
-    flex-direction: row;
-    width: 100%;
-    padding: var(--landscape-padding, 12px);
-    border-radius: var(--landscape-border-radius, 4px);
-    background: var(--gx-card-background, gray);
+  flex-direction: row;
+  width: 100%;
+  padding: var(--landscape-padding);
+  border-radius: var(--landscape-border-radius);
+  background: var(--gx-card-background);
+  color: var(--gx-card-text-color);
+  border: var(--border-width) solid var(--gx-card-border-color);
 }
 
 .gx-shape-landscape .gx-card-header {
-    flex-direction: column;
-    width: 30%;
-    margin-right: 16px;
+  flex-direction: column;
+  width: 30%;
+  margin-right: 16px;
 }
 
 .gx-shape-landscape .gx-card-content {
-    flex: 1;
+  flex: 1;
 }
 
-/* Layout styles for card groups */
+/* --------------------------------------------
+   6. Header 可點擊樣式
+   -------------------------------------------- */
+.gx-card-header.gx-header-clickable {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
+  padding: 4px;
+  margin: -4px;
+}
+
+.gx-card-header.gx-header-clickable:hover {
+  background-color: var(--gx-color-accent-50, rgba(0, 122, 204, 0.05));
+}
+
+/* --------------------------------------------
+   7. Card Group 佈局
+   -------------------------------------------- */
 .gx-layout-horizontal {
-    display: flex;
-    flex-direction: row;
-    gap: var(--horizontal-gap, 16px);
+  display: flex;
+  flex-direction: row;
+  gap: var(--horizontal-gap);
 }
 
 .gx-layout-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: var(--vertical-gap, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--vertical-gap);
 }
 
 .gx-layout-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--grid-gap, 16px);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--grid-gap);
 }
 
-.gx-card-tags{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    padding: var(--tags-padding, 4px 8px);
-    gap: var(--tags-gap, 8px);
+/* --------------------------------------------
+   8. Tags 樣式
+   -------------------------------------------- */
+.gx-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: var(--tags-padding);
+  gap: var(--tags-gap);
 }
 
-/* Content Image styles */
+/* --------------------------------------------
+   9. Media 樣式（圖片）
+   -------------------------------------------- */
 .gx-card-media {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 12px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
-/* Image aspect ratio variants */
+/* Media - 長寬比變體 */
 .gx-card-media[data-ratio="1:1"] {
-    aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 1;
 }
 
 .gx-card-media[data-ratio="4:3"] {
-    aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 3;
 }
 
 .gx-card-media[data-ratio="16:9"] {
-    aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 9;
 }
 
 .gx-card-media[data-ratio="21:9"] {
-    aspect-ratio: 21 / 9;
+  aspect-ratio: 21 / 9;
 }
 
 .gx-card-media[data-ratio="3:4"] {
-    aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 4;
 }
 
 .gx-card-media[data-ratio="9:16"] {
-    aspect-ratio: 9 / 16;
+  aspect-ratio: 9 / 16;
 }
 
 .gx-card-media[data-ratio="auto"] {
-    aspect-ratio: auto;
+  aspect-ratio: auto;
 }
 
-
-/* Text expand/collapse styles */
+/* --------------------------------------------
+   10. Description 樣式（文字展開/收起）
+   -------------------------------------------- */
 .gx-card-description {
-    position: relative;
-    overflow: hidden;
-    padding: var(--description-padding);
+  position: relative;
+  overflow: hidden;
+  padding: var(--description-padding);
 }
 
 .gx-card-description .description-text {
-    margin: 0;
-    line-height: 1.5;
+  margin: 0;
+  line-height: 1.5;
 }
 
-/* 只有啟用收合功能時才應用截斷樣式 */
+/* Description - 收合狀態 */
 .gx-card-description.collapsible .description-text {
-    font-size: var(--font-size, 14px);
-    line-height: var(--line-height, 20px);
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--max-lines, 3);
-    line-clamp: var(--max-lines, 3);
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: var(--font-size, 14px);
+  line-height: var(--line-height, 20px);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--max-lines, 3);
+  line-clamp: var(--max-lines, 3);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* Description - 展開狀態 */
 .gx-card-description.collapsible.expanded .description-text {
-    display: block;
-    -webkit-line-clamp: none;
-    line-clamp: none;
-    overflow: visible;
+  display: block;
+  -webkit-line-clamp: none;
+  line-clamp: none;
+  overflow: visible;
+}
+
+/* --------------------------------------------
+   11. 展開按鈕樣式
+   -------------------------------------------- */
+.gx-expand-button-container {
+  justify-content: flex-end;
+  padding-right: var(--expand-button-container-padding);
 }
 
 .gx-expand-button {
-    background: none;
-    border: none;
-    color: var(--expand-button-text-color, #007acc);
-    cursor: pointer;
-    font-size: var(--expand-button-font-size, 14px);
-    font-weight: 500;
-    padding: 4px 0;
-    margin-top: 8px;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.gx-expand-button-container{
-    justify-content: flex-end;
-    padding-right: var(--expand-button-container-padding, 0 8px)  ;
+  background: none;
+  border: none;
+  color: var(--expand-button-text-color);
+  cursor: pointer;
+  font-size: var(--expand-button-font-size);
+  font-weight: 500;
+  padding: 4px 0;
+  margin-top: 8px;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .gx-expand-button:hover {
-    color: var(--expand-button-hover-text-color, #005999);
-    text-decoration: none;
+  color: var(--expand-button-hover-text-color);
+  text-decoration: underline;
 }
 
 .gx-expand-button:focus {
-    outline: 2px solid var(--expand-button-focus-outline-color, #007acc);
-    outline-offset: 2px;
-    border-radius: 2px;
+  outline: 2px solid var(--expand-button-focus-outline-color);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
