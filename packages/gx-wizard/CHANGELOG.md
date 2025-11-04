@@ -1,5 +1,11 @@
 # @sanring/gx-wizard
 
+## 0.0.3
+
+### Patch Changes
+
+- 110b3ac: fix readme
+
 ## 0.0.2
 
 ### Patch Changes
