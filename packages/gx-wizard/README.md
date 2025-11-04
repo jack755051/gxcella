@@ -1,6 +1,6 @@
 # GX-Wizard
 
-基於 TPI ICR-frontend Wizard 組件的 Angular 版本實現。
+基於 Angular 實現的步進器組件。
 
 ## ✅ 已完成的組件
 

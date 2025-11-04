@@ -1,6 +1,6 @@
 # GX-Table
 
-基於 TPI ICR-frontend Table 組件的 Angular 版本實現。
+基於 Angular 實現的表單組件。
 
 ## ✅ 已完成的組件
 
