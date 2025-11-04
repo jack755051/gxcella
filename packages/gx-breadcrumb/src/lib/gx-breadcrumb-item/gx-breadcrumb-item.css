@@ -39,7 +39,7 @@
     line-height: 1;
     padding: 0 6px;
     user-select: none;
-    color: var(--gx-bc-muted);
+    color: var(--gx-bc-muted, #6b7280); /* 添加回退值，確保即使沒有定義 CSS 變數也能顯示 */
 }
 
 /* ---------------------------------------
@@ -69,13 +69,13 @@
 /* 可點狀態 */
 .gx-breadcrumb-item-available {
     text-decoration: none;
-    color: var(--gx-bc-muted);
+    color: var(--gx-bc-muted, #6b7280);  /* 添加回退值 */
     padding: 2px 4px;                                    /* 放大時不會貼到分隔符 */
 }
 
 /* hover：對整個項目一起動，避免 label/icon 分別放大造成抖動 */
 .gx-breadcrumb-item-available:hover {
-    color: var(--gx-bc-hover);
+    color: var(--gx-bc-hover, #3b82f6);  /* 添加回退值 */
 }
 .gx-breadcrumb-item-available:hover .gx-breadcrumb-item-inner {
     transform: scale(var(--gx-bc-scale));                /* ✅ 中心縮放 */
@@ -83,7 +83,7 @@
 
 /* focus：鍵盤導覽可見（a 元素） */
 .gx-breadcrumb-item-available:focus-visible {
-    outline: 2px solid var(--gx-bc-hover);
+    outline: 2px solid var(--gx-bc-hover, #3b82f6);  /* 添加回退值 */
     outline-offset: 2px;
     border-radius: 6px;
 }
@@ -91,8 +91,8 @@
 /* 不可點/當前頁 */
 .gx-breadcrumb-item-disable {
     cursor: default;
-    color: var(--gx-bc-fg);
-    font-weight: var(--gx-active-weight);
+    color: var(--gx-bc-fg, #111827);  /* 添加回退值 */
+    font-weight: var(--gx-active-weight, 800);  /* 添加回退值 */
     opacity: .85;                 /* 些微淡化（仍保留對比） */
 }
 

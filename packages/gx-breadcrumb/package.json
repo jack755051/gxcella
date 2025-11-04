@@ -20,11 +20,14 @@
   "peerDependencies": {
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",
+    "@angular/router": "^20.1.0",
     "@sanring/gx-styles": "1.0.2",
-    "lucide-angular": "^0.539.0",
     "tailwindcss": "^4.1.11"
   },
   "peerDependenciesMeta": {
+    "lucide-angular": {
+      "optional": true
+    },
     "tailwindcss": {
       "optional": true
     }

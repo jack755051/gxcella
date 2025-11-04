@@ -1,15 +1,26 @@
-import {Component, inject, Input, Output, EventEmitter, HostBinding} from '@angular/core';
+import {Component, inject, Input, Output, EventEmitter, HostBinding, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {CommonModule, NgClass} from "@angular/common";
-import { LucideAngularModule } from 'lucide-angular';
 import {GxBreadcrumbSeparator, GxTheme, GxVariant, IGxBreadCrumb} from "./model/gx-breadcrumb.type";
 import {GxBreadcrumbItem} from "./gx-breadcrumb-item/gx-breadcrumb-item";
 import {SEP_MAP} from "./model/gx-breadcrumb.constants";
 import { GxBreadcrumbService } from './services/breadcrumb.services';
 
+/**
+ * GxBreadcrumb Component
+ *
+ * 麵包屑導航組件，支援兩種模式：
+ * 1. 手動模式 - 提供 [data] input
+ * 2. 自動模式 - 基於路由自動生成（需配置路由 data.breadcrumb）
+ *
+ * 圖標支援：
+ * - iconImg: Lucide 圖標（可選，需安裝 lucide-angular）
+ * - icon: 文字/Emoji 圖標（無需額外依賴）
+ */
 @Component({
   selector: 'gx-breadcrumb',
   standalone: true,
-  imports: [CommonModule, NgClass, LucideAngularModule, GxBreadcrumbItem],
+  imports: [CommonModule, NgClass, GxBreadcrumbItem],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // 允許 lucide-icon 元素（當用戶安裝 lucide-angular 時）
   templateUrl:'gx-breadcrumb.html',
   styleUrls: ['gx-breadcrumb.css'],
 })

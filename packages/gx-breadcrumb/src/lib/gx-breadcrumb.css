@@ -41,4 +41,6 @@
     display: inline-block;
     line-height: 1;
     padding: 0 6px;
+    color: var(--gx-breadcrumb-separator-color, #6b7280); /* 添加分隔符號顏色 */
+    user-select: none; /* 防止被選取 */
 }
