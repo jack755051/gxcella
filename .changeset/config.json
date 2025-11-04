@@ -7,6 +7,10 @@
       "@sanring/gx-breadcrumb",
       "@sanring/gx-card",
       "@sanring/gx-ui"
+    ],    
+    [
+      "@sanring/gx-table",
+      "@sanring/gx-wizard"
     ]
   ],
   "linked": [],
