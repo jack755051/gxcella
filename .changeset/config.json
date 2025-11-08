@@ -10,7 +10,8 @@
     ],    
     [
       "@sanring/gx-table",
-      "@sanring/gx-wizard"
+      "@sanring/gx-wizard",
+      "@sanring/gx-pagination"
     ]
   ],
   "linked": [],

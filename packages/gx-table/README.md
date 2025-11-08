@@ -1,6 +1,6 @@
 # GX-Table
 
-基於 Angular 實現的表單組件。
+一個功能強大且靈活的 Angular 表格組件，提供排序、選擇、空狀態等完整功能。採用 Angular Standalone Components 架構實現，內建 Signal 狀態管理，適合用於資料列表、管理後台、報表展示等場景。
 
 ## ✅ 已完成的組件
 
@@ -288,23 +288,30 @@ interface TableColumn {
 }
 ```
 
-## 🔄 與 TPI 項目的對應關係
+## 🔄 技術實現
 
-| TPI (Vue) | gx-table (Angular) | 狀態 |
-|-----------|-------------------|------|
-| `TableShell.vue` | `GxTableShell` | ✅ 完成 |
-| `TableHeader.vue` | `GxTableHeader` | ✅ 完成 |
-| `TableHeaderCell.vue` | `GxTableHeaderCell` | ✅ 完成 |
-| `TableBody.vue` | `GxTableBody` | ✅ 完成 |
-| `TableRow.vue` | `GxTableRow` | ✅ 完成 |
-| `TableCell.vue` | `GxTableCell` | ✅ 完成 |
-| `TableEmptyState.vue` | `GxTableEmptyState` | ✅ 完成 |
-| `useTable.ts` | `TableService` | ✅ 完成 |
+本組件採用 Angular 18+ 的 Standalone Components 架構，提供現代化且高效能的表格解決方案。
 
-## 📚 參考資料
+### 組件架構
 
-- TPI 項目：`/Users/charlie010583/Desktop/TPI/ICR-frontend/components/table`
-- gx-card 實現：`/Users/charlie010583/Desktop/01_private/gxcella/packages/gx-card`
+| 組件名稱 | 功能說明 |
+|---------|---------|
+| `GxTableShell` | 表格容器，管理整體佈局與空狀態 |
+| `GxTableHeader` | 表頭組件，支援排序與全選功能 |
+| `GxTableHeaderCell` | 表頭單元格，提供排序指示器 |
+| `GxTableBody` | 表格主體，處理資料渲染與行選擇 |
+| `GxTableRow` | 表格行，支援選擇與禁用狀態 |
+| `GxTableCell` | 表格單元格，支援自定義內容 |
+| `GxTableEmptyState` | 空狀態顯示組件 |
+| `TableService` | 狀態管理服務，統一管理排序與選擇 |
+
+### 核心特點
+- **響應式狀態管理**：完全使用 Angular Signals，提供高效能的資料響應
+- **模組化設計**：靈活的組件結構，支援自由組合與客製化
+- **內建服務層**：提供 `TableService` 統一管理表格狀態（排序、選擇等）
+- **豐富的插槽系統**：支援自定義 toolbar、footer、empty state 等區塊
+- **無障礙支援**：遵循 ARIA 標準，提升可用性
+- **TypeScript 類型安全**：完整的類型定義，提供更好的開發體驗
 
 ## 🛠️ 開發
 
@@ -318,4 +325,4 @@ ls -la dist/gx-table
 
 ## 🤝 貢獻
 
-歡迎提交 PR 來完成剩餘的組件！
+歡迎提交 Issue 與 Pull Request 來改進組件功能！

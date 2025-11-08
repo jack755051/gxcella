@@ -1,6 +1,6 @@
 # GX-Wizard
 
-基於 Angular 實現的步進器組件。
+一個功能完整的 Angular 步驟導航組件，提供直觀的多步驟流程體驗。採用 Angular Standalone Components 架構實現，適合用於表單嚮導、註冊流程、多階段任務等場景。
 
 ## ✅ 已完成的組件
 
@@ -333,20 +333,26 @@ interface WizardCustomClass {
 }
 ```
 
-## 🔄 與 TPI 項目的對應關係
+## 🔄 技術實現
 
-| TPI (Vue) | gx-wizard (Angular) | 狀態 |
-|-----------|-------------------|------|
-| `WizardContainer.vue` | `GxWizardContainer` | ✅ 完成 |
-| `WizardStep.vue` | `GxWizardStep` | ✅ 完成 |
-| `WizardHeader.vue` | `GxWizardHeader` | ✅ 完成 |
-| `WizardContent.vue` | `GxWizardContent` | ✅ 完成 |
-| `WizardActions.vue` | `GxWizardActions` | ✅ 完成 |
+本組件採用 Angular 18+ 的 Standalone Components 架構，提供現代化的開發體驗。
 
-## 📚 參考資料
+### 組件架構
 
-- TPI 項目：`/Users/charlie010583/Desktop/TPI/ICR-frontend/components/wizard`
-- gx-table 實現：`/Users/charlie010583/Desktop/01_private/gxcella/packages/gx-table`
+| 組件名稱 | 功能說明 |
+|---------|---------|
+| `GxWizardContainer` | 步驟容器，負責狀態管理與導航控制 |
+| `GxWizardStep` | 單一步驟組件，處理步驟生命週期與狀態 |
+| `GxWizardHeader` | 步驟標頭，顯示標題、描述與視覺指示 |
+| `GxWizardContent` | 步驟內容區域，支援完全自定義內容 |
+| `GxWizardActions` | 步驟操作按鈕，處理導航邏輯與事件 |
+
+### 核心特點
+- **響應式狀態管理**：完全使用 Angular Signals 進行狀態管理
+- **靈活的內容投影**：支援多層級的 Content Projection
+- **豐富的事件系統**：提供完整的生命週期事件掛鉤
+- **無障礙支援**：內建 ARIA 屬性，符合無障礙標準
+- **高度可客製化**：支援樣式與行為的完全自定義
 
 ## 🛠️ 開發
 
