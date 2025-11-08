@@ -1,5 +1,11 @@
 # @sanring/gx-ui
 
+## 3.0.1
+
+### Patch Changes
+
+- 3435b22: fix README
+
 ## 3.0.0
 
 ### Minor Changes

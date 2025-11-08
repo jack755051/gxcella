@@ -1,5 +1,13 @@
 # @sanring/gx-card
 
+## 3.0.1
+
+### Patch Changes
+
+- 3435b22: fix README
+- Updated dependencies [3435b22]
+  - @sanring/gx-ui@3.0.1
+
 ## 3.0.0
 
 ### Minor Changes
