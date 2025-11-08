@@ -1,18 +1,35 @@
 {
   "name": "@sanring/gx-pagination",
-  "version": "0.0.4",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jack755051/gxcella",
+    "directory": "packages/gx-pagination"
+  },
   "scripts": {
-    "build": "ng-packagr -p ng-package.json"
+    "build": "ng-packagr -p ng-package.json",
+    "prepublishOnly": "npm run build && node ../../scripts/sync-version-to-dist.js package.json dist"
+  },
+  "publishConfig": {
+    "directory": "dist",
+    "access": "public"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
   },
   "peerDependencies": {
     "@angular/common": "^20.3.0",
     "@angular/core": "^20.3.0"
   },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
   "devDependencies": {
     "ng-packagr": "^20.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/fesm2022/sanring-gx-pagination.mjs"
+    }
+  },
+  "types": "./dist/index.d.ts"
 }
