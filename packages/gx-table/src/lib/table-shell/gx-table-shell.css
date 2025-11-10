@@ -25,16 +25,19 @@
 
 /* Sticky header 支援 */
 .gx-table-container.sticky-header thead th {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 10;
   background-color: var(--gx-table-header-bg, #e6f8f9);
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
 
 /* 表格 */
 .gx-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .gx-table.layout-auto {

@@ -7,6 +7,7 @@ th {
   letter-spacing: 0.05em;
   color: var(--gx-table-header-text-color, #6b7280);
   min-width: 100px;
+  border-bottom: 1px solid var(--gx-table-border-color, #e5e7eb);
 }
 
 th.sortable {
