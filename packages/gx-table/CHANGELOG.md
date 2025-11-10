@@ -1,5 +1,11 @@
 # @sanring/gx-table
 
+## 0.1.4
+
+### Patch Changes
+
+- 631681c: upgrade gx-table
+
 ## 0.1.3
 
 ### Patch Changes
