@@ -22,11 +22,18 @@ th.sortable:hover {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
+}
+
+.gx-header-cell-content > span:first-child {
+  flex: 1;
+  min-width: 0;
 }
 
 .gx-sort-icons {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 
 .gx-sort-icon {
