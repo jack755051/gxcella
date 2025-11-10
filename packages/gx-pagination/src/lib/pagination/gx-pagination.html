@@ -1,0 +1,87 @@
+<div class="flex items-center" [class]="containerClass()">
+  <!-- 左側佔位 (當 selectorPosition 為 center 或 right 時使用) -->
+  @if (selectorPosition() === 'center') {
+    <div class="flex-1"></div>
+  }
+
+  <!-- 分頁控制列 -->
+  <div class="pagination--selector flex items-center gap-2">
+    <!-- 上一頁按鈕 -->
+    <button
+      type="button"
+      [class]="customClass().previousButton || 'btn btn-pagination'"
+      [disabled]="isPreviousDisabled()"
+      (click)="handlePrevious()"
+    >
+      @if (button().previous.icon) {
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      }
+      {{ button().previous.label }}
+    </button>
+
+    <!-- 中間區域：依據 selectType 顯示 -->
+    @if (selectType() === SelectType.SELECT) {
+      <gx-pagination-select
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        (pageChange)="handlePageChange($event)"
+      />
+    }
+
+    @if (selectType() === SelectType.INPUT) {
+      <gx-pagination-input
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        [placeholder]="inputConfig().placeholder"
+        [inputClass]="inputConfig().inputClass || ''"
+        [disabled]="inputConfig().disabled || false"
+        (pageChange)="handlePageChange($event)"
+      />
+    }
+
+    @if (selectType() === SelectType.LIST) {
+      <gx-pagination-list
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        [customClass]="customClass().list || ''"
+        (pageChange)="handlePageChange($event)"
+      />
+    }
+
+    <!-- 下一頁按鈕 -->
+    <button
+      type="button"
+      [class]="customClass().nextButton || 'btn btn-pagination'"
+      [disabled]="isNextDisabled()"
+      (click)="handleNext()"
+    >
+      {{ button().next.label }}
+      @if (button().next.icon) {
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      }
+    </button>
+  </div>
+
+  <!-- 右側彈性空間 -->
+  <div class="flex-1" [class]="perPageContainerClass()">
+    <!-- 每頁筆數選擇 -->
+    @if (showPerPageSelector()) {
+      <div
+        class="pagination--per-page flex items-center gap-2"
+        [class]="perPagePositionClass()"
+      >
+        <span class="text-sm text-gray-600">每頁顯示:</span>
+        <gx-pagination-per-page
+          name="per-page-selector"
+          [(perPage)]="perPage"
+          [perPageOptions]="perPageOptions()"
+          (perPageChange)="handlePerPageChange($event)"
+        />
+      </div>
+    }
+  </div>
+</div>

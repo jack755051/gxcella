@@ -38,6 +38,9 @@ export interface PaginationCustomClass {
   ellipsis?: string;
   pageSize?: string;
   info?: string;
+  previousButton?: string;
+  nextButton?: string;
+  disableButton?: string;
 }
 
 /**
@@ -53,3 +56,45 @@ export interface PaginationLabels {
   items?: string;
   itemsPerPage?: string;
 }
+
+/**
+ * Select type enum - determines how page selection is displayed
+ */
+export enum SelectType {
+  SELECT = 'select',
+  INPUT = 'input',
+  LIST = 'list'
+}
+
+/**
+ * Button configuration interface
+ */
+export interface PaginationButtonProps {
+  label: string;
+  icon?: boolean;
+  customClass?: string;
+  action?: () => void;
+}
+
+/**
+ * Button configuration for prev/next buttons
+ */
+export interface PaginationButton {
+  next: PaginationButtonProps;
+  previous: PaginationButtonProps;
+}
+
+/**
+ * Input configuration for PaginationInput component
+ */
+export interface PaginationInputProps {
+  show?: boolean;
+  placeholder?: string;
+  inputClass?: string;
+  disabled?: boolean;
+}
+
+/**
+ * Selector position options
+ */
+export type SelectorPosition = 'left' | 'center' | 'right' | 'between';

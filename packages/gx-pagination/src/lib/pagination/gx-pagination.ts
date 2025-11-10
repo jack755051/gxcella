@@ -1,406 +1,219 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  computed,
-  signal,
-  effect,
-} from '@angular/core';
+import { Component, input, output, computed, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { GxPaginationInput } from '../pagination-input/gx-pagination-input';
+import { GxPaginationSelect } from '../pagination-select/gx-pagination-select';
+import { GxPaginationList } from '../pagination-list/gx-pagination-list';
+import { GxPaginationPerPage } from '../pagination-per-page/gx-pagination-per-page';
 import {
-  PaginationConfig,
-  PageChangeEvent,
+  SelectType,
+  PaginationButton,
   PaginationCustomClass,
-  PaginationLabels,
+  PaginationInputProps,
+  SelectorPosition
 } from '../model/pagination.types';
 
+/**
+ * GxPagination Component
+ *
+ * 對應 Vue 的 Pagination.vue，完整的分頁組件
+ * - 支援多種選擇模式（select, input, list）
+ * - 支援每頁數量選擇
+ * - 支援自訂樣式和位置
+ * - 完全響應式設計
+ */
 @Component({
   selector: 'gx-pagination',
   standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div [class]="customClass()?.container || 'gx-pagination'">
-      <!-- Page info -->
-      @if (showInfo()) {
-        <div [class]="customClass()?.info || 'gx-pagination__info'">
-          {{ getInfoText() }}
-        </div>
-      }
-
-      <!-- Pagination navigation -->
-      <nav [class]="customClass()?.nav || 'gx-pagination__nav'">
-        <ul [class]="customClass()?.list || 'gx-pagination__list'">
-          <!-- First page button -->
-          @if (showFirstLast()) {
-            <li [class]="getItemClass(1)">
-              <button
-                type="button"
-                [class]="getLinkClass(1)"
-                [disabled]="isDisabled() || currentPage() === 1"
-                (click)="goToPage(1)">
-                {{ labels().first || '«' }}
-              </button>
-            </li>
-          }
-
-          <!-- Previous button -->
-          @if (showPrevNext()) {
-            <li [class]="getItemClass(currentPage() - 1)">
-              <button
-                type="button"
-                [class]="getLinkClass(currentPage() - 1)"
-                [disabled]="isDisabled() || currentPage() === 1"
-                (click)="goToPage(currentPage() - 1)">
-                {{ labels().previous || '‹' }}
-              </button>
-            </li>
-          }
-
-          <!-- Page numbers -->
-          @if (showPageNumbers()) {
-            @for (page of visiblePages(); track page) {
-              <li [class]="getItemClass(page)">
-                @if (page === -1) {
-                  <span [class]="customClass()?.ellipsis || 'gx-pagination__ellipsis'">
-                    ...
-                  </span>
-                } @else {
-                  <button
-                    type="button"
-                    [class]="getLinkClass(page)"
-                    [disabled]="isDisabled()"
-                    (click)="goToPage(page)">
-                    {{ page }}
-                  </button>
-                }
-              </li>
-            }
-          }
-
-          <!-- Next button -->
-          @if (showPrevNext()) {
-            <li [class]="getItemClass(currentPage() + 1)">
-              <button
-                type="button"
-                [class]="getLinkClass(currentPage() + 1)"
-                [disabled]="isDisabled() || currentPage() === totalPages()"
-                (click)="goToPage(currentPage() + 1)">
-                {{ labels().next || '›' }}
-              </button>
-            </li>
-          }
-
-          <!-- Last page button -->
-          @if (showFirstLast()) {
-            <li [class]="getItemClass(totalPages())">
-              <button
-                type="button"
-                [class]="getLinkClass(totalPages())"
-                [disabled]="isDisabled() || currentPage() === totalPages()"
-                (click)="goToPage(totalPages())">
-                {{ labels().last || '»' }}
-              </button>
-            </li>
-          }
-        </ul>
-      </nav>
-
-      <!-- Page size selector -->
-      @if (showPageSize() && pageSizeOptions().length > 0) {
-        <div [class]="customClass()?.pageSize || 'gx-pagination__page-size'">
-          <label>
-            {{ labels().itemsPerPage || 'Items per page:' }}
-            <select
-              [value]="pageSize()"
-              [disabled]="isDisabled()"
-              (change)="onPageSizeChange($event)">
-              @for (size of pageSizeOptions(); track size) {
-                <option [value]="size">{{ size }}</option>
-              }
-            </select>
-          </label>
-        </div>
-      }
-    </div>
-  `,
-  styles: [`
-    .gx-pagination {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      font-family: var(--gx-pagination-font-family, system-ui, -apple-system, sans-serif);
-    }
-
-    .gx-pagination__info {
-      font-size: var(--gx-pagination-info-font-size, 0.875rem);
-      color: var(--gx-pagination-info-color, #6b7280);
-    }
-
-    .gx-pagination__nav {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-    }
-
-    .gx-pagination__list {
-      display: flex;
-      align-items: center;
-      gap: var(--gx-pagination-gap, 0.25rem);
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .gx-pagination__list li {
-      display: flex;
-    }
-
-    .gx-pagination__list button {
-      min-width: var(--gx-pagination-button-size, 2.5rem);
-      height: var(--gx-pagination-button-size, 2.5rem);
-      padding: var(--gx-pagination-button-padding, 0.5rem 0.75rem);
-      font-size: var(--gx-pagination-button-font-size, 0.875rem);
-      font-weight: var(--gx-pagination-button-font-weight, 500);
-      color: var(--gx-pagination-button-color, #374151);
-      background-color: var(--gx-pagination-button-bg, transparent);
-      border: 1px solid var(--gx-pagination-border-color, #d1d5db);
-      border-radius: var(--gx-pagination-border-radius, 0.375rem);
-      cursor: pointer;
-      transition: all 0.15s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .gx-pagination__list button:hover:not(:disabled) {
-      background-color: var(--gx-pagination-button-hover-bg, #f3f4f6);
-      border-color: var(--gx-pagination-button-hover-border, #9ca3af);
-    }
-
-    .gx-pagination__list button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .gx-pagination__list button.active {
-      color: var(--gx-pagination-active-color, #ffffff);
-      background-color: var(--gx-pagination-active-bg, #3b82f6);
-      border-color: var(--gx-pagination-active-border, #3b82f6);
-    }
-
-    .gx-pagination__ellipsis {
-      min-width: var(--gx-pagination-button-size, 2.5rem);
-      height: var(--gx-pagination-button-size, 2.5rem);
-      padding: var(--gx-pagination-button-padding, 0.5rem 0.75rem);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gx-pagination-ellipsis-color, #6b7280);
-    }
-
-    .gx-pagination__page-size {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: var(--gx-pagination-page-size-font-size, 0.875rem);
-      color: var(--gx-pagination-page-size-color, #374151);
-    }
-
-    .gx-pagination__page-size select {
-      padding: 0.375rem 0.75rem;
-      font-size: var(--gx-pagination-page-size-font-size, 0.875rem);
-      border: 1px solid var(--gx-pagination-border-color, #d1d5db);
-      border-radius: var(--gx-pagination-border-radius, 0.375rem);
-      background-color: var(--gx-pagination-select-bg, #ffffff);
-      cursor: pointer;
-    }
-
-    .gx-pagination__page-size select:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  `],
+  imports: [
+    CommonModule,
+    GxPaginationInput,
+    GxPaginationSelect,
+    GxPaginationList,
+    GxPaginationPerPage
+  ],
+  templateUrl: './gx-pagination.html',
+  styleUrls: ['./gx-pagination.css']
 })
 export class GxPagination {
-  // Inputs
-  @Input() set config(value: Partial<PaginationConfig>) {
-    if (value.currentPage !== undefined) this.currentPage.set(value.currentPage);
-    if (value.pageSize !== undefined) this.pageSize.set(value.pageSize);
-    if (value.totalItems !== undefined) this.totalItems.set(value.totalItems);
-    if (value.maxVisiblePages !== undefined) this.maxVisiblePages.set(value.maxVisiblePages);
-    if (value.showFirstLast !== undefined) this.showFirstLast.set(value.showFirstLast);
-    if (value.showPrevNext !== undefined) this.showPrevNext.set(value.showPrevNext);
-    if (value.showPageNumbers !== undefined) this.showPageNumbers.set(value.showPageNumbers);
-    if (value.showPageSize !== undefined) this.showPageSize.set(value.showPageSize);
-    if (value.pageSizeOptions !== undefined) this.pageSizeOptions.set(value.pageSizeOptions);
-    if (value.disabled !== undefined) this.isDisabled.set(value.disabled);
-  }
+  // ==================== 基本配置 ====================
 
-  @Input() set currentPageInput(value: number) {
-    this.currentPage.set(value);
-  }
+  /** 當前頁碼 */
+  currentPageInput = input.required<number>();
 
-  @Input() set pageSizeInput(value: number) {
-    this.pageSize.set(value);
-  }
+  /** 每頁顯示數量 */
+  pageSizeInput = input.required<number>();
 
-  @Input() set totalItemsInput(value: number) {
-    this.totalItems.set(value);
-  }
+  /** 總項目數 */
+  totalItemsInput = input.required<number>();
 
-  @Input() customClass = signal<PaginationCustomClass | undefined>(undefined);
-  @Input() labels = signal<PaginationLabels>({
-    first: '«',
-    previous: '‹',
-    next: '›',
-    last: '»',
-    page: 'Page',
-    of: 'of',
-    items: 'items',
-    itemsPerPage: 'Items per page:',
-  });
-  @Input() showInfo = signal<boolean>(false);
-
-  // Outputs
-  @Output() pageChange = new EventEmitter<PageChangeEvent>();
-  @Output() pageSizeChange = new EventEmitter<number>();
-
-  // State
-  currentPage = signal<number>(1);
-  pageSize = signal<number>(10);
-  totalItems = signal<number>(0);
-  maxVisiblePages = signal<number>(5);
-  showFirstLast = signal<boolean>(true);
-  showPrevNext = signal<boolean>(true);
-  showPageNumbers = signal<boolean>(true);
-  showPageSize = signal<boolean>(false);
-  pageSizeOptions = signal<number[]>([10, 25, 50, 100]);
-  isDisabled = signal<boolean>(false);
-
-  // Computed
-  totalPages = computed(() => {
-    return Math.ceil(this.totalItems() / this.pageSize());
+  /** 按鈕配置 */
+  button = input<PaginationButton>({
+    next: { label: '下一頁', icon: true },
+    previous: { label: '上一頁', icon: true }
   });
 
-  visiblePages = computed(() => {
-    const total = this.totalPages();
-    const current = this.currentPage();
-    const max = this.maxVisiblePages();
+  /** 選擇類型 */
+  selectType = input<SelectType>(SelectType.SELECT);
 
-    if (total <= max) {
-      return Array.from({ length: total }, (_, i) => i + 1);
-    }
+  // ==================== 外觀配置 ====================
 
-    const half = Math.floor(max / 2);
-    let start = current - half;
-    let end = current + half;
+  /** 自訂樣式類別 */
+  customClass = input<PaginationCustomClass>({});
 
-    if (start < 1) {
-      start = 1;
-      end = max;
-    }
+  /** 輸入框配置 */
+  inputConfig = input<PaginationInputProps>({});
 
-    if (end > total) {
-      end = total;
-      start = total - max + 1;
-    }
+  /** 分頁控制器位置 */
+  selectorPosition = input<SelectorPosition>('between');
 
-    const pages: number[] = [];
+  // ==================== 每頁顯示配置 ====================
 
-    if (start > 1) {
-      pages.push(1);
-      if (start > 2) {
-        pages.push(-1); // Ellipsis
-      }
-    }
+  /** 是否顯示每頁數量選擇器 */
+  showPerPageSelector = input<boolean>(false);
 
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
+  /** 每頁選項 */
+  perPageOptions = input<number[]>([5, 10, 20, 50]);
 
-    if (end < total) {
-      if (end < total - 1) {
-        pages.push(-1); // Ellipsis
-      }
-      pages.push(total);
-    }
+  /** 當前每頁顯示數量（用於同步） */
+  currentPerPage = input<number | undefined>(undefined);
 
-    return pages;
+  // ==================== 事件輸出 ====================
+
+  /** 頁碼變更事件 */
+  pageChange = output<number>();
+
+  /** 下一頁事件 */
+  pageNext = output<number>();
+
+  /** 上一頁事件 */
+  pagePrevious = output<number>();
+
+  /** 每頁數量變更事件 */
+  perPageChange = output<number>();
+
+  // ==================== 內部狀態 ====================
+
+  /** 當前頁碼（內部狀態） */
+  protected currentPage = signal<number>(1);
+
+  /** 每頁數量（內部狀態） */
+  protected perPage = signal<number>(10);
+
+  /** 總頁數 */
+  protected readonly totalPages = computed(() => {
+    return Math.ceil(this.totalItemsInput() / this.pageSizeInput());
   });
+
+  /** 容器 CSS class */
+  protected readonly containerClass = computed(() => {
+    const position = this.selectorPosition();
+    if (position === 'between') {
+      return 'justify-between gap-4';
+    }
+    return 'gap-4';
+  });
+
+  /** 每頁顯示區域容器樣式 */
+  protected readonly perPageContainerClass = computed(() => {
+    if (!this.showPerPageSelector()) {
+      return '';
+    }
+    if (this.selectorPosition() === 'between') {
+      return '';
+    }
+    return 'flex';
+  });
+
+  /** 每頁顯示的位置樣式 */
+  protected readonly perPagePositionClass = computed(() => {
+    const position = this.selectorPosition();
+    if (position === 'left' || position === 'center') {
+      return 'ml-auto';
+    }
+    if (position === 'right') {
+      return 'ml-4';
+    }
+    return '';
+  });
+
+  /** 暴露 SelectType 給模板 */
+  protected readonly SelectType = SelectType;
+
+  // ==================== 生命週期 ====================
 
   constructor() {
-    // Emit change when page or size changes
+    // 同步 input 到內部狀態
     effect(() => {
-      const current = this.currentPage();
-      const size = this.pageSize();
-      const total = this.totalPages();
-      const items = this.totalItems();
+      this.currentPage.set(this.currentPageInput());
+    });
 
-      // Ensure current page is valid
-      if (current > total && total > 0) {
-        this.currentPage.set(total);
-        return;
-      }
-
-      this.pageChange.emit({
-        currentPage: current,
-        pageSize: size,
-        totalPages: total,
-        totalItems: items,
-      });
+    effect(() => {
+      this.perPage.set(this.currentPerPage() || this.pageSizeInput());
     });
   }
 
-  goToPage(page: number): void {
-    if (this.isDisabled()) return;
+  // ==================== 事件處理 ====================
 
+  /**
+   * 處理頁碼變更
+   */
+  protected handlePageChange(page: number): void {
+    if (page < 1 || page > this.totalPages()) {
+      return;
+    }
+
+    if (page !== this.currentPage()) {
+      this.currentPage.set(page);
+      this.pageChange.emit(page);
+    }
+  }
+
+  /**
+   * 處理上一頁
+   */
+  protected handlePrevious(): void {
+    const current = this.currentPage();
+    if (current > 1) {
+      const newPage = current - 1;
+      this.currentPage.set(newPage);
+      this.pageChange.emit(newPage);
+      this.pagePrevious.emit(newPage);
+    }
+  }
+
+  /**
+   * 處理下一頁
+   */
+  protected handleNext(): void {
+    const current = this.currentPage();
     const total = this.totalPages();
-    if (page < 1 || page > total) return;
-    if (page === this.currentPage()) return;
-
-    this.currentPage.set(page);
+    if (current < total) {
+      const newPage = current + 1;
+      this.currentPage.set(newPage);
+      this.pageChange.emit(newPage);
+      this.pageNext.emit(newPage);
+    }
   }
 
-  onPageSizeChange(event: Event): void {
-    if (this.isDisabled()) return;
-
-    const select = event.target as HTMLSelectElement;
-    const newSize = parseInt(select.value, 10);
-
-    this.pageSize.set(newSize);
-    this.currentPage.set(1); // Reset to first page
-    this.pageSizeChange.emit(newSize);
+  /**
+   * 處理每頁數量變更
+   */
+  protected handlePerPageChange(value: number): void {
+    this.perPage.set(value);
+    this.perPageChange.emit(value);
   }
 
-  getItemClass(page: number): string {
-    const baseClass = this.customClass()?.item || 'gx-pagination__item';
-    const isActive = page === this.currentPage();
-    const isDisabled = page < 1 || page > this.totalPages();
-
-    const classes = [baseClass];
-    if (isActive) classes.push(this.customClass()?.active || 'active');
-    if (isDisabled) classes.push(this.customClass()?.disabled || 'disabled');
-
-    return classes.join(' ');
+  /**
+   * 檢查是否禁用上一頁按鈕
+   */
+  protected isPreviousDisabled(): boolean {
+    return this.currentPage() <= 1;
   }
 
-  getLinkClass(page: number): string {
-    const baseClass = this.customClass()?.link || 'gx-pagination__link';
-    const isActive = page === this.currentPage();
-
-    const classes = [baseClass];
-    if (isActive) classes.push('active');
-
-    return classes.join(' ');
-  }
-
-  getInfoText(): string {
-    const start = (this.currentPage() - 1) * this.pageSize() + 1;
-    const end = Math.min(this.currentPage() * this.pageSize(), this.totalItems());
-    const total = this.totalItems();
-
-    return `${start}-${end} ${this.labels().of} ${total} ${this.labels().items}`;
+  /**
+   * 檢查是否禁用下一頁按鈕
+   */
+  protected isNextDisabled(): boolean {
+    return this.currentPage() >= this.totalPages();
   }
 }
