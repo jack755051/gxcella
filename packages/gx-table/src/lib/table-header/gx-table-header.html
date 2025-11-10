@@ -13,10 +13,11 @@
 
   <!-- 欄位標題 -->
   @for (column of columns(); track column.key) {
-    <gx-table-header-cell
+    <th
+      gx-table-header-cell
       [column]="column"
       [sortConfig]="sortConfig()"
       (sort)="sort.emit($event)">
-    </gx-table-header-cell>
+    </th>
   }
 </tr>

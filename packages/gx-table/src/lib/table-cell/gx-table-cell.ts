@@ -12,11 +12,15 @@ import { TableColumn } from '../model/table.types';
  * - 支援自定義內容投影（ng-content）
  */
 @Component({
-  selector: 'gx-table-cell',
+  selector: 'td[gx-table-cell]',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './gx-table-cell.html',
   styleUrl: './gx-table-cell.css',
+  host: {
+    '[class]': 'alignClass()',
+    '[ngStyle]': 'columnStyle()'
+  }
 })
 export class GxTableCell {
   /** 欄位配置 */

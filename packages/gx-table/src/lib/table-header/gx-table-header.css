@@ -1,5 +1,5 @@
 :host {
-  background-color: var(--gx-table-header-bg, #e6f8f9);
+  /* 移除這裡的背景色，因為會在 th 上設置 */
 }
 
 .gx-table-checkbox-cell {

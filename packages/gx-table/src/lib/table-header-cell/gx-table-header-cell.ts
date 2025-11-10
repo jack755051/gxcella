@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 import { TableColumn, SortConfig } from '../model/table.types';
 
 @Component({
-  selector: 'gx-table-header-cell',
+  selector: 'th[gx-table-header-cell]',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './gx-table-header-cell.html',
-  styleUrls: ['./gx-table-header-cell.css']
+  styleUrls: ['./gx-table-header-cell.css'],
+  host: {
+    '[class]': 'alignClass()',
+    '[ngStyle]': 'columnStyle()',
+    '[class.sortable]': 'column().sortable',
+    '(click)': 'handleClick()'
+  }
 })
 export class GxTableHeaderCell {
   column = input.required<TableColumn>();

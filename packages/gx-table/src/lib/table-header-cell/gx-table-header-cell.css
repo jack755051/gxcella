@@ -1,4 +1,4 @@
-th {
+:host {
   padding: 1rem 1.5rem;
   text-align: left;
   font-size: 0.875rem;
@@ -6,16 +6,16 @@ th {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--gx-table-header-text-color, #6b7280);
-  min-width: 100px;
   border-bottom: 1px solid var(--gx-table-border-color, #e5e7eb);
+  background-color: var(--gx-table-header-bg, #e6f8f9);
 }
 
-th.sortable {
+:host(.sortable) {
   cursor: pointer;
   user-select: none;
 }
 
-th.sortable:hover {
+:host(.sortable:hover) {
   background-color: var(--gx-table-header-hover-bg, rgba(0, 0, 0, 0.05));
 }
 

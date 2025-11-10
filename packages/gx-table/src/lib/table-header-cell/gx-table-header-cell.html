@@ -1,28 +1,22 @@
-<th
-  [class]="alignClass()"
-  [ngStyle]="columnStyle()"
-  [class.sortable]="column().sortable"
-  (click)="handleClick()">
-  <div class="gx-header-cell-content">
-    <span>{{ column().label }}</span>
+<div class="gx-header-cell-content">
+  <span>{{ column().label }}</span>
 
-    @if (column().sortable) {
-      <span class="gx-sort-icons">
-        <svg
-          [class.active]="isActiveAsc()"
-          class="gx-sort-icon gx-sort-asc"
-          fill="currentColor"
-          viewBox="0 0 20 20">
-          <path d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" />
-        </svg>
-        <svg
-          [class.active]="isActiveDesc()"
-          class="gx-sort-icon gx-sort-desc"
-          fill="currentColor"
-          viewBox="0 0 20 20">
-          <path d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" />
-        </svg>
-      </span>
-    }
-  </div>
-</th>
+  @if (column().sortable) {
+    <span class="gx-sort-icons">
+      <svg
+        [class.active]="isActiveAsc()"
+        class="gx-sort-icon gx-sort-asc"
+        fill="currentColor"
+        viewBox="0 0 20 20">
+        <path d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" />
+      </svg>
+      <svg
+        [class.active]="isActiveDesc()"
+        class="gx-sort-icon gx-sort-desc"
+        fill="currentColor"
+        viewBox="0 0 20 20">
+        <path d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" />
+      </svg>
+    </span>
+  }
+</div>

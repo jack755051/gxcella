@@ -13,8 +13,5 @@
 
 <!-- 資料欄位 -->
 @for (column of columns(); track column.key) {
-  <gx-table-cell [column]="column" [row]="row()">
-    <!-- 支援自定義內容投影 -->
-    <ng-content [select]="'[cell-' + column.key + ']'"></ng-content>
-  </gx-table-cell>
+  <td gx-table-cell [column]="column" [row]="row()"></td>
 }

@@ -23,13 +23,17 @@
   max-height: 600px;
 }
 
-/* Sticky header 支援 */
-.gx-table-container.sticky-header thead th {
+/* Sticky header 支援 - 直接針對所有 thead th */
+.gx-table-container thead th {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 10;
   background-color: var(--gx-table-header-bg, #e6f8f9);
+}
+
+/* 當 sticky-header 啟用時添加陰影 */
+.gx-table-container.sticky-header thead th {
   box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
 

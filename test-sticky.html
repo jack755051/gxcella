@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Header Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .gx-table-container {
+      max-height: 400px;
+      overflow: auto;
+      border: 1px solid #ccc;
+    }
+
+    .gx-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .gx-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: #e6f8f9;
+      padding: 1rem 1.5rem;
+      text-align: left;
+      font-weight: 500;
+      border-bottom: 2px solid #333;
+    }
+
+    .gx-table tbody td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sticky Header 測試</h1>
+
+  <div class="gx-table-container">
+    <table class="gx-table">
+      <thead>
+        <tr>
+          <th style="width: 150px;">發佈日期</th>
+          <th style="width: 400px;">標題</th>
+          <th style="width: 120px;">分類</th>
+          <th style="width: 100px;">狀態</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2025-01-15</td><td>光訊科技發佈新一代 AI 智能監控系統</td><td>產品發佈</td><td>最新</td></tr>
+        <tr><td>2025-01-10</td><td>光訊參與 2025 台北國際安全科技應用博覽會</td><td>展會活動</td><td>熱門</td></tr>
+        <tr><td>2025-01-05</td><td>新型車牌辨識攝影機通過國家認證</td><td>技術認證</td><td>最新</td></tr>
+        <tr><td>2024-12-28</td><td>光訊科技榮獲年度最佳監控設備供應商獎</td><td>公司榮譽</td><td>熱門</td></tr>
+        <tr><td>2024-12-20</td><td>水下監控攝影機應用於港口安全監控專案</td><td>案例分享</td><td>一般</td></tr>
+        <tr><td>2024-12-15</td><td>光訊與國際知名安防廠商達成戰略合作</td><td>合作公告</td><td>重要</td></tr>
+        <tr><td>2024-12-10</td><td>高速球攝影機系列產品全面升級</td><td>產品更新</td><td>一般</td></tr>
+        <tr><td>2024-12-05</td><td>光訊科技通過 ISO 9001:2015 品質管理系統認證</td><td>技術認證</td><td>重要</td></tr>
+        <tr><td>2024-11-28</td><td>智慧城市監控解決方案成功導入新北市政府</td><td>案例分享</td><td>熱門</td></tr>
+        <tr><td>2024-11-20</td><td>光訊科技發表 2024 年度研發成果報告</td><td>技術研發</td><td>一般</td></tr>
+        <tr><td>2024-11-15</td><td>新一代紅外線夜視技術突破業界標準</td><td>技術研發</td><td>最新</td></tr>
+        <tr><td>2024-11-10</td><td>光訊科技捐贈監控設備予偏鄉學校</td><td>社會責任</td><td>一般</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top: 20px;">
+    <strong>測試說明：</strong><br>
+    1. 滾動表格內容<br>
+    2. Header 應該固定在頂部不動<br>
+    3. 如果 header 沒有固定，請告訴我你的瀏覽器版本
+  </p>
+</body>
+</html>
