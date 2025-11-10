@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GxCardActions, CardAction } from '../components/gx-card-actions';
 
