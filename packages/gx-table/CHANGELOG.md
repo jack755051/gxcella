@@ -1,5 +1,11 @@
 # @sanring/gx-table
 
+## 0.1.8
+
+### Patch Changes
+
+- d23b6a0: upgrade to 0.1.6
+
 ## 0.1.5
 
 ### Patch Changes
