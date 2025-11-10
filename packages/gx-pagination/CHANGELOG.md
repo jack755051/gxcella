@@ -1,5 +1,11 @@
 # @sanring/gx-pagination
 
+## 0.1.9
+
+### Patch Changes
+
+- ae2247b: upgrade to 0.1.9
+
 ## 0.1.8
 
 ### Patch Changes
