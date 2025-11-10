@@ -1,5 +1,11 @@
 # @sanring/gx-wizard
 
+## 0.1.11
+
+### Patch Changes
+
+- f3511e1: upgrade to "0.1.10"
+
 ## 0.1.10
 
 ### Patch Changes
