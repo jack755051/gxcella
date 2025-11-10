@@ -1,5 +1,11 @@
 # @sanring/gx-pagination
 
+## 0.2.2
+
+### Patch Changes
+
+- 84b5fce: upgrade angular 19 to 20
+
 ## 0.2.1
 
 ### Patch Changes

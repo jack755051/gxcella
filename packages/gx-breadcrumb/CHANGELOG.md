@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 4.0.1
+
+### Patch Changes
+
+- 84b5fce: upgrade angular 19 to 20
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,5 +1,13 @@
 # @sanring/gx-card
 
+## 4.0.1
+
+### Patch Changes
+
+- 84b5fce: upgrade angular 19 to 20
+- Updated dependencies [84b5fce]
+  - @sanring/gx-ui@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes
