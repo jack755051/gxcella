@@ -1,5 +1,11 @@
 # @sanring/gx-wizard
 
+## 0.2.3
+
+### Patch Changes
+
+- 616c8ea: upgrade gx-pagination
+
 ## 0.2.2
 
 ### Patch Changes
