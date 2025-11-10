@@ -1,5 +1,11 @@
 # @sanring/gx-wizard
 
+## 0.1.12
+
+### Patch Changes
+
+- a12ad08: upgrade to 0.1.12
+
 ## 0.1.11
 
 ### Patch Changes
