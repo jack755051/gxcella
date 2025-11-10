@@ -4,7 +4,7 @@ import { TableColumn, SortConfig } from '../model/table.types';
 import { GxTableHeaderCell } from '../table-header-cell/gx-table-header-cell';
 
 @Component({
-  selector: 'gx-table-header',
+  selector: 'thead[gx-table-header]',
   standalone: true,
   imports: [CommonModule, GxTableHeaderCell],
   templateUrl: './gx-table-header.html',

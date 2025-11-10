@@ -13,7 +13,7 @@ import { GxTableRow } from '../table-row/gx-table-row';
  * - 支援自定義欄位內容（透過插槽傳遞）
  */
 @Component({
-  selector: 'gx-table-body',
+  selector: 'tbody[gx-table-body]',
   standalone: true,
   imports: [CommonModule, GxTableRow],
   templateUrl: './gx-table-body.html',

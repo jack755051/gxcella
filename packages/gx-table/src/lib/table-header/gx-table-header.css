@@ -1,4 +1,4 @@
-.gx-table-header {
+:host {
   background-color: var(--gx-table-header-bg, #e6f8f9);
 }
 

@@ -1,11 +1,8 @@
-tbody {
+:host {
   background-color: var(--gx-table-body-bg, #ffffff);
 }
 
-.divide-y > * + * {
+:host > * + * {
   border-top-width: 1px;
-}
-
-.divide-gray-200 > * + * {
   border-color: var(--gx-table-border-color, #e5e7eb);
 }
