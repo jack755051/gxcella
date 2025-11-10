@@ -2,7 +2,7 @@
   background-color: var(--gx-table-body-bg, #ffffff);
 }
 
-:host > * + * {
+:host > tr + tr {
   border-top-width: 1px;
   border-color: var(--gx-table-border-color, #e5e7eb);
 }

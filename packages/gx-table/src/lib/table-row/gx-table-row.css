@@ -17,7 +17,7 @@
   background-color: var(--gx-table-row-selected-bg, #eff6ff);
 }
 
-/* Selected row hover state - 選中行的 hover 狀態 */
+/* Selected row hover state */
 .bg-blue-50:hover {
   background-color: var(--gx-table-row-selected-hover-bg, #dbeafe);
 }

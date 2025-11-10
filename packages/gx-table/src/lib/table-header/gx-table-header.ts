@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, input, output, viewChild } from '@angular/core';
+import { Component, ElementRef, input, output, viewChild, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableColumn, SortConfig } from '../model/table.types';
 import { GxTableHeaderCell } from '../table-header-cell/gx-table-header-cell';
@@ -48,4 +48,14 @@ export class GxTableHeader {
 
   // Checkbox 引用
   checkboxRef = viewChild<ElementRef<HTMLInputElement>>('checkboxRef');
+
+  constructor() {
+    // 監聽 indeterminate 狀態變化
+    effect(() => {
+      const checkbox = this.checkboxRef()?.nativeElement;
+      if (checkbox) {
+        checkbox.indeterminate = this.isIndeterminate();
+      }
+    });
+  }
 }

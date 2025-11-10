@@ -9,8 +9,6 @@ export interface TableServiceOptions<T = any> {
   data: WritableSignal<T[]> | Signal<T[]>;
   /** 欄位配置 */
   columns: TableColumn[];
-  /** 可排序的欄位 */
-  sortableColumns?: string[];
   /** ID 欄位鍵值 */
   idKey?: string;
   /** 判斷行是否禁用 */
@@ -72,7 +70,6 @@ export class TableService<T extends Record<string, any> = any> {
    */
   initialize(options: TableServiceOptions<T>): void {
     this.options = {
-      sortableColumns: [],
       idKey: 'id',
       disabledPredicate: undefined,
       onSort: undefined,
@@ -156,7 +153,7 @@ export class TableService<T extends Record<string, any> = any> {
    */
   handleSort(key: string): void {
     const column = this.options.columns.find(col => col.key === key);
-    if (!column?.sortable && !this.options.sortableColumns.includes(key)) {
+    if (!column?.sortable) {
       return;
     }
 
