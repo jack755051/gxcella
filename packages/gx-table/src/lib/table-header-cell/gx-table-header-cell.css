@@ -6,6 +6,7 @@ th {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--gx-table-header-text-color, #6b7280);
+  min-width: 100px;
 }
 
 th.sortable {

@@ -26,9 +26,17 @@
 /* 表格 */
 .gx-table {
   width: 100%;
-  min-width: 100%;
   border-collapse: collapse;
   table-layout: auto;
+}
+
+/* 確保所有欄位使用相同的 box-sizing */
+.gx-table th,
+.gx-table td {
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Footer 區域 */

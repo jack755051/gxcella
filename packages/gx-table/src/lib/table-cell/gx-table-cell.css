@@ -1,6 +1,7 @@
 td {
   padding: 1rem 1.5rem;
   font-size: 0.875rem;
+  min-width: 100px;
 }
 
 .text-center {
