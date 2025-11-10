@@ -2,9 +2,10 @@
   background-color: var(--gx-table-header-bg, #e6f8f9);
 }
 
-.gx-table-header-checkbox {
+.gx-table-checkbox-cell {
   width: 3rem;
   padding: 1rem 1.5rem;
+  text-align: center;
 }
 
 .gx-checkbox {

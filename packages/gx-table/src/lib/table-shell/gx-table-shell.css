@@ -4,6 +4,8 @@
   border-radius: 1rem;
   background-color: var(--gx-table-bg, #ffffff);
   box-shadow: var(--gx-table-shadow, 0 1px 3px 0 rgba(0, 0, 0, 0.1));
+  width: 100%;
+  min-width: 600px;
 }
 
 /* Toolbar 區域 */
@@ -24,7 +26,9 @@
 /* 表格 */
 .gx-table {
   width: 100%;
+  min-width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
 
 /* Footer 區域 */

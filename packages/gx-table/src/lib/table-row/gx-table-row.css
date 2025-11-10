@@ -1,5 +1,6 @@
-tr {
+:host {
   transition: background-color 0.2s;
+  display: table-row;
 }
 
 .transition-colors {
@@ -25,6 +26,7 @@ tr {
 .gx-table-checkbox-cell {
   width: 3rem;
   padding: 1rem 1.5rem;
+  text-align: center;
 }
 
 .h-4 {

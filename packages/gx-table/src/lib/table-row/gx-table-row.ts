@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableColumn } from '../model/table.types';
 import { GxTableCell } from '../table-cell/gx-table-cell';
@@ -14,11 +14,14 @@ import { GxTableCell } from '../table-cell/gx-table-cell';
  * - 支援自定義欄位內容（ng-content）
  */
 @Component({
-  selector: 'gx-table-row',
+  selector: 'tr[gx-table-row]',
   standalone: true,
   imports: [CommonModule, GxTableCell],
   templateUrl: './gx-table-row.html',
   styleUrl: './gx-table-row.css',
+  host: {
+    '[class]': 'rowClass()'
+  }
 })
 export class GxTableRow {
   /** 行資料 */

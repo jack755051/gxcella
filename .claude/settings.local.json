@@ -38,7 +38,9 @@
       "Bash(npm pack:*)",
       "Bash(tar:*)",
       "Bash(npm unpublish:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(node scripts/sync-version-to-dist.js:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

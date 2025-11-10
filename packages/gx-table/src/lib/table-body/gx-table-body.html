@@ -1,5 +1,6 @@
 @for (row of data(); track getRowKey(row, $index)) {
-  <gx-table-row
+  <tr
+    gx-table-row
     [row]="row"
     [columns]="columns()"
     [selectable]="selectable()"
@@ -9,5 +10,5 @@
   >
     <!-- 傳遞所有插槽到 TableRow -->
     <ng-content></ng-content>
-  </gx-table-row>
+  </tr>
 }

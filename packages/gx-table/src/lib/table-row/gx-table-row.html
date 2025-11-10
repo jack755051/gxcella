@@ -1,22 +1,20 @@
-<tr [class]="rowClass()">
-  <!-- 選擇 Checkbox - 統一寬度和 padding，與 header 一致 -->
-  @if (selectable()) {
-    <td class="gx-table-checkbox-cell">
-      <input
-        type="checkbox"
-        [checked]="selected()"
-        [disabled]="disabled()"
-        [class]="checkboxClass()"
-        (change)="handleSelect()"
-      />
-    </td>
-  }
+<!-- 選擇 Checkbox - 統一寬度和 padding，與 header 一致 -->
+@if (selectable()) {
+  <td class="gx-table-checkbox-cell">
+    <input
+      type="checkbox"
+      [checked]="selected()"
+      [disabled]="disabled()"
+      [class]="checkboxClass()"
+      (change)="handleSelect()"
+    />
+  </td>
+}
 
-  <!-- 資料欄位 -->
-  @for (column of columns(); track column.key) {
-    <gx-table-cell [column]="column" [row]="row()">
-      <!-- 支援自定義內容投影 -->
-      <ng-content [select]="'[cell-' + column.key + ']'"></ng-content>
-    </gx-table-cell>
-  }
-</tr>
+<!-- 資料欄位 -->
+@for (column of columns(); track column.key) {
+  <gx-table-cell [column]="column" [row]="row()">
+    <!-- 支援自定義內容投影 -->
+    <ng-content [select]="'[cell-' + column.key + ']'"></ng-content>
+  </gx-table-cell>
+}
