@@ -1,5 +1,11 @@
 # @sanring/gx-wizard
 
+## 0.2.1
+
+### Patch Changes
+
+- 830371c: upgrade gx-table
+
 ## 0.1.13
 
 ### Patch Changes

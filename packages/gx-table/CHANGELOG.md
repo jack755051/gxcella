@@ -1,5 +1,50 @@
 # @sanring/gx-table
 
+## 0.2.1
+
+### Patch Changes
+
+- 830371c: upgrade gx-table
+
+## 0.2.0
+
+### Minor Changes
+
+- **🐛 Critical Bug Fix: Component Selector Correction**
+
+  Fixed fundamental issue with component selectors that caused multiple layout problems.
+
+  **What Changed:**
+
+  - Changed `gx-table-header-cell` from element selector to attribute selector (`th[gx-table-header-cell]`)
+  - Changed `gx-table-cell` from element selector to attribute selector (`td[gx-table-cell]`)
+  - Updated templates to use `<th gx-table-header-cell>` instead of `<gx-table-header-cell>`
+  - Updated templates to use `<td gx-table-cell>` instead of `<gx-table-cell>`
+  - Changed CSS from `th` selector to `:host` selector
+  - Added `background-color` to header cell styles
+
+  **Fixes:**
+
+  - ✅ Header background color now displays correctly (#e6f8f9)
+  - ✅ Sticky header now works properly when scrolling
+  - ✅ Column widths now respect percentage values with `table-layout: fixed`
+  - ✅ Table now fills 100% width when configured
+  - ✅ Proper HTML table structure (no wrapper elements)
+
+  **Migration Required (only if using low-level components directly):**
+
+  Most users won't need to change anything if using `gx-table-wrapper` or `gx-table-header`/`gx-table-body`.
+
+  If you're manually using components:
+
+  ```html
+  <!-- Before -->
+  <gx-table-header-cell [column]="column"></gx-table-header-cell>
+
+  <!-- After -->
+  <th gx-table-header-cell [column]="column"></th>
+  ```
+
 ## 0.1.13
 
 ### Patch Changes
