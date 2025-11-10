@@ -24,10 +24,11 @@
 }
 
 /* Sticky header 支援 */
-.gx-table-container.sticky-header thead tr {
+.gx-table-container.sticky-header thead th {
   position: sticky;
   top: 0;
   z-index: 10;
+  background-color: var(--gx-table-header-bg, #e6f8f9);
 }
 
 /* 表格 */
