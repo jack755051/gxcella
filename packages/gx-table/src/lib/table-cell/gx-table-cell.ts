@@ -53,11 +53,11 @@ export class GxTableCell {
     }
 
     if (column.minWidth) {
-      styles['minWidth'] = column.minWidth;
+      styles['min-width'] = column.minWidth;
     }
 
     if (column.maxWidth) {
-      styles['maxWidth'] = column.maxWidth;
+      styles['max-width'] = column.maxWidth;
     }
 
     return styles;
