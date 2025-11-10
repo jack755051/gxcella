@@ -1,5 +1,13 @@
 # @sanring/gx-card
 
+## 4.0.0
+
+### Patch Changes
+
+- a878c23: include all dist files in npm package
+- Updated dependencies [a878c23]
+  - @sanring/gx-ui@4.0.0
+
 ## 3.0.1
 
 ### Patch Changes

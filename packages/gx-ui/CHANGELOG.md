@@ -1,5 +1,11 @@
 # @sanring/gx-ui
 
+## 4.0.0
+
+### Patch Changes
+
+- a878c23: include all dist files in npm package
+
 ## 3.0.1
 
 ### Patch Changes

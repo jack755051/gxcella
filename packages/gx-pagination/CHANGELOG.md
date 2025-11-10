@@ -1,5 +1,11 @@
 # @sanring/gx-pagination
 
+## 0.1.2
+
+### Patch Changes
+
+- a878c23: include all dist files in npm package
+
 ## 0.1.1
 
 ### Patch Changes
