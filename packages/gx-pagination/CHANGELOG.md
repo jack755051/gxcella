@@ -1,5 +1,11 @@
 # @sanring/gx-pagination
 
+## 0.1.5
+
+### Patch Changes
+
+- d868236: upgrade to 0.1.5
+
 ## 0.1.4
 
 ### Patch Changes
