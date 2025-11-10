@@ -19,4 +19,16 @@ export class GxTableShell {
    * 自訂最大高度，例如 '500px' 或 '70vh'
    */
   maxHeight = input<string | undefined>(undefined);
+
+  /**
+   * 是否凍結 header（預設為 true）
+   */
+  stickyHeader = input<boolean>(true);
+
+  /**
+   * 表格佈局模式
+   * - 'auto': 自動調整（適合固定寬度如 px）
+   * - 'fixed': 固定佈局（適合百分比寬度）
+   */
+  tableLayout = input<'auto' | 'fixed'>('auto');
 }

@@ -23,11 +23,25 @@
   max-height: 600px;
 }
 
+/* Sticky header 支援 */
+.gx-table-container.sticky-header thead tr {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 /* 表格 */
 .gx-table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.gx-table.layout-auto {
   table-layout: auto;
+}
+
+.gx-table.layout-fixed {
+  table-layout: fixed;
 }
 
 /* 確保所有欄位使用相同的 box-sizing */

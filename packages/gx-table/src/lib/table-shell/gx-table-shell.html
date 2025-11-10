@@ -8,8 +8,9 @@
   <div
     class="gx-table-container"
     [class.has-max-height]="!maxHeight()"
+    [class.sticky-header]="stickyHeader()"
     [style.max-height]="maxHeight()">
-    <table class="gx-table">
+    <table class="gx-table" [class.layout-fixed]="tableLayout() === 'fixed'" [class.layout-auto]="tableLayout() === 'auto'">
       <ng-content></ng-content>
     </table>
   </div>
