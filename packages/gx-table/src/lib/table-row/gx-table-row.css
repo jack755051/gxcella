@@ -16,18 +16,15 @@ tr {
   background-color: var(--gx-table-row-selected-bg, #eff6ff);
 }
 
-.w-12 {
+/* Selected row hover state - 選中行的 hover 狀態 */
+.bg-blue-50:hover {
+  background-color: var(--gx-table-row-selected-hover-bg, #dbeafe);
+}
+
+/* Checkbox cell - 與 header 保持一致 */
+.gx-table-checkbox-cell {
   width: 3rem;
-}
-
-.px-6 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem 1.5rem;
 }
 
 .h-4 {

@@ -2,15 +2,20 @@
 
 Angular 麵包屑導航組件，支援自動路由生成和手動配置兩種模式。
 
+> **🎉 v2.0 重大更新**：全新組合式設計，參考 `@sanring/gx-table` 的架構，提供更高的靈活性和可組合性！
+
 ## ✨ 特性
 
-- ✅ **雙模式支援**：手動配置或自動路由生成
+- ✅ **組合式設計**：可自由組合 Container、List、Item 組件（v2.0 新增）
+- ✅ **三種使用模式**：自動/手動/自定義組合
+- ✅ **Signal API**：完整的 Angular Signal 支援（v2.0）
 - ✅ **靈活的圖標支援**：Lucide 圖標（可選）或文字/Emoji 圖標
-- ✅ **主題系統**：內建 default、glass 等主題
+- ✅ **主題系統**：內建 default、glass、minimal、colorful 等主題
 - ✅ **響應式設計**：支援不同螢幕尺寸
 - ✅ **完整的樣式自定義**：CSS 變數支援
 - ✅ **無障礙支援**：符合 ARIA 標準
 - ✅ **TypeScript**：完整的類型定義
+- ✅ **向後兼容**：保留舊版 API（使用 `gx-breadcrumb-legacy`）
 
 ## 📦 安裝
 
@@ -30,40 +35,81 @@ npm install lucide-angular
 
 ## 🎯 使用方式
 
-### 模式 1：手動模式（提供 data）
+### 🆕 方式 1：組合式 API（推薦 - v2.0）
+
+完全自由組合，類似 `@sanring/gx-table` 的設計：
 
 ```typescript
 import { Component } from '@angular/core';
-import { GxBreadcrumb, IGxBreadCrumb } from '@sanring/gx-breadcrumb';
+import {
+  GxBreadcrumbContainer,
+  GxBreadcrumbList,
+  GxBreadcrumbItemV2
+} from '@sanring/gx-breadcrumb';
 
 @Component({
   selector: 'app-example',
   standalone: true,
-  imports: [GxBreadcrumb],
+  imports: [GxBreadcrumbContainer, GxBreadcrumbList, GxBreadcrumbItemV2],
   template: `
-    <gx-breadcrumb
-      [data]="breadcrumbs"
-      [showIcon]="true">
-    </gx-breadcrumb>
+    <gx-breadcrumb-container theme="default" variant="modern">
+      <gx-breadcrumb-list>
+        <gx-breadcrumb-item-v2
+          label="首頁"
+          link="/"
+          icon="🏠"
+          [showIcon]="true"
+        />
+        <gx-breadcrumb-item-v2
+          label="產品"
+          link="/products"
+          icon="📦"
+          [showIcon]="true"
+        />
+        <gx-breadcrumb-item-v2
+          label="詳情"
+          [active]="true"
+          icon="📄"
+          [showIcon]="true"
+          [showSeparator]="false"
+        />
+      </gx-breadcrumb-list>
+    </gx-breadcrumb-container>
   `
 })
-export class ExampleComponent {
-  breadcrumbs: IGxBreadCrumb[] = [
-    { label: '首頁', link: '/', icon: '🏠' },
-    { label: '產品', link: '/products', icon: '📦' },
-    { label: '詳情', link: '/products/123', icon: '📄' }
-  ];
-}
+export class ExampleComponent {}
 ```
 
-### 模式 2：自動模式（基於路由）
+**優點：**
+- ✅ 完全控制每個項目
+- ✅ 可以在 Item 之間插入自定義內容
+- ✅ 每個組件都可以獨立使用
+- ✅ 類似 gx-table 的設計，學習曲線低
 
-**1. 配置路由：**
+---
+
+### 方式 2：包裝組件 - 自動模式
+
+```typescript
+import { Component } from '@angular/core';
+import { GxBreadcrumb } from '@sanring/gx-breadcrumb';
+
+@Component({
+  selector: 'app-layout',
+  standalone: true,
+  imports: [GxBreadcrumb],
+  template: `
+    <!-- mode="auto" 從路由自動生成 -->
+    <gx-breadcrumb mode="auto" [showIcon]="true" />
+  `
+})
+export class LayoutComponent {}
+```
+
+需要配置路由：
 
 ```typescript
 // app.routes.ts
-import { Routes } from '@angular/router';
-
 export const routes: Routes = [
   {
     path: '',
@@ -76,10 +122,7 @@ export const routes: Routes = [
       {
         path: ':id',
         data: {
-          breadcrumb: (route) => {
-            // 動態麵包屑
-            return `產品 ${route.params['id']}`;
-          }
+          breadcrumb: (route) => `產品 ${route.params['id']}`
         }
       }
     ]
@@ -87,22 +130,51 @@ export const routes: Routes = [
 ];
 ```
 
-**2. 使用組件：**
+---
+
+### 方式 3：包裝組件 - 手動模式
 
 ```typescript
 import { Component } from '@angular/core';
-import { GxBreadcrumb } from '@sanring/gx-breadcrumb';
+import { GxBreadcrumb, IGxBreadCrumb } from '@sanring/gx-breadcrumb';
 
 @Component({
-  selector: 'app-layout',
+  selector: 'app-example',
   standalone: true,
   imports: [GxBreadcrumb],
   template: `
-    <!-- 不提供 data，自動從路由生成 -->
-    <gx-breadcrumb [showIcon]="true"></gx-breadcrumb>
+    <gx-breadcrumb
+      mode="manual"
+      [data]="breadcrumbs"
+      [showIcon]="true"
+    />
   `
 })
-export class LayoutComponent {}
+export class ExampleComponent {
+  breadcrumbs: IGxBreadCrumb[] = [
+    { label: '首頁', link: '/', icon: '🏠' },
+    { label: '產品', link: '/products', icon: '📦' },
+    { label: '詳情', link: '/products/123', icon: '📄' }
+  ];
+}
+```
+
+---
+
+### 🔄 向後兼容（舊版 API）
+
+如果您使用舊版本，可以繼續使用 `gx-breadcrumb-legacy`：
+
+```typescript
+import { GxBreadcrumbLegacy } from '@sanring/gx-breadcrumb';
+
+@Component({
+  imports: [GxBreadcrumbLegacy],
+  template: `
+    <gx-breadcrumb-legacy [data]="breadcrumbs" />
+  `
+})
+export class LegacyComponent {}
 ```
 
 ### 圖標使用方式
@@ -179,15 +251,69 @@ export class MyComponent {
 
 ## 📖 API 文檔
 
-### GxBreadcrumb
+### 🆕 GxBreadcrumbContainer
+
+容器組件，提供主題和變體樣式。
 
 #### Inputs
 
 | 屬性 | 類型 | 預設值 | 說明 |
 |------|------|--------|------|
-| `data` | `IGxBreadCrumb[]` | `null` | 手動模式：提供麵包屑數據。不提供則使用自動模式 |
+| `theme` | `GxTheme` | `'default'` | 主題樣式（`'default'` \| `'dark'` \| `'brand'`） |
+| `variant` | `GxVariant` | `'modern'` | 變體樣式（`'modern'` \| `'glass'` \| `'minimal'` \| `'colorful'`） |
+
+---
+
+### 🆕 GxBreadcrumbList
+
+列表組件，負責渲染麵包屑項目容器。
+
+#### Inputs
+
+| 屬性 | 類型 | 預設值 | 說明 |
+|------|------|--------|------|
+| `separator` | `GxBreadcrumbSeparator` | `Slash` | 分隔符號類型 |
+| `ariaLabel` | `string` | `'Breadcrumb navigation'` | 無障礙標籤 |
+
+---
+
+### 🆕 GxBreadcrumbItemV2
+
+麵包屑項目組件（完全獨立可用）。
+
+#### Inputs
+
+| 屬性 | 類型 | 預設值 | 說明 |
+|------|------|--------|------|
+| `label` | `string` | **必填** | 顯示文字 |
+| `link` | `string \| undefined` | `undefined` | 連結路徑 |
+| `icon` | `string \| undefined` | `undefined` | 文字/Emoji 圖標 |
+| `iconImg` | `any` | `undefined` | Lucide 圖標 |
+| `active` | `boolean` | `false` | 是否為當前頁 |
+| `disabled` | `boolean` | `false` | 是否禁用 |
+| `showIcon` | `boolean` | `false` | 是否顯示圖標 |
+| `separator` | `string` | `'/'` | 分隔符字元 |
+| `showSeparator` | `boolean` | `true` | 是否顯示分隔符 |
+| `target` | `'_self' \| '_blank'` | `'_self'` | 外部連結的 target |
+
+#### Outputs
+
+| 事件 | 類型 | 說明 |
+|------|------|------|
+| `itemClick` | `OutputEmitter<{label: string; link?: string}>` | 點擊項目時觸發 |
+
+---
+
+### GxBreadcrumb（包裝組件）
+
+#### Inputs
+
+| 屬性 | 類型 | 預設值 | 說明 |
+|------|------|--------|------|
+| `mode` | `'auto' \| 'manual' \| 'custom'` | `'auto'` | 使用模式 |
+| `data` | `IGxBreadCrumb[]` | `null` | 手動模式：提供麵包屑數據 |
 | `theme` | `GxTheme` | `'default'` | 主題樣式 |
-| `variant` | `GxVariant` | `'modern'` | 變體樣式（`'modern'` \| `'glass'`） |
+| `variant` | `GxVariant` | `'modern'` | 變體樣式 |
 | `separator` | `GxBreadcrumbSeparator` | `Slash` | 分隔符號 |
 | `showIcon` | `boolean` | `false` | 是否顯示圖標 |
 | `rootCrumb` | `IGxBreadCrumb \| false \| undefined` | `undefined` | 自定義根麵包屑 |
@@ -196,7 +322,7 @@ export class MyComponent {
 
 | 事件 | 類型 | 說明 |
 |------|------|------|
-| `itemClick` | `EventEmitter<IGxBreadCrumb>` | 點擊麵包屑項目時觸發 |
+| `itemClick` | `OutputEmitter<IGxBreadCrumb>` | 點擊麵包屑項目時觸發 |
 
 ### IGxBreadCrumb 介面
 

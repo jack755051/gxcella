@@ -1,7 +1,7 @@
 <tr [class]="rowClass()">
   <!-- 選擇 Checkbox - 統一寬度和 padding，與 header 一致 -->
   @if (selectable()) {
-    <td class="w-12 px-6 py-4">
+    <td class="gx-table-checkbox-cell">
       <input
         type="checkbox"
         [checked]="selected()"
