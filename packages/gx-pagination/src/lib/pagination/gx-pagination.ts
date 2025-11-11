@@ -1,5 +1,6 @@
 import { Component, input, output, computed, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { GxButton, GxIcon } from '@sanring/gx-ui';
 import { GxPaginationInput } from '../pagination-input/gx-pagination-input';
 import { GxPaginationSelect } from '../pagination-select/gx-pagination-select';
 import { GxPaginationList } from '../pagination-list/gx-pagination-list';
@@ -26,6 +27,8 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    GxButton,
+    GxIcon,
     GxPaginationInput,
     GxPaginationSelect,
     GxPaginationList,

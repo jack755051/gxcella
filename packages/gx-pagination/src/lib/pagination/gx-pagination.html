@@ -7,19 +7,19 @@
   <!-- 分頁控制列 -->
   <div class="pagination--selector flex items-center gap-2">
     <!-- 上一頁按鈕 -->
-    <button
-      type="button"
-      [class]="customClass().previousButton || 'btn btn-pagination'"
-      [disabled]="isPreviousDisabled()"
-      (click)="handlePrevious()"
-    >
+    <gx-button
+      [action]="{
+        label: button().previous.label,
+        handler: handlePrevious.bind(this),
+        disabled: isPreviousDisabled()
+      }"
+      [variant]="'outline'"
+      [intent]="'info'"
+      [disabled]="isPreviousDisabled()">
       @if (button().previous.icon) {
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
+        <gx-icon name="chevron-left" [size]="16" start></gx-icon>
       }
-      {{ button().previous.label }}
-    </button>
+    </gx-button>
 
     <!-- 中間區域：依據 selectType 顯示 -->
     @if (selectType() === SelectType.SELECT) {
@@ -51,19 +51,19 @@
     }
 
     <!-- 下一頁按鈕 -->
-    <button
-      type="button"
-      [class]="customClass().nextButton || 'btn btn-pagination'"
-      [disabled]="isNextDisabled()"
-      (click)="handleNext()"
-    >
-      {{ button().next.label }}
+    <gx-button
+      [action]="{
+        label: button().next.label,
+        handler: handleNext.bind(this),
+        disabled: isNextDisabled()
+      }"
+      [variant]="'outline'"
+      [intent]="'info'"
+      [disabled]="isNextDisabled()">
       @if (button().next.icon) {
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
+        <gx-icon name="chevron-right" [size]="16" end></gx-icon>
       }
-    </button>
+    </gx-button>
   </div>
 
   <!-- 右側彈性空間 -->
