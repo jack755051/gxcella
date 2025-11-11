@@ -41,6 +41,11 @@ export class GxTag {
     size = input<GxTagSize>('md');
 
     /**
+     * 是否可點擊
+     */
+    clickable = input<boolean>(false);
+
+    /**
      * 點擊事件（當 Tag 可點擊時）
      */
     onClick = output<MouseEvent>();
@@ -75,17 +80,10 @@ export class GxTag {
     }
 
     /**
-     * 是否可點擊（有訂閱 onClick 事件）
-     */
-    get isClickable(): boolean {
-        return this.onClick.observed;
-    }
-
-    /**
      * 處理 Tag 點擊
      */
     handleClick(event: MouseEvent) {
-        if (!this.disabled() && this.isClickable) {
+        if (!this.disabled() && this.clickable()) {
             this.onClick.emit(event);
         }
     }

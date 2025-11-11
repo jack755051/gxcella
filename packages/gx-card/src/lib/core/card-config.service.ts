@@ -60,9 +60,9 @@ export interface GxCardGlobalConfig {
   actions?: {
     /** 預設最大動作數量 */
     maxActions?: Record<GxCardShape, number>;
-    
+
     /** 預設按鈕變體 */
-    buttonVariants?: Record<GxCardShape, 'filled' | 'outline' | 'soft' | 'ghost' | 'tag'>;
+    buttonVariants?: Record<GxCardShape, 'filled' | 'outline' | 'soft' | 'ghost'>;
   };
   
   /** 自定義 CSS 類別前綴 */
@@ -194,9 +194,9 @@ export class GxCardConfigService {
   /**
    * 獲取按鈕變體
    */
-  getButtonVariant(shape: GxCardShape): 'filled' | 'outline' | 'soft' | 'ghost' | 'tag' {
-    return this.config.actions?.buttonVariants?.[shape] || 
-           this.config.actions?.buttonVariants?.classic || 
+  getButtonVariant(shape: GxCardShape): 'filled' | 'outline' | 'soft' | 'ghost' {
+    return this.config.actions?.buttonVariants?.[shape] ||
+           this.config.actions?.buttonVariants?.classic ||
            DEFAULT_CARD_CONFIG.actions!.buttonVariants!.classic!;
   }
   

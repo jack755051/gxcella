@@ -24,13 +24,13 @@
   @if (tagsData && tagsData.length > 0) {
     <div class="gx-card-tags">
       @for (tag of tagsData; track tag.id) {
-        <gx-button
-          [variant]="'tag'"
+        <gx-tag
           [intent]="tag.intent ?? 'info'"
           [disabled]="tag.disabled ?? false"
-          (pressed)="onTagClick(tag, $event)">
+          [clickable]="true"
+          (onClick)="onTagClick(tag, $event)">
           {{ tag.label }}
-        </gx-button>
+        </gx-tag>
       }
     </div>
   }

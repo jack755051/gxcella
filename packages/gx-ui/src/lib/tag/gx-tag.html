@@ -1,6 +1,6 @@
 <span
     class="gx-tag"
-    [class.gx-tag--clickable]="isClickable"
+    [class.gx-tag--clickable]="clickable()"
     [class.gx-tag--disabled]="disabled()"
     [class.gx-tag--removable]="removable()"
     (click)="handleClick($event)">

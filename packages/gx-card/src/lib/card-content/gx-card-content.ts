@@ -1,6 +1,6 @@
 import { Component, computed, inject, input, output, signal, viewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GxButton } from '@sanring/gx-ui';
+import { GxTag } from '@sanring/gx-ui';
 import { GxMedia, IGxCardContent, IGxTag, IGxDescriptionCollapse } from '../model/card.type';
 import { GxCardConfigService } from '../core/card-config.service';
 import { HeightMeasurementService, HeightMeasurementResult } from '../core/height-measurement.service';
@@ -8,7 +8,7 @@ import { HeightMeasurementService, HeightMeasurementResult } from '../core/heigh
 @Component({
   selector: 'gx-card-content',
   standalone: true,
-  imports: [CommonModule, GxButton],
+  imports: [CommonModule, GxTag],
   templateUrl: './gx-card-content.html',
   styleUrls: ['./gx-card-content.css']
 })
