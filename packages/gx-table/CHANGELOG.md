@@ -1,5 +1,11 @@
 # @sanring/gx-table
 
+## 1.0.0
+
+### Minor Changes
+
+- 5260557: minor all package
+
 ## 0.2.3
 
 ### Patch Changes

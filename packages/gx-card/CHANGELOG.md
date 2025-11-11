@@ -1,5 +1,16 @@
 # @sanring/gx-card
 
+## 5.0.0
+
+### Minor Changes
+
+- 5260557: minor all package
+
+### Patch Changes
+
+- Updated dependencies [5260557]
+  - @sanring/gx-ui@5.0.0
+
 ## 4.0.1
 
 ### Patch Changes

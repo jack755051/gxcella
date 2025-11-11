@@ -1,6 +1,6 @@
 {
   "name": "@sanring/gx-pagination",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/jack755051/gxcella",
@@ -19,9 +19,13 @@
   },
   "peerDependencies": {
     "@angular/common": "^20.3.0",
-    "@angular/core": "^20.3.0"
+    "@angular/core": "^20.3.0",
+    "@sanring/gx-ui": "^5.0.0",
+    "lucide-angular": "^0.539.0"
   },
   "devDependencies": {
+    "@sanring/gx-ui": "^5.0.0",
+    "lucide-angular": "^0.539.0",
     "ng-packagr": "^20.3.0"
   },
   "sideEffects": false,

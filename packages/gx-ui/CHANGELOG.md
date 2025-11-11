@@ -1,5 +1,11 @@
 # @sanring/gx-ui
 
+## 5.0.0
+
+### Minor Changes
+
+- 5260557: minor all package
+
 ## 4.0.1
 
 ### Patch Changes

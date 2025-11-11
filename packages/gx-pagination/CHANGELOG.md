@@ -1,5 +1,16 @@
 # @sanring/gx-pagination
 
+## 1.0.0
+
+### Minor Changes
+
+- 5260557: minor all package
+
+### Patch Changes
+
+- Updated dependencies [5260557]
+  - @sanring/gx-ui@5.0.0
+
 ## 0.2.3
 
 ### Patch Changes
