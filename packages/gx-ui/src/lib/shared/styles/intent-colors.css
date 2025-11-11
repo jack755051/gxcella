@@ -1,0 +1,111 @@
+/**
+ * 共享的 Intent 顏色系統
+ *
+ * 定義統一的語意顏色，供所有組件使用
+ * 這確保了整個設計系統的一致性
+ */
+
+:root {
+    /* ==================== Base Colors ==================== */
+    /* Info (藍色) */
+    --gx-color-info-50:  #eff6ff;
+    --gx-color-info-100: #dbeafe;
+    --gx-color-info-200: #bfdbfe;
+    --gx-color-info-300: #93c5fd;
+    --gx-color-info-400: #60a5fa;
+    --gx-color-info-500: #3b82f6;
+    --gx-color-info-600: #2563eb;
+    --gx-color-info-700: #1d4ed8;
+    --gx-color-info-800: #1e40af;
+    --gx-color-info-900: #1e3a8a;
+
+    /* Success (綠色) */
+    --gx-color-success-50:  #f0fdf4;
+    --gx-color-success-100: #dcfce7;
+    --gx-color-success-200: #bbf7d0;
+    --gx-color-success-300: #86efac;
+    --gx-color-success-400: #4ade80;
+    --gx-color-success-500: #22c55e;
+    --gx-color-success-600: #16a34a;
+    --gx-color-success-700: #15803d;
+    --gx-color-success-800: #166534;
+    --gx-color-success-900: #14532d;
+
+    /* Warning (黃色/橙色) */
+    --gx-color-warning-50:  #fff7ed;
+    --gx-color-warning-100: #ffedd5;
+    --gx-color-warning-200: #fed7aa;
+    --gx-color-warning-300: #fdba74;
+    --gx-color-warning-400: #fb923c;
+    --gx-color-warning-500: #f97316;
+    --gx-color-warning-600: #ea580c;
+    --gx-color-warning-700: #c2410c;
+    --gx-color-warning-800: #9a3412;
+    --gx-color-warning-900: #7c2d12;
+
+    /* Error (紅色) */
+    --gx-color-error-50:  #fef2f2;
+    --gx-color-error-100: #fee2e2;
+    --gx-color-error-200: #fecaca;
+    --gx-color-error-300: #fca5a5;
+    --gx-color-error-400: #f87171;
+    --gx-color-error-500: #ef4444;
+    --gx-color-error-600: #dc2626;
+    --gx-color-error-700: #b91c1c;
+    --gx-color-error-800: #991b1b;
+    --gx-color-error-900: #7f1d1d;
+
+    /* Gray (中性色) */
+    --gx-color-gray-50:  #f9fafb;
+    --gx-color-gray-100: #f3f4f6;
+    --gx-color-gray-200: #e5e7eb;
+    --gx-color-gray-300: #d1d5db;
+    --gx-color-gray-400: #9ca3af;
+    --gx-color-gray-500: #6b7280;
+    --gx-color-gray-600: #4b5563;
+    --gx-color-gray-700: #374151;
+    --gx-color-gray-800: #1f2937;
+    --gx-color-gray-900: #111827;
+
+    /* Accent (可選的強調色) */
+    --gx-color-accent-400: #a78bfa;
+
+    /* ==================== Intent Semantic Colors ==================== */
+    /* 這些變數會根據當前的 intent 自動映射到對應的顏色 */
+
+    /* Info Intent */
+    --gx-intent-info-bg: var(--gx-color-info-500);
+    --gx-intent-info-foreground: white;
+    --gx-intent-info-hover: var(--gx-color-info-600);
+    --gx-intent-info-active: var(--gx-color-info-700);
+    --gx-intent-info-border: var(--gx-color-info-500);
+    --gx-intent-info-soft-bg: var(--gx-color-info-50);
+    --gx-intent-info-soft-fg: var(--gx-color-info-700);
+
+    /* Success Intent */
+    --gx-intent-success-bg: var(--gx-color-success-500);
+    --gx-intent-success-foreground: white;
+    --gx-intent-success-hover: var(--gx-color-success-600);
+    --gx-intent-success-active: var(--gx-color-success-700);
+    --gx-intent-success-border: var(--gx-color-success-500);
+    --gx-intent-success-soft-bg: var(--gx-color-success-50);
+    --gx-intent-success-soft-fg: var(--gx-color-success-700);
+
+    /* Warning Intent */
+    --gx-intent-warning-bg: var(--gx-color-warning-500);
+    --gx-intent-warning-foreground: white;
+    --gx-intent-warning-hover: var(--gx-color-warning-600);
+    --gx-intent-warning-active: var(--gx-color-warning-700);
+    --gx-intent-warning-border: var(--gx-color-warning-500);
+    --gx-intent-warning-soft-bg: var(--gx-color-warning-50);
+    --gx-intent-warning-soft-fg: var(--gx-color-warning-700);
+
+    /* Error Intent */
+    --gx-intent-error-bg: var(--gx-color-error-500);
+    --gx-intent-error-foreground: white;
+    --gx-intent-error-hover: var(--gx-color-error-600);
+    --gx-intent-error-active: var(--gx-color-error-700);
+    --gx-intent-error-border: var(--gx-color-error-500);
+    --gx-intent-error-soft-bg: var(--gx-color-error-50);
+    --gx-intent-error-soft-fg: var(--gx-color-error-700);
+}

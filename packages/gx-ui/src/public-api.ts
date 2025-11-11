@@ -3,6 +3,10 @@
  */
 // packages/gx-ui/src/public-api.ts
 
+// shared design tokens
+export * from './lib/shared/model/design-tokens';
+export * from './lib/shared/model/action.model';
+
 // laoding
 export * from './lib/loading/gx-loading';
 export * from './lib/loading/gx-loading-spinner/gx-loading-spinner';
@@ -22,6 +26,7 @@ export * from './lib/button/gx-button';
 export * from './lib/button/model/button.types';
 // tag
 export * from './lib/tag/gx-tag';
+export * from './lib/tag/model/tag.types';
 // icon
 export * from './lib/icon/gx-icon';
 export * from './lib/icon/model/icon.type';

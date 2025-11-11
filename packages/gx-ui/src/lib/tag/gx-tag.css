@@ -1,27 +1,190 @@
-.gx-tag-wrapper {
+/**
+ * GxTag 樣式 - 獨立實現
+ *
+ * 使用共享的 intent-colors.css 來保持設計系統一致性
+ * 不再依賴 Button 的樣式
+ */
+
+/* ==================== Host Element ==================== */
+:host {
+    display: inline-flex;
+    width: fit-content;
+    inline-size: max-content;
+    flex: 0 0 auto;
+
+    /* 預設 intent 變數映射（會被 data-intent 覆寫） */
+    --tag-bg: var(--gx-intent-info-soft-bg);
+    --tag-fg: var(--gx-intent-info-soft-fg);
+    --tag-hover-bg: var(--gx-color-info-100);
+    --tag-border: var(--gx-intent-info-soft-bg);
+}
+
+/* Intent 變數映射 */
+:host([data-intent="info"]) {
+    --tag-bg: var(--gx-intent-info-soft-bg);
+    --tag-fg: var(--gx-intent-info-soft-fg);
+    --tag-hover-bg: var(--gx-color-info-100);
+    --tag-border: var(--gx-intent-info-soft-bg);
+}
+
+:host([data-intent="success"]) {
+    --tag-bg: var(--gx-intent-success-soft-bg);
+    --tag-fg: var(--gx-intent-success-soft-fg);
+    --tag-hover-bg: var(--gx-color-success-100);
+    --tag-border: var(--gx-intent-success-soft-bg);
+}
+
+:host([data-intent="warning"]) {
+    --tag-bg: var(--gx-intent-warning-soft-bg);
+    --tag-fg: var(--gx-intent-warning-soft-fg);
+    --tag-hover-bg: var(--gx-color-warning-100);
+    --tag-border: var(--gx-intent-warning-soft-bg);
+}
+
+:host([data-intent="error"]) {
+    --tag-bg: var(--gx-intent-error-soft-bg);
+    --tag-fg: var(--gx-intent-error-soft-fg);
+    --tag-hover-bg: var(--gx-color-error-100);
+    --tag-border: var(--gx-intent-error-soft-bg);
+}
+
+/* Size 變數映射 */
+:host([data-size="sm"]) {
+    --tag-px: 8px;
+    --tag-py: 2px;
+    --tag-font-size: 0.75rem;
+    --tag-gap: 4px;
+}
+
+:host([data-size="md"]) {
+    --tag-px: 10px;
+    --tag-py: 4px;
+    --tag-font-size: 0.875rem;
+    --tag-gap: 6px;
+}
+
+:host([data-size="lg"]) {
+    --tag-px: 12px;
+    --tag-py: 6px;
+    --tag-font-size: 1rem;
+    --tag-gap: 8px;
+}
+
+/* ==================== Tag Container ==================== */
+.gx-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tag-gap, 6px);
+
+    /* 間距 */
+    padding-inline: var(--tag-px, 10px);
+    padding-block: var(--tag-py, 4px);
+
+    /* 外觀 */
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    border: 1px solid var(--tag-border);
+    border-radius: 999px;  /* 藥丸形狀 */
+
+    /* 字體 */
+    font-size: var(--tag-font-size, 0.875rem);
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+
+    /* 過渡效果 */
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+
+    /* 重置 */
+    box-sizing: border-box;
+    user-select: none;
+}
+
+/* ==================== Clickable State ==================== */
+.gx-tag--clickable {
+    cursor: pointer;
+}
+
+.gx-tag--clickable:hover:not(.gx-tag--disabled) {
+    background: var(--tag-hover-bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.gx-tag--clickable:active:not(.gx-tag--disabled) {
+    transform: translateY(1px);
+}
+
+/* ==================== Disabled State ==================== */
+.gx-tag--disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
+/* ==================== Tag Content ==================== */
+.gx-tag-content {
     display: inline-flex;
     align-items: center;
     gap: 4px;
 }
 
+/* ==================== Remove Button ==================== */
 .gx-tag-remove {
+    /* 重置 */
     appearance: none;
+    -webkit-appearance: none;
     border: none;
     background: none;
+    margin: 0;
     padding: 2px;
-    cursor: pointer;
-    color: inherit;
+
+    /* 佈局 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    /* 外觀 */
+    color: currentColor;
     opacity: 0.6;
-    transition: opacity 0.15s;
     border-radius: 4px;
+    cursor: pointer;
+
+    /* 過渡 */
+    transition: opacity 0.15s ease, background-color 0.15s ease;
 }
 
 .gx-tag-remove:hover:not(:disabled) {
     opacity: 1;
-    background: rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.gx-tag-remove:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.gx-tag-remove:focus {
+    outline: 2px solid var(--gx-color-accent-400);
+    outline-offset: 2px;
+}
+
+.gx-tag-remove:focus:not(:focus-visible) {
+    outline: none;
 }
 
 .gx-tag-remove:disabled {
-    cursor: not-allowed;
     opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* SVG 圖標 */
+.gx-tag-remove svg {
+    display: block;
+    flex-shrink: 0;
+}
+
+/* ==================== Removable Spacing ==================== */
+.gx-tag--removable {
+    padding-inline-end: 6px;  /* 移除按鈕那側減少一點 padding */
 }

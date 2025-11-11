@@ -1,23 +1,37 @@
-<span class="gx-tag-wrapper" [attr.data-removable]="removable()">
-      <gx-button
-              [intent]="intent()"
-              [variant]="'soft'"
-              [disabled]="disabled()"
-              [styleTokens]="tagStyles"
-              (pressed)="onClick.emit($event)">
-        <ng-content></ng-content>
-      </gx-button>
+<span
+    class="gx-tag"
+    [class.gx-tag--clickable]="isClickable"
+    [class.gx-tag--disabled]="disabled()"
+    [class.gx-tag--removable]="removable()"
+    (click)="handleClick($event)">
 
+    <!-- Tag 內容 -->
+    <span class="gx-tag-content">
+        <ng-content></ng-content>
+    </span>
+
+    <!-- 移除按鈕 -->
     @if (removable()) {
         <button
-                class="gx-tag-remove"
-                type="button"
-                [disabled]="disabled()"
-                (click)="onRemove($event)"
-                aria-label="Remove tag">
-          <svg width="12" height="12" viewBox="0 0 12 12">
-            <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+            type="button"
+            class="gx-tag-remove"
+            [disabled]="disabled()"
+            (click)="handleRemove($event)"
+            aria-label="Remove tag">
+            <!-- X 圖標 -->
+            <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M9 3L3 9M3 3L9 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+            </svg>
         </button>
     }
-    </span>
+</span>

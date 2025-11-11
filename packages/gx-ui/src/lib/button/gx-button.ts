@@ -1,13 +1,16 @@
-import {Component, computed, input, output} from "@angular/core";
-import {GxButtonIntent, GxButtonStyle, GxButtonVariant} from "./model/button.types";
-import {GxAction} from "../shared/model/action.model";
+import { Component, computed, input, output } from '@angular/core';
+import { GxButtonIntent, GxButtonStyle, GxButtonVariant } from './model/button.types';
+import { GxAction } from '../shared/model/action.model';
 
 @Component({
-    selector:'gx-button',
-    standalone:true,
-    imports:[],
-    templateUrl:'gx-button.html',
-    styleUrls:['gx-button.css'],
+    selector: 'gx-button',
+    standalone: true,
+    imports: [],
+    templateUrl: 'gx-button.html',
+    styleUrls: [
+        '../shared/styles/intent-colors.css',
+        'gx-button.css'
+    ]
 })
 export class GxButton {
     // 行為導向
