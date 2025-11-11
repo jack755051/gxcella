@@ -1,0 +1,10 @@
+<div
+    class="gx-tooltip"
+    [class]="'gx-tooltip--' + theme() + ' gx-tooltip--' + position()">
+    <div class="gx-tooltip-content">
+        {{ content() }}
+    </div>
+    @if (showArrow()) {
+        <div class="gx-tooltip-arrow"></div>
+    }
+</div>

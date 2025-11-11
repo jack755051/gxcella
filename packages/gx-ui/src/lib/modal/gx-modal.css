@@ -1,0 +1,158 @@
+:host {
+    /* CSS custom properties for theming */
+    --gx-modal-bg: white;
+    --gx-modal-border-radius: 12px;
+    --gx-modal-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    --gx-modal-header-padding: 20px 24px;
+    --gx-modal-content-padding: 24px;
+    --gx-modal-footer-padding: 16px 24px;
+    --gx-modal-border-color: #e5e7eb;
+    --gx-modal-title-color: #111827;
+    --gx-modal-close-color: #6b7280;
+    --gx-modal-close-hover-color: #111827;
+}
+
+/* Modal container */
+.gx-modal-container {
+    background: var(--gx-modal-bg);
+    border-radius: var(--gx-modal-border-radius);
+    box-shadow: var(--gx-modal-shadow);
+    display: flex;
+    flex-direction: column;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+/* Header */
+.gx-modal-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gx-modal-header-padding);
+    border-bottom: 1px solid var(--gx-modal-border-color);
+}
+
+.gx-modal-title {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gx-modal-title-color);
+}
+
+.gx-modal-title--left {
+    justify-content: flex-start;
+}
+
+.gx-modal-title--center {
+    justify-content: center;
+}
+
+.gx-modal-title--right {
+    justify-content: flex-end;
+}
+
+.gx-modal-title-icon {
+    flex-shrink: 0;
+}
+
+.gx-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--gx-modal-close-color);
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.gx-modal-close:hover {
+    color: var(--gx-modal-close-hover-color);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.gx-modal-close:focus {
+    outline: 2px solid var(--gx-modal-close-hover-color);
+    outline-offset: 2px;
+}
+
+/* Content */
+.gx-modal-content {
+    padding: var(--gx-modal-content-padding);
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Footer */
+.gx-modal-footer,
+.gx-modal-footer-custom {
+    display: flex;
+    gap: 12px;
+    padding: var(--gx-modal-footer-padding);
+    border-top: 1px solid var(--gx-modal-border-color);
+}
+
+.gx-modal-footer--left,
+.gx-modal-footer-custom {
+    justify-content: flex-start;
+}
+
+.gx-modal-footer--center {
+    justify-content: center;
+}
+
+.gx-modal-footer--right {
+    justify-content: flex-end;
+}
+
+/* Hide footer if no buttons */
+.gx-modal-footer:empty,
+.gx-modal-footer-custom:empty {
+    display: none;
+}
+
+/* Animation */
+.gx-modal-container {
+    animation: gx-modal-enter 0.2s ease-out;
+}
+
+@keyframes gx-modal-enter {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Scrollbar styling */
+.gx-modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.gx-modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.gx-modal-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.gx-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

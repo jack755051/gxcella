@@ -1,0 +1,67 @@
+@if (visible()) {
+    <gx-overlay
+        [closeOnEsc]="closeOnEsc()"
+        (backdropClick)="onBackdropClick()">
+        <div
+            class="gx-modal-container"
+            [class]="customClass()"
+            [style.width]="modalWidth()"
+            [style.height]="modalHeight()">
+
+            <!-- Header -->
+            <div class="gx-modal-header">
+                <div
+                    class="gx-modal-title"
+                    [class]="'gx-modal-title--' + titlePosition()">
+                    @if (titleIcon()) {
+                        <gx-icon
+                            [name]="titleIcon()!"
+                            [size]="titleIconSize()"
+                            class="gx-modal-title-icon">
+                        </gx-icon>
+                    }
+                    <span>{{ title() }}</span>
+                </div>
+                @if (showClose()) {
+                    <button
+                        type="button"
+                        class="gx-modal-close"
+                        (click)="close()"
+                        aria-label="Close modal">
+                        <gx-icon name="x" [size]="20"></gx-icon>
+                    </button>
+                }
+            </div>
+
+            <!-- Content -->
+            <div class="gx-modal-content">
+                <ng-content></ng-content>
+            </div>
+
+            <!-- Footer with buttons -->
+            @if (buttons().length > 0) {
+                <div
+                    class="gx-modal-footer"
+                    [class]="'gx-modal-footer--' + buttonPosition()">
+                    @for (button of buttons(); track $index) {
+                        <gx-button
+                            [action]="button.action"
+                            [variant]="button.variant ?? 'filled'"
+                            [intent]="button.intent ?? 'info'"
+                            [disabled]="button.action.disabled ?? false"
+                            [styleTokens]="button.styleTokens ?? { px: 12, py: 8, radius: 8 }"
+                            [tooltip]="button.tooltip"
+                            [needsAriaLabel]="button.needsAriaLabel ?? false"
+                            (pressed)="onButtonClick(button, $event)">
+                        </gx-button>
+                    }
+                </div>
+            }
+
+            <!-- Custom footer slot -->
+            <div class="gx-modal-footer-custom">
+                <ng-content select="[footer]"></ng-content>
+            </div>
+        </div>
+    </gx-overlay>
+}

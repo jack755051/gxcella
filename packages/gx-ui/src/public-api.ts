@@ -27,3 +27,10 @@ export * from './lib/icon/gx-icon';
 export * from './lib/icon/model/icon.type';
 // overlay
 export * from './lib/overlay/gx-overlay';
+// modal
+export * from './lib/modal/gx-modal';
+export * from './lib/modal/model/modal.types';
+// tooltip
+export * from './lib/tooltip/gx-tooltip.directive';
+export * from './lib/tooltip/gx-tooltip.component';
+export * from './lib/tooltip/model/tooltip.types';
