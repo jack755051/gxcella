@@ -1,5 +1,11 @@
 # @sanring/gx-wizard
 
+## 1.0.1
+
+### Patch Changes
+
+- db1b0d2: update table and pagination
+
 ## 1.0.0
 
 ### Minor Changes
