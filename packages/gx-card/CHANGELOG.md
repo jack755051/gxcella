@@ -1,5 +1,13 @@
 # @sanring/gx-card
 
+## 5.0.1
+
+### Patch Changes
+
+- e5291af: upgrade package
+- Updated dependencies [e5291af]
+  - @sanring/gx-ui@5.0.1
+
 ## 5.0.0
 
 ### Minor Changes

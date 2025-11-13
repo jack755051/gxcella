@@ -1,5 +1,11 @@
 # @sanring/gx-breadcrumb
 
+## 5.0.1
+
+### Patch Changes
+
+- e5291af: upgrade package
+
 ## 5.0.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @sanring/gx-table
 
+## 1.0.2
+
+### Patch Changes
+
+- e5291af: upgrade package
+
 ## 1.0.1
 
 ### Patch Changes
