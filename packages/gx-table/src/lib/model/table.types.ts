@@ -29,6 +29,18 @@ export interface SortConfig {
 }
 
 /**
+ * 分頁配置
+ */
+export interface PaginationConfig {
+  /** 當前頁碼（從 1 開始） */
+  currentPage: number;
+  /** 每頁顯示數量 */
+  pageSize: number;
+  /** 總項目數 */
+  totalItems: number;
+}
+
+/**
  * Table 狀態
  */
 export interface TableState {
@@ -36,6 +48,8 @@ export interface TableState {
   sortConfig: SortConfig;
   /** 已選擇的 ID 列表 */
   selectedIds: string[];
+  /** 分頁配置（可選） */
+  pagination?: PaginationConfig;
 }
 
 /**

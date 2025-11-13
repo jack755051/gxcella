@@ -1,5 +1,5 @@
 import { Injectable, Signal, WritableSignal, computed, signal } from '@angular/core';
-import { TableColumn, TableState, SortConfig } from '../model/table.types';
+import { TableColumn, TableState, SortConfig, PaginationConfig } from '../model/table.types';
 
 /**
  * Table Service 配置選項
@@ -15,6 +15,17 @@ export interface TableServiceOptions<T = any> {
   disabledPredicate?: (row: T) => boolean;
   /** 排序回調函數（用於 API 排序） */
   onSort?: (key: string, direction: 'asc' | 'desc') => void;
+  /** 分頁配置（啟用分頁功能） */
+  pagination?: {
+    /** 初始頁碼 */
+    initialPage?: number;
+    /** 每頁顯示數量 */
+    pageSize?: number;
+    /** 總項目數（用於 API 分頁） */
+    totalItems?: number;
+    /** 頁碼變更回調（用於 API 分頁） */
+    onPageChange?: (page: number, pageSize: number) => void;
+  };
 }
 
 /**
@@ -45,6 +56,11 @@ export class TableService<T extends Record<string, any> = any> {
   private readonly selectableData: Signal<T[]>;
   private readonly selectableCount: Signal<number>;
 
+  // 分頁狀態
+  readonly paginationState: Signal<PaginationConfig | null>;
+  readonly paginatedData: Signal<T[]>;
+  readonly totalPages: Signal<number>;
+
   constructor() {
     // 初始化狀態
     this.state = signal<TableState>({
@@ -63,6 +79,9 @@ export class TableService<T extends Record<string, any> = any> {
     this.selectedCount = computed(() => this.state().selectedIds.length);
     this.isAllSelected = computed(() => false);
     this.isIndeterminate = computed(() => false);
+    this.paginationState = computed(() => this.state().pagination ?? null);
+    this.paginatedData = computed(() => []);
+    this.totalPages = computed(() => 0);
   }
 
   /**
@@ -75,6 +94,25 @@ export class TableService<T extends Record<string, any> = any> {
       onSort: undefined,
       ...options,
     } as Required<TableServiceOptions<T>>;
+
+    // 如果啟用分頁，初始化分頁狀態
+    if (options.pagination) {
+      const dataLength = this.options.data().length;
+      // 客戶端分頁：使用實際資料長度
+      // API 分頁：使用提供的 totalItems（可能大於當前載入的資料）
+      const totalItems = options.pagination.onPageChange
+        ? (options.pagination.totalItems ?? dataLength)
+        : dataLength;
+
+      this.state.update(state => ({
+        ...state,
+        pagination: {
+          currentPage: options.pagination?.initialPage ?? 1,
+          pageSize: options.pagination?.pageSize ?? 10,
+          totalItems,
+        }
+      }));
+    }
 
     // 重新綁定計算屬性
     this.bindComputedProperties();
@@ -145,6 +183,34 @@ export class TableService<T extends Record<string, any> = any> {
       const selectedCount = this.state().selectedIds.length;
       const selectableCount = this.selectableCount();
       return selectedCount > 0 && selectedCount < selectableCount;
+    });
+
+    // 分頁資料
+    (this.paginatedData as any) = computed(() => {
+      const pagination = this.state().pagination;
+      if (!pagination) {
+        // 沒有分頁時返回所有排序後的資料
+        return this.sortedData();
+      }
+
+      // 如果有 onPageChange 回調，表示使用 API 分頁，直接返回 sortedData
+      if (this.options.pagination?.onPageChange) {
+        return this.sortedData();
+      }
+
+      // 客戶端分頁：對排序後的資料進行切片
+      const startIndex = (pagination.currentPage - 1) * pagination.pageSize;
+      const endIndex = startIndex + pagination.pageSize;
+      return this.sortedData().slice(startIndex, endIndex);
+    });
+
+    // 總頁數
+    (this.totalPages as any) = computed(() => {
+      const pagination = this.state().pagination;
+      if (!pagination) {
+        return 0;
+      }
+      return Math.ceil(pagination.totalItems / pagination.pageSize);
     });
   }
 
@@ -288,5 +354,97 @@ export class TableService<T extends Record<string, any> = any> {
       },
       selectedIds: [],
     });
+  }
+
+  // ==================== 分頁方法 ====================
+
+  /**
+   * 處理頁碼變更
+   */
+  handlePageChange(page: number): void {
+    const pagination = this.state().pagination;
+    if (!pagination) {
+      return;
+    }
+
+    // 檢查頁碼是否有效
+    if (page < 1 || page > this.totalPages()) {
+      return;
+    }
+
+    this.state.update(state => ({
+      ...state,
+      pagination: {
+        ...state.pagination!,
+        currentPage: page,
+      }
+    }));
+
+    // 如果提供了 onPageChange 回調，調用它（用於 API 分頁）
+    if (this.options.pagination?.onPageChange) {
+      this.options.pagination.onPageChange(page, pagination.pageSize);
+    }
+  }
+
+  /**
+   * 設置每頁顯示數量
+   */
+  setPageSize(pageSize: number): void {
+    const pagination = this.state().pagination;
+    if (!pagination) {
+      return;
+    }
+
+    this.state.update(state => ({
+      ...state,
+      pagination: {
+        ...state.pagination!,
+        pageSize,
+        currentPage: 1, // 重置到第一頁
+      }
+    }));
+
+    // 如果提供了 onPageChange 回調，調用它
+    if (this.options.pagination?.onPageChange) {
+      this.options.pagination.onPageChange(1, pageSize);
+    }
+  }
+
+  /**
+   * 更新總項目數（用於 API 分頁）
+   */
+  updateTotalItems(totalItems: number): void {
+    const pagination = this.state().pagination;
+    if (!pagination) {
+      return;
+    }
+
+    this.state.update(state => ({
+      ...state,
+      pagination: {
+        ...state.pagination!,
+        totalItems,
+      }
+    }));
+  }
+
+  /**
+   * 上一頁
+   */
+  previousPage(): void {
+    const pagination = this.state().pagination;
+    if (pagination && pagination.currentPage > 1) {
+      this.handlePageChange(pagination.currentPage - 1);
+    }
+  }
+
+  /**
+   * 下一頁
+   */
+  nextPage(): void {
+    const pagination = this.state().pagination;
+    if (pagination && pagination.currentPage < this.totalPages()) {
+      this.handlePageChange(pagination.currentPage + 1);
+    }
   }
 }

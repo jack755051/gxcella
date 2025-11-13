@@ -10,7 +10,8 @@ import {
   PaginationButton,
   PaginationCustomClass,
   PaginationInputProps,
-  SelectorPosition
+  SelectorPosition,
+  PaginationConfig
 } from '../model/pagination.types';
 
 /**
@@ -40,14 +41,20 @@ import {
 export class GxPagination {
   // ==================== 基本配置 ====================
 
-  /** 當前頁碼 */
-  currentPageInput = input.required<number>();
+  /**
+   * 分頁配置物件（新方式，與 TableService 整合使用）
+   * 提供此參數時，會覆蓋 currentPageInput、pageSizeInput、totalItemsInput
+   */
+  config = input<PaginationConfig | null>(null);
 
-  /** 每頁顯示數量 */
-  pageSizeInput = input.required<number>();
+  /** 當前頁碼（舊方式，向後兼容） */
+  currentPageInput = input<number>(1);
 
-  /** 總項目數 */
-  totalItemsInput = input.required<number>();
+  /** 每頁顯示數量（舊方式，向後兼容） */
+  pageSizeInput = input<number>(10);
+
+  /** 總項目數（舊方式，向後兼容） */
+  totalItemsInput = input<number>(0);
 
   /** 按鈕配置 */
   button = input<PaginationButton>({
@@ -104,6 +111,10 @@ export class GxPagination {
 
   /** 總頁數 */
   protected readonly totalPages = computed(() => {
+    const cfg = this.config();
+    if (cfg) {
+      return Math.ceil(cfg.totalItems / cfg.pageSize);
+    }
     return Math.ceil(this.totalItemsInput() / this.pageSizeInput());
   });
 
@@ -147,11 +158,25 @@ export class GxPagination {
   constructor() {
     // 同步 input 到內部狀態
     effect(() => {
-      this.currentPage.set(this.currentPageInput());
+      const cfg = this.config();
+      if (cfg) {
+        // 使用 config 物件
+        this.currentPage.set(cfg.currentPage);
+      } else {
+        // 使用獨立輸入（向後兼容）
+        this.currentPage.set(this.currentPageInput());
+      }
     });
 
     effect(() => {
-      this.perPage.set(this.currentPerPage() || this.pageSizeInput());
+      const cfg = this.config();
+      if (cfg) {
+        // 使用 config 物件
+        this.perPage.set(this.currentPerPage() || cfg.pageSize);
+      } else {
+        // 使用獨立輸入（向後兼容）
+        this.perPage.set(this.currentPerPage() || this.pageSizeInput());
+      }
     });
   }
 

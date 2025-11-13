@@ -1,383 +1,416 @@
-# GX-Pagination
+# @sanring/gx-pagination
 
-一個功能完整且高度客製化的 Angular 分頁組件，提供直觀的分頁導航體驗。採用 Angular Standalone Components 架構實現，內建 Signal 狀態管理，適合用於資料列表、搜尋結果、報表展示等場景。
+完整、靈活且高效能的 Angular 分頁組件庫，基於 Angular 20+ 和 Signal-based 架構。
 
-## ✅ 已完成的組件
+## 特性
 
-### 核心組件
-- ✅ `GxPagination` - 分頁導航組件（支援頁碼、首尾頁、上下頁、頁面大小選擇）
+- ✅ **多種模式**: 支援 Select（下拉）、Input（輸入）、List（按鈕列表）三種分頁選擇模式
+- ✅ **完全響應式**: 使用 Angular Signals 實現高效能狀態管理
+- ✅ **模組化設計**: 可組合的子組件，靈活搭配使用
+- ✅ **彈性佈局**: 支援多種佈局位置（left, center, right, between）
+- ✅ **每頁數量選擇**: 內建每頁顯示數量選擇器
+- ✅ **TypeScript**: 完整的類型定義
+- ✅ **獨立組件**: 完全支援 Standalone API
+- ✅ **PaginationService**: 提供完整的分頁狀態管理
 
-### 類型定義
-- ✅ `PaginationConfig` - 分頁配置介面
-- ✅ `PageChangeEvent` - 頁面變更事件
-- ✅ `PaginationCustomClass` - 自定義樣式介面
-- ✅ `PaginationLabels` - 國際化標籤介面
+## 安裝
 
-## 📦 安裝
-
-```bash
+\`\`\`bash
 npm install @sanring/gx-pagination
-```
+# or
+yarn add @sanring/gx-pagination
+\`\`\`
 
-## 🎯 使用方式
+## 快速開始
 
-### 基本範例
+### 1. 基本使用（Select 模式）
 
-```typescript
-import { Component, signal } from '@angular/core';
-import { GxPagination, PageChangeEvent } from '@sanring/gx-pagination';
+\`\`\`typescript
+import { Component } from '@angular/core';
+import { GxPagination, SelectType } from '@sanring/gx-pagination';
 
 @Component({
-  selector: 'app-example',
+  selector: 'app-basic-pagination',
   standalone: true,
   imports: [GxPagination],
-  template: `
+  template: \`
     <gx-pagination
-      [currentPageInput]="currentPage()"
-      [pageSizeInput]="pageSize()"
-      [totalItemsInput]="totalItems()"
-      (pageChange)="onPageChange($event)">
-    </gx-pagination>
-  `
+      [currentPageInput]="currentPage"
+      [pageSizeInput]="pageSize"
+      [totalItemsInput]="totalItems"
+      [selectType]="SelectType.SELECT"
+      (pageChange)="onPageChange($event)"
+    />
+  \`
 })
-export class ExampleComponent {
-  currentPage = signal(1);
-  pageSize = signal(10);
-  totalItems = signal(100);
+export class BasicPaginationComponent {
+  SelectType = SelectType;
+  currentPage = 1;
+  pageSize = 10;
+  totalItems = 100;
 
-  onPageChange(event: PageChangeEvent) {
-    console.log('Page changed:', event);
-    this.currentPage.set(event.currentPage);
-    // 載入新的資料
+  onPageChange(page: number) {
+    this.currentPage = page;
+    console.log('當前頁:', page);
   }
 }
-```
+\`\`\`
 
-### 使用 Config 物件
+### 2. Input 輸入模式
 
-```typescript
-import { Component, signal } from '@angular/core';
-import { GxPagination, PaginationConfig } from '@sanring/gx-pagination';
-
+\`\`\`typescript
 @Component({
-  selector: 'app-config-example',
-  standalone: true,
-  imports: [GxPagination],
-  template: `
+  template: \`
     <gx-pagination
-      [config]="paginationConfig()"
-      (pageChange)="onPageChange($event)">
-    </gx-pagination>
-  `
-})
-export class ConfigExampleComponent {
-  paginationConfig = signal<Partial<PaginationConfig>>({
-    currentPage: 1,
-    pageSize: 20,
-    totalItems: 200,
-    maxVisiblePages: 7,
-    showFirstLast: true,
-    showPrevNext: true,
-    showPageNumbers: true,
-    showPageSize: true,
-    pageSizeOptions: [10, 20, 50, 100],
-    disabled: false,
-  });
-
-  onPageChange(event: PageChangeEvent) {
-    console.log('Current page:', event.currentPage);
-    console.log('Page size:', event.pageSize);
-    console.log('Total pages:', event.totalPages);
-  }
-}
-```
-
-### 完整功能範例
-
-```typescript
-import { Component, signal } from '@angular/core';
-import { GxPagination, PaginationLabels } from '@sanring/gx-pagination';
-
-@Component({
-  selector: 'app-full-example',
-  standalone: true,
-  imports: [GxPagination],
-  template: `
-    <div class="data-list">
-      <!-- 顯示資料 -->
-      @for (item of currentPageData(); track item.id) {
-        <div class="data-item">{{ item.name }}</div>
-      }
-    </div>
-
-    <gx-pagination
-      [currentPageInput]="currentPage()"
-      [pageSizeInput]="pageSize()"
-      [totalItemsInput]="totalItems()"
-      [showInfo]="true"
-      [labels]="customLabels()"
-      [config]="{
-        showFirstLast: true,
-        showPrevNext: true,
-        showPageNumbers: true,
-        showPageSize: true,
-        maxVisiblePages: 5,
-        pageSizeOptions: [10, 25, 50, 100]
+      [currentPageInput]="currentPage"
+      [pageSizeInput]="pageSize"
+      [totalItemsInput]="totalItems"
+      [selectType]="SelectType.INPUT"
+      [inputConfig]="{
+        placeholder: '請輸入頁碼',
+        inputClass: 'custom-input'
       }"
       (pageChange)="onPageChange($event)"
-      (pageSizeChange)="onPageSizeChange($event)">
-    </gx-pagination>
-  `
+    />
+  \`
 })
-export class FullExampleComponent {
-  currentPage = signal(1);
-  pageSize = signal(10);
-  totalItems = signal(250);
+export class InputPaginationComponent {
+  SelectType = SelectType;
+  // ...
+}
+\`\`\`
 
-  allData = signal([
-    { id: 1, name: 'Item 1' },
-    { id: 2, name: 'Item 2' },
-    // ... 更多資料
-  ]);
+### 3. List 按鈕列表模式
 
-  customLabels = signal<PaginationLabels>({
-    first: '首頁',
-    previous: '上一頁',
-    next: '下一頁',
-    last: '末頁',
-    page: '頁',
-    of: '共',
-    items: '筆',
-    itemsPerPage: '每頁顯示：',
-  });
+\`\`\`typescript
+@Component({
+  template: \`
+    <gx-pagination
+      [currentPageInput]="currentPage"
+      [pageSizeInput]="pageSize"
+      [totalItemsInput]="totalItems"
+      [selectType]="SelectType.LIST"
+      (pageChange)="onPageChange($event)"
+    />
+  \`
+})
+export class ListPaginationComponent {
+  SelectType = SelectType;
+  // ...
+}
+\`\`\`
 
-  currentPageData = computed(() => {
-    const start = (this.currentPage() - 1) * this.pageSize();
-    const end = start + this.pageSize();
-    return this.allData().slice(start, end);
-  });
+### 4. 帶每頁數量選擇器
 
-  onPageChange(event: PageChangeEvent) {
-    this.currentPage.set(event.currentPage);
-    // 載入資料或更新 UI
+\`\`\`typescript
+@Component({
+  template: \`
+    <gx-pagination
+      [currentPageInput]="currentPage"
+      [pageSizeInput]="pageSize"
+      [totalItemsInput]="totalItems"
+      [showPerPageSelector]="true"
+      [perPageOptions]="[10, 20, 50, 100]"
+      [currentPerPage]="pageSize"
+      (pageChange)="onPageChange($event)"
+      (perPageChange)="onPerPageChange($event)"
+    />
+  \`
+})
+export class PerPagePaginationComponent {
+  currentPage = 1;
+  pageSize = 10;
+  totalItems = 100;
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    // 載入新頁面資料
   }
 
-  onPageSizeChange(newSize: number) {
-    console.log('Page size changed to:', newSize);
-    this.pageSize.set(newSize);
+  onPerPageChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1; // 重置到第一頁
     // 重新載入資料
   }
 }
-```
+\`\`\`
 
-### 自定義樣式
+### 5. 自訂佈局位置
 
-```typescript
+\`\`\`typescript
 @Component({
-  template: `
+  template: \`
+    <!-- 分頁控制在中間，每頁選擇器在右側 -->
     <gx-pagination
-      [currentPageInput]="1"
-      [pageSizeInput]="10"
-      [totalItemsInput]="100"
-      [customClass]="{
-        container: 'my-pagination',
-        nav: 'my-pagination-nav',
-        list: 'my-pagination-list',
-        item: 'my-pagination-item',
-        link: 'my-pagination-link',
-        active: 'my-active',
-        disabled: 'my-disabled',
-        ellipsis: 'my-ellipsis',
-        pageSize: 'my-page-size',
-        info: 'my-info'
-      }">
-    </gx-pagination>
-  `,
-  styles: [`
-    .my-pagination {
-      background: #f9fafb;
-      padding: 1rem;
-      border-radius: 0.5rem;
-    }
+      [currentPageInput]="currentPage"
+      [pageSizeInput]="pageSize"
+      [totalItemsInput]="totalItems"
+      [selectorPosition]="'center'"
+      [showPerPageSelector]="true"
+      (pageChange)="onPageChange($event)"
+    />
 
-    .my-pagination-link.my-active {
-      background: #10b981;
-      border-color: #10b981;
-    }
-
-    .my-pagination-link:hover:not(:disabled) {
-      background: #d1fae5;
-    }
-  `]
+    <!-- 兩端對齊（預設） -->
+    <gx-pagination
+      [currentPageInput]="currentPage"
+      [pageSizeInput]="pageSize"
+      [totalItemsInput]="totalItems"
+      [selectorPosition]="'between'"
+      [showPerPageSelector]="true"
+      (pageChange)="onPageChange($event)"
+    />
+  \`
 })
-export class CustomStyledPaginationComponent {
+export class LayoutPaginationComponent {
   // ...
 }
-```
+\`\`\`
 
-## 📖 API 文檔
+### 6. 使用 PaginationService（進階）
 
-### GxPagination
+\`\`\`typescript
+import { Component, signal, effect } from '@angular/core';
+import { GxPagination, PaginationService } from '@sanring/gx-pagination';
 
-#### Inputs
+@Component({
+  selector: 'app-advanced-pagination',
+  standalone: true,
+  imports: [GxPagination],
+  providers: [PaginationService],
+  template: \`
+    <gx-pagination
+      [currentPageInput]="paginationService.currentPage()"
+      [pageSizeInput]="paginationService.pageSize()"
+      [totalItemsInput]="paginationService.totalItems()"
+      (pageChange)="paginationService.goToPage($event)"
+      (perPageChange)="paginationService.changePageSize($event)"
+    />
+
+    <div>
+      目前顯示: {{ paginationService.startIndex() }} - 
+      {{ paginationService.endIndex() }} / 
+      {{ paginationService.totalItems() }}
+    </div>
+  \`
+})
+export class AdvancedPaginationComponent {
+  constructor(public paginationService: PaginationService) {
+    // 初始化分頁服務
+    this.paginationService.initialize({
+      currentPage: 1,
+      pageSize: 10,
+      totalItems: 100,
+      pageSizeOptions: [10, 20, 50, 100]
+    });
+
+    // 監聽分頁狀態變化
+    effect(() => {
+      const state = this.paginationService.getState();
+      console.log('分頁狀態:', state);
+      // 這裡可以呼叫 API 載入資料
+    });
+  }
+}
+\`\`\`
+
+## API 文件
+
+### GxPagination Inputs
 
 | 屬性 | 類型 | 預設值 | 說明 |
 |------|------|--------|------|
-| `config` | `Partial<PaginationConfig>` | `undefined` | 完整的分頁配置物件 |
-| `currentPageInput` | `number` | `1` | 當前頁碼 |
-| `pageSizeInput` | `number` | `10` | 每頁顯示數量 |
-| `totalItemsInput` | `number` | `0` | 總資料筆數 |
-| `customClass` | `PaginationCustomClass` | `undefined` | 自定義樣式類別 |
-| `labels` | `PaginationLabels` | 預設英文標籤 | 國際化標籤 |
-| `showInfo` | `boolean` | `false` | 是否顯示資訊文字 |
+| `currentPageInput` | `number` | **必填** | 當前頁碼 |
+| `pageSizeInput` | `number` | **必填** | 每頁顯示數量 |
+| `totalItemsInput` | `number` | **必填** | 總項目數 |
+| `selectType` | `SelectType` | `SelectType.SELECT` | 選擇模式 |
+| `button` | `PaginationButton` | 預設按鈕配置 | 上一頁/下一頁按鈕配置 |
+| `customClass` | `PaginationCustomClass` | `{}` | 自訂 CSS class |
+| `inputConfig` | `PaginationInputProps` | `{}` | 輸入框配置（INPUT 模式） |
+| `selectorPosition` | `SelectorPosition` | `'between'` | 分頁控制器位置 |
+| `showPerPageSelector` | `boolean` | `false` | 是否顯示每頁數量選擇器 |
+| `perPageOptions` | `number[]` | `[5, 10, 20, 50]` | 每頁選項 |
+| `currentPerPage` | `number \| undefined` | `undefined` | 當前每頁數量（同步用） |
 
-#### Outputs
+### GxPagination Outputs
 
-| 事件 | 類型 | 說明 |
+| 事件 | 參數 | 說明 |
 |------|------|------|
-| `pageChange` | `EventEmitter<PageChangeEvent>` | 頁面變更事件 |
-| `pageSizeChange` | `EventEmitter<number>` | 頁面大小變更事件 |
+| `pageChange` | `number` | 頁碼變更 |
+| `pageNext` | `number` | 下一頁 |
+| `pagePrevious` | `number` | 上一頁 |
+| `perPageChange` | `number` | 每頁數量變更 |
 
-### PaginationConfig 介面
+### SelectType 枚舉
 
-```typescript
-interface PaginationConfig {
-  currentPage: number;           // 當前頁碼
-  pageSize: number;              // 每頁顯示數量
-  totalItems: number;            // 總資料筆數
-  maxVisiblePages?: number;      // 最多顯示幾個頁碼按鈕（預設：5）
-  showFirstLast?: boolean;       // 是否顯示首尾頁按鈕（預設：true）
-  showPrevNext?: boolean;        // 是否顯示上下頁按鈕（預設：true）
-  showPageNumbers?: boolean;     // 是否顯示頁碼按鈕（預設：true）
-  showPageSize?: boolean;        // 是否顯示頁面大小選擇器（預設：false）
-  pageSizeOptions?: number[];    // 頁面大小選項（預設：[10, 25, 50, 100]）
-  disabled?: boolean;            // 是否禁用所有按鈕（預設：false）
+\`\`\`typescript
+enum SelectType {
+  SELECT = 'select',  // 下拉選單
+  INPUT = 'input',    // 輸入框
+  LIST = 'list'       // 按鈕列表
 }
-```
+\`\`\`
 
-### PageChangeEvent 介面
+### SelectorPosition 類型
 
-```typescript
-interface PageChangeEvent {
-  currentPage: number;    // 當前頁碼
-  pageSize: number;       // 每頁顯示數量
-  totalPages: number;     // 總頁數
-  totalItems: number;     // 總資料筆數
-}
-```
+\`\`\`typescript
+type SelectorPosition = 'left' | 'center' | 'right' | 'between';
+\`\`\`
 
-### PaginationCustomClass 介面
+- `left`: 分頁控制器靠左
+- `center`: 分頁控制器居中
+- `right`: 分頁控制器靠右（靠近每頁選擇器）
+- `between`: 兩端對齊（預設）
 
-```typescript
-interface PaginationCustomClass {
-  container?: string;     // 容器樣式
-  nav?: string;          // 導航區樣式
-  list?: string;         // 列表樣式
-  item?: string;         // 項目樣式
-  link?: string;         // 連結/按鈕樣式
-  active?: string;       // 啟用狀態樣式
-  disabled?: string;     // 禁用狀態樣式
-  ellipsis?: string;     // 省略符號樣式
-  pageSize?: string;     // 頁面大小選擇器樣式
-  info?: string;         // 資訊文字樣式
-}
-```
+### PaginationService 方法
 
-### PaginationLabels 介面
+| 方法 | 參數 | 說明 |
+|------|------|------|
+| `initialize()` | `PaginationServiceOptions` | 初始化服務 |
+| `goToPage()` | `page: number` | 跳轉到指定頁 |
+| `nextPage()` | - | 下一頁 |
+| `previousPage()` | - | 上一頁 |
+| `firstPage()` | - | 第一頁 |
+| `lastPage()` | - | 最後一頁 |
+| `changePageSize()` | `size: number` | 更改每頁數量 |
+| `updateTotalItems()` | `total: number` | 更新總項目數 |
+| `reset()` | - | 重置到第一頁 |
+| `getState()` | - | 獲取當前狀態 |
 
-```typescript
-interface PaginationLabels {
-  first?: string;         // 首頁按鈕文字（預設：'«'）
-  previous?: string;      // 上一頁按鈕文字（預設：'‹'）
-  next?: string;          // 下一頁按鈕文字（預設：'›'）
-  last?: string;          // 末頁按鈕文字（預設：'»'）
-  page?: string;          // 頁面文字（預設：'Page'）
-  of?: string;            // 「共」文字（預設：'of'）
-  items?: string;         // 項目單位文字（預設：'items'）
-  itemsPerPage?: string;  // 每頁項目文字（預設：'Items per page:'）
-}
-```
+### PaginationService 計算屬性（Signals）
 
-## 🎨 樣式自定義
+| 屬性 | 類型 | 說明 |
+|------|------|------|
+| `currentPage()` | `number` | 當前頁碼 |
+| `pageSize()` | `number` | 每頁數量 |
+| `totalItems()` | `number` | 總項目數 |
+| `totalPages()` | `number` | 總頁數 |
+| `hasPrevious()` | `boolean` | 是否有上一頁 |
+| `hasNext()` | `boolean` | 是否有下一頁 |
+| `startIndex()` | `number` | 當前頁起始索引 |
+| `endIndex()` | `number` | 當前頁結束索引 |
+| `isFirstPage()` | `boolean` | 是否為第一頁 |
+| `isLastPage()` | `boolean` | 是否為最後一頁 |
 
-使用 CSS 變數進行自定義：
+## 子組件
 
-```css
+### GxPaginationInput
+
+輸入框形式的頁碼選擇器。
+
+\`\`\`typescript
+import { GxPaginationInput } from '@sanring/gx-pagination';
+
+<gx-pagination-input
+  [currentPage]="1"
+  [totalPages]="10"
+  [placeholder]="'頁碼'"
+  (pageChange)="onPageChange($event)"
+/>
+\`\`\`
+
+### GxPaginationSelect
+
+下拉選單形式的頁碼選擇器。
+
+\`\`\`typescript
+import { GxPaginationSelect } from '@sanring/gx-pagination';
+
+<gx-pagination-select
+  [currentPage]="1"
+  [totalPages]="10"
+  (pageChange)="onPageChange($event)"
+/>
+\`\`\`
+
+### GxPaginationList
+
+按鈕列表形式的頁碼選擇器。
+
+\`\`\`typescript
+import { GxPaginationList } from '@sanring/gx-pagination';
+
+<gx-pagination-list
+  [currentPage]="1"
+  [totalPages]="10"
+  (pageChange)="onPageChange($event)"
+/>
+\`\`\`
+
+### GxPaginationPerPage
+
+每頁數量選擇器。
+
+\`\`\`typescript
+import { GxPaginationPerPage } from '@sanring/gx-pagination';
+
+<gx-pagination-per-page
+  name="per-page"
+  [(perPage)]="pageSize"
+  [perPageOptions]="[10, 20, 50]"
+  (perPageChange)="onPerPageChange($event)"
+/>
+\`\`\`
+
+## 樣式自訂
+
+所有組件都支援 CSS 變數自訂：
+
+\`\`\`css
 :root {
-  /* 字型 */
-  --gx-pagination-font-family: system-ui, -apple-system, sans-serif;
-
-  /* 間距 */
-  --gx-pagination-gap: 0.25rem;
-  --gx-pagination-button-size: 2.5rem;
-  --gx-pagination-button-padding: 0.5rem 0.75rem;
-
-  /* 字體大小 */
-  --gx-pagination-button-font-size: 0.875rem;
-  --gx-pagination-button-font-weight: 500;
-  --gx-pagination-info-font-size: 0.875rem;
-  --gx-pagination-page-size-font-size: 0.875rem;
-
-  /* 按鈕顏色 */
+  /* 按鈕 */
   --gx-pagination-button-color: #374151;
-  --gx-pagination-button-bg: transparent;
+  --gx-pagination-button-bg: #ffffff;
+  --gx-pagination-button-border: #d1d5db;
+  
+  /* 懸停狀態 */
   --gx-pagination-button-hover-bg: #f3f4f6;
-  --gx-pagination-button-hover-border: #9ca3af;
-
-  /* 啟用狀態 */
+  
+  /* 當前頁 */
   --gx-pagination-active-color: #ffffff;
   --gx-pagination-active-bg: #3b82f6;
-  --gx-pagination-active-border: #3b82f6;
-
-  /* 邊框 */
-  --gx-pagination-border-color: #d1d5db;
-  --gx-pagination-border-radius: 0.375rem;
-
-  /* 其他元素 */
-  --gx-pagination-info-color: #6b7280;
-  --gx-pagination-ellipsis-color: #6b7280;
-  --gx-pagination-page-size-color: #374151;
-  --gx-pagination-select-bg: #ffffff;
 }
-```
+\`\`\`
 
-## 🔄 技術實現
+## 與 @sanring/gx-table 整合
 
-本組件採用 Angular 18+ 的 Standalone Components 架構。
+\`\`\`typescript
+import { GxPagination } from '@sanring/gx-pagination';
+import { GxTableShell, TableService } from '@sanring/gx-table';
 
-### 核心特性
-- **響應式狀態管理**：完全使用 Angular Signals，提供高效能的資料響應
-- **智能頁碼顯示**：自動計算並顯示合適的頁碼範圍，避免過多按鈕
-- **彈性配置**：支援多種配置方式，可顯示/隱藏各種元素
-- **國際化支援**：所有文字標籤皆可自定義，支援多語言
-- **完整的樣式系統**：提供 CSS 變數與自定義類別兩種方式客製化樣式
-- **無障礙支援**：遵循 ARIA 標準，提升可用性
+@Component({
+  template: \`
+    <gx-table-shell>
+      <thead gx-table-header [columns]="columns"></thead>
+      <tbody gx-table-body [data]="pagedData()"></tbody>
+      
+      <div footer>
+        <gx-pagination
+          [currentPageInput]="currentPage"
+          [pageSizeInput]="pageSize"
+          [totalItemsInput]="totalItems"
+          (pageChange)="onPageChange($event)"
+        />
+      </div>
+    </gx-table-shell>
+  \`
+})
+export class TableWithPaginationComponent {
+  // ...
+}
+\`\`\`
 
-### 使用場景
-- 資料表格分頁
-- 搜尋結果分頁
-- 文章列表分頁
-- 產品目錄分頁
-- 任何需要分頁導航的場景
+## 版本要求
 
-## 🛠️ 開發
+- Angular >= 20.0.0
+- TypeScript >= 5.8.0
 
-```bash
-# 安裝依賴
-cd packages/gx-pagination
-npm install
-
-# 構建
-npm run build
-
-# 查看生成的文件
-ls -la ../../dist/gx-pagination
-```
-
-## 🤝 貢獻
-
-歡迎提交 Issue 與 Pull Request 來改進組件功能！
-
-## 📄 授權
+## 授權
 
 MIT
+
+## 相關連結
+
+- [GitHub Repository](https://github.com/jack755051/gxcella)
+- [NPM Package](https://www.npmjs.com/package/@sanring/gx-pagination)
+- [@sanring/gx-table](https://www.npmjs.com/package/@sanring/gx-table)
+- [問題回報](https://github.com/jack755051/gxcella/issues)
