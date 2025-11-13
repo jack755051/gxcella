@@ -39,3 +39,6 @@ export * from './lib/modal/model/modal.types';
 export * from './lib/tooltip/gx-tooltip.directive';
 export * from './lib/tooltip/gx-tooltip.component';
 export * from './lib/tooltip/model/tooltip.types';
+// select
+export * from './lib/select/gx-select';
+export * from './lib/select/model/select.types';

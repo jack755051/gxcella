@@ -1,0 +1,258 @@
+/* ==================== GxSelect ====================
+ *
+ * 下拉選擇組件，支援 Intent 系統和現代化變體
+ *
+ * 可覆寫變數：
+ * --gx-select-bg              背景色
+ * --gx-select-fg              文字色
+ * --gx-select-border          邊框
+ * --gx-select-radius          圓角
+ * --gx-select-px              水平 padding
+ * --gx-select-py              垂直 padding
+ * --gx-select-height          高度
+ * --gx-select-arrow-color     箭頭顏色
+ *
+ * ====================================================== */
+
+/* ========== Intent Variable Mapping ========== */
+:host {
+    display: inline-flex;
+    width: 100%;
+
+    /* 預設 Intent: info */
+    --intent-bg: var(--gx-intent-info-bg);
+    --intent-fg: var(--gx-intent-info-foreground);
+    --intent-hover: var(--gx-intent-info-hover);
+    --intent-active: var(--gx-intent-info-active);
+    --intent-border: var(--gx-intent-info-border);
+    --intent-soft-bg: var(--gx-intent-info-soft-bg);
+}
+
+:host([intent="success"]) {
+    --intent-bg: var(--gx-intent-success-bg);
+    --intent-fg: var(--gx-intent-success-foreground);
+    --intent-hover: var(--gx-intent-success-hover);
+    --intent-active: var(--gx-intent-success-active);
+    --intent-border: var(--gx-intent-success-border);
+    --intent-soft-bg: var(--gx-intent-success-soft-bg);
+}
+
+:host([intent="warning"]) {
+    --intent-bg: var(--gx-intent-warning-bg);
+    --intent-fg: var(--gx-intent-warning-foreground);
+    --intent-hover: var(--gx-intent-warning-hover);
+    --intent-active: var(--gx-intent-warning-active);
+    --intent-border: var(--gx-intent-warning-border);
+    --intent-soft-bg: var(--gx-intent-warning-soft-bg);
+}
+
+:host([intent="error"]) {
+    --intent-bg: var(--gx-intent-error-bg);
+    --intent-fg: var(--gx-intent-error-foreground);
+    --intent-hover: var(--gx-intent-error-hover);
+    --intent-active: var(--gx-intent-error-active);
+    --intent-border: var(--gx-intent-error-border);
+    --intent-soft-bg: var(--gx-intent-error-soft-bg);
+}
+
+/* ========== Base Select Styles ========== */
+.gx-select {
+    /* 重置瀏覽器預設樣式 */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* 佈局 */
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    /* 間距與邊框 */
+    padding-inline: var(--gx-select-px, 12px);
+    padding-block: var(--gx-select-py, 8px);
+    padding-right: calc(var(--gx-select-px, 12px) + 32px); /* 為箭頭留空間 */
+    border-radius: var(--gx-select-radius, 8px);
+    border: 1px solid var(--gx-select-border, var(--gx-color-gray-300));
+
+    /* 字體與顏色 */
+    font: inherit;
+    background: var(--gx-select-bg, #fff);
+    color: var(--gx-select-fg, var(--gx-color-gray-900));
+
+    /* 高度 */
+    height: var(--gx-select-height, auto);
+    min-height: 40px;
+
+    /* 下拉箭頭 */
+    background-image: var(--gx-select-arrow-icon, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"));
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px 20px;
+
+    /* 過渡動畫 */
+    transition:
+        background-color var(--gx-transition-normal, 250ms) var(--gx-ease-in-out),
+        color var(--gx-transition-normal, 250ms) var(--gx-ease-in-out),
+        border-color var(--gx-transition-normal, 250ms) var(--gx-ease-in-out),
+        box-shadow var(--gx-transition-normal, 250ms) var(--gx-ease-in-out);
+
+    /* 游標 */
+    cursor: pointer;
+}
+
+/* 隱藏 IE 的下拉箭頭 */
+.gx-select::-ms-expand {
+    display: none;
+}
+
+/* Hover 狀態 */
+.gx-select:not(:disabled):hover {
+    border-color: var(--gx-color-gray-400);
+    box-shadow: var(--gx-shadow-sm);
+}
+
+/* Focus 狀態 */
+.gx-select:focus {
+    outline: 2px solid var(--intent-border);
+    outline-offset: 2px;
+    border-color: var(--intent-border);
+}
+
+.gx-select:focus-visible {
+    outline: 2px solid var(--intent-border);
+    outline-offset: 2px;
+}
+
+.gx-select:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ========== Size Variants ========== */
+:host([size="sm"]) .gx-select {
+    --gx-select-px: 8px;
+    --gx-select-py: 6px;
+    --gx-select-height: 32px;
+    font-size: 0.875rem;
+    background-size: 16px 16px;
+    padding-right: calc(var(--gx-select-px, 8px) + 28px);
+}
+
+:host([size="md"]) .gx-select {
+    --gx-select-px: 12px;
+    --gx-select-py: 8px;
+    --gx-select-height: 40px;
+}
+
+:host([size="lg"]) .gx-select {
+    --gx-select-px: 16px;
+    --gx-select-py: 12px;
+    --gx-select-height: 48px;
+    font-size: 1.125rem;
+    background-size: 24px 24px;
+    padding-right: calc(var(--gx-select-px, 16px) + 36px);
+}
+
+/* ========== Style Variants ========== */
+
+/* Outline Variant (預設) */
+:host([variant="outline"]) .gx-select {
+    --gx-select-bg: transparent;
+    --gx-select-fg: var(--gx-color-gray-900);
+    --gx-select-border: var(--intent-border);
+}
+
+/* Filled Variant */
+:host([variant="filled"]) .gx-select {
+    --gx-select-bg: var(--intent-bg);
+    --gx-select-fg: var(--intent-fg);
+    --gx-select-border: var(--intent-bg);
+}
+
+/* Soft Variant */
+:host([variant="soft"]) .gx-select {
+    --gx-select-bg: var(--intent-soft-bg);
+    --gx-select-fg: var(--intent-bg);
+    --gx-select-border: transparent;
+}
+
+/* Ghost Variant */
+:host([variant="ghost"]) .gx-select {
+    --gx-select-bg: transparent;
+    --gx-select-fg: var(--intent-bg);
+    --gx-select-border: transparent;
+}
+
+:host([variant="ghost"]) .gx-select:hover:not(:disabled) {
+    --gx-select-bg: var(--intent-soft-bg);
+}
+
+/* Glass Variant (玻璃態效果) */
+:host([variant="glass"]) .gx-select {
+    --gx-select-bg: var(--gx-glass-bg);
+    --gx-select-fg: var(--intent-bg);
+    --gx-select-border: var(--gx-glass-border);
+    backdrop-filter: var(--gx-glass-backdrop);
+    -webkit-backdrop-filter: var(--gx-glass-backdrop);
+    box-shadow: var(--gx-shadow-md);
+}
+
+:host([variant="glass"]) .gx-select:hover:not(:disabled) {
+    --gx-select-bg: var(--gx-glass-bg-strong);
+    box-shadow: var(--gx-shadow-lg);
+}
+
+/* ========== Disabled State ========== */
+.gx-select:disabled {
+    --gx-select-bg: var(--gx-color-gray-100) !important;
+    --gx-select-fg: var(--gx-color-gray-400) !important;
+    --gx-select-border: var(--gx-color-gray-200) !important;
+
+    opacity: 0.7;
+    cursor: not-allowed !important;
+
+    /* 禁用所有互動效果 */
+    box-shadow: none !important;
+}
+
+/* ========== Options Styling ========== */
+.gx-select option {
+    padding: 8px 12px;
+    background: var(--gx-light-bg-primary, #fff);
+    color: var(--gx-color-gray-900);
+}
+
+.gx-select option:disabled {
+    color: var(--gx-color-gray-400);
+}
+
+/* ========== 深色模式 ========== */
+@media (prefers-color-scheme: dark) {
+    .gx-select {
+        --gx-select-bg: var(--gx-dark-bg-tertiary);
+        --gx-select-fg: var(--gx-color-gray-100);
+        --gx-select-border: var(--gx-color-gray-600);
+
+        /* 深色模式下的箭頭 */
+        --gx-select-arrow-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23d1d5db' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    }
+
+    .gx-select option {
+        background: var(--gx-dark-bg-tertiary);
+        color: var(--gx-color-gray-100);
+    }
+}
+
+/* 手動深色模式控制 */
+html[data-theme="dark"] .gx-select,
+html.dark .gx-select {
+    --gx-select-bg: var(--gx-dark-bg-tertiary);
+    --gx-select-fg: var(--gx-color-gray-100);
+    --gx-select-border: var(--gx-color-gray-600);
+    --gx-select-arrow-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23d1d5db' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+html[data-theme="dark"] .gx-select option,
+html.dark .gx-select option {
+    background: var(--gx-dark-bg-tertiary);
+    color: var(--gx-color-gray-100);
+}
