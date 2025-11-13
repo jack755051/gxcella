@@ -70,18 +70,19 @@
   <div class="flex-1" [class]="perPageContainerClass()">
     <!-- 每頁筆數選擇 -->
     @if (showPerPageSelector()) {
-      <div
-        class="pagination--per-page flex items-center gap-2"
+      <gx-pagination-per-page
         [class]="perPagePositionClass()"
-      >
-        <span class="text-sm text-gray-600">每頁顯示:</span>
-        <gx-pagination-per-page
-          name="per-page-selector"
-          [(perPage)]="perPage"
-          [perPageOptions]="perPageOptions()"
-          (perPageChange)="handlePerPageChange($event)"
-        />
-      </div>
+        name="per-page-selector"
+        [(perPage)]="perPage"
+        [perPageOptions]="perPageOptions()"
+        [size]="perPageSize()"
+        [variant]="perPageVariant()"
+        [intent]="perPageIntent()"
+        [showLabel]="perPageShowLabel()"
+        [labelPrefix]="perPageLabelPrefix()"
+        [labelSuffix]="perPageLabelSuffix()"
+        (perPageChange)="handlePerPageChange($event)"
+      />
     }
   </div>
 </div>

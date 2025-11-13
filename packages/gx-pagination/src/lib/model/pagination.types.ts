@@ -98,3 +98,22 @@ export interface PaginationInputProps {
  * Selector position options
  */
 export type SelectorPosition = 'left' | 'center' | 'right' | 'between';
+
+/**
+ * Per-page selector configuration
+ * 每頁選擇器樣式配置（使用 GxSelect 組件）
+ */
+export interface PerPageSelectorConfig {
+  /** 尺寸 */
+  size?: 'sm' | 'md' | 'lg';
+  /** 變體 */
+  variant?: 'filled' | 'outline' | 'soft' | 'ghost' | 'glass';
+  /** Intent 語義色彩 */
+  intent?: 'info' | 'success' | 'warning' | 'error';
+  /** 是否顯示標籤 */
+  showLabel?: boolean;
+  /** 前綴標籤文字 */
+  labelPrefix?: string;
+  /** 後綴標籤文字 */
+  labelSuffix?: string;
+}

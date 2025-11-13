@@ -1,140 +1,143 @@
 import { Component, input, output, computed, model } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-/**
- * Option interface for per-page select
- */
-export interface PerPageOption {
-  label: string;
-  value: number;
-}
+import { GxSelect, GxSelectOption, GxSelectSize, GxSelectVariant, GxSelectIntent } from '@sanring/gx-ui';
 
 /**
  * GxPaginationPerPage Component
  *
- * 對應 Vue 的 PaginationPerPage.vue，提供每頁顯示數量選擇器
- * - 使用原生 select 元素
- * - 支援雙向綁定
- * - 自動轉換選項格式
+ * 每頁顯示數量選擇器，使用 GxSelect 組件
+ * - 支援設計系統的所有特性
+ * - 支援 Intent、Variant、Size
+ * - 支援深色模式
+ * - 完全可自訂樣式
  */
 @Component({
   selector: 'gx-pagination-per-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [GxSelect],
   template: `
-    <select
-      [class]="selectClasses()"
-      [value]="perPage()"
-      [name]="name()"
-      [disabled]="disabled()"
-      (change)="handleChange($event)"
-    >
-      @for (option of optionObjects(); track option.value) {
-        <option [value]="option.value">{{ option.label }}</option>
+    <div class="per-page-container">
+      @if (showLabel()) {
+        <span class="per-page-label">{{ labelPrefix() }}</span>
       }
-    </select>
+
+      <gx-select
+        [options]="optionObjects()"
+        [(value)]="perPage"
+        [size]="size()"
+        [variant]="variant()"
+        [intent]="intent()"
+        [disabled]="disabled()"
+        [name]="name()"
+        [id]="id()"
+        (valueChange)="handleChange($event)"
+      />
+
+      @if (showLabel()) {
+        <span class="per-page-label">{{ labelSuffix() }}</span>
+      }
+    </div>
   `,
   styles: [`
     :host {
       display: inline-block;
     }
 
-    select {
-      border: 1px solid #d1d5db;
-      border-radius: 0.375rem;
-      padding: 0.375rem 0.75rem;
+    .per-page-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .per-page-label {
       font-size: 0.875rem;
-      background-color: #ffffff;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      min-width: 4rem;
+      color: var(--gx-color-gray-600, #525252);
+      user-select: none;
     }
 
-    select:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    /* 深色模式 */
+    @media (prefers-color-scheme: dark) {
+      .per-page-label {
+        color: var(--gx-color-gray-400, #a3a3a3);
+      }
     }
 
-    select:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      background-color: #f3f4f6;
-    }
-
-    select:hover:not(:disabled) {
-      border-color: #9ca3af;
+    html[data-theme="dark"] .per-page-label,
+    html.dark .per-page-label {
+      color: var(--gx-color-gray-400, #a3a3a3);
     }
   `]
 })
 export class GxPaginationPerPage {
-  /** select 元素的 name 屬性 */
-  name = input.required<string>();
+  // ==================== 基本屬性 ====================
 
-  /** 當前每頁顯示數量 */
+  /** select 元素的 name 屬性 */
+  name = input<string>('perPage');
+
+  /** select 元素的 id 屬性 */
+  id = input<string | undefined>(undefined);
+
+  /** 當前每頁顯示數量（雙向綁定） */
   perPage = model.required<number>();
 
   /** 可選的每頁顯示數量選項 */
-  perPageOptions = input<number[]>([10, 25, 50, 100]);
-
-  /** 自訂 CSS class */
-  customClass = input<string>('');
+  perPageOptions = input<number[]>([10, 20, 50, 100]);
 
   /** 是否禁用 */
   disabled = input<boolean>(false);
 
-  /** 是否允許 null 選項 */
-  isNullOption = input<boolean>(false);
+  // ==================== 設計系統屬性 ====================
+
+  /** 尺寸 */
+  size = input<GxSelectSize>('sm');
+
+  /** 變體 */
+  variant = input<GxSelectVariant>('ghost');
+
+  /** Intent 語義色彩 */
+  intent = input<GxSelectIntent>('info');
+
+  // ==================== 標籤配置 ====================
+
+  /** 是否顯示標籤 */
+  showLabel = input<boolean>(true);
+
+  /** 前綴標籤文字 */
+  labelPrefix = input<string>('每頁');
+
+  /** 後綴標籤文字 */
+  labelSuffix = input<string>('筆');
+
+  // ==================== 自訂樣式 ====================
+
+  /** 自訂 CSS class（已棄用，建議使用 CSS Variables） */
+  customClass = input<string>('');
+
+  // ==================== 事件 ====================
 
   /** 每頁數量變更事件 */
   perPageChange = output<number>();
 
+  // ==================== 計算屬性 ====================
+
   /**
-   * 將數字陣列轉換為選項物件陣列
+   * 將數字陣列轉換為 GxSelectOption 格式
    */
-  protected optionObjects = computed(() => {
+  protected optionObjects = computed((): GxSelectOption<number>[] => {
     const options = this.perPageOptions();
     return options.map(n => ({
-      label: String(n),
+      label: `${n}`,
       value: n
     }));
   });
 
-  /**
-   * 計算 select 的 CSS classes
-   */
-  protected selectClasses(): string {
-    const base = 'rounded border px-2 py-1';
-    const custom = this.customClass();
-    return custom ? `${base} ${custom}` : base;
-  }
+  // ==================== 事件處理 ====================
 
   /**
    * 處理選擇變更事件
    */
-  protected handleChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    const value = select.value;
-
-    // 處理 null 選項
-    if (this.isNullOption() && (value === null || value === '')) {
-      // 如果允許 null 選項，保持當前值或使用預設值
-      return;
-    }
-
-    // 轉換為數字
-    const num = typeof value === 'number' ? value : Number(value);
-
-    // 驗證數字
-    if (Number.isFinite(num) && num > 0) {
-      // 更新 model
-      this.perPage.set(num);
-
-      // 發出事件
-      this.perPageChange.emit(num);
-    } else {
-      // 如果無效，重置為當前值
-      select.value = this.perPage().toString();
+  protected handleChange(value: number | null): void {
+    if (value !== null) {
+      this.perPageChange.emit(value);
     }
   }
 }

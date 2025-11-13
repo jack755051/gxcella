@@ -87,6 +87,24 @@ export class GxPagination {
   /** 當前每頁顯示數量（用於同步） */
   currentPerPage = input<number | undefined>(undefined);
 
+  /** 每頁選擇器尺寸 */
+  perPageSize = input<'sm' | 'md' | 'lg'>('sm');
+
+  /** 每頁選擇器變體 */
+  perPageVariant = input<'filled' | 'outline' | 'soft' | 'ghost' | 'glass'>('ghost');
+
+  /** 每頁選擇器 Intent */
+  perPageIntent = input<'info' | 'success' | 'warning' | 'error'>('info');
+
+  /** 是否顯示每頁選擇器標籤 */
+  perPageShowLabel = input<boolean>(true);
+
+  /** 每頁選擇器前綴標籤 */
+  perPageLabelPrefix = input<string>('每頁');
+
+  /** 每頁選擇器後綴標籤 */
+  perPageLabelSuffix = input<string>('筆');
+
   // ==================== 事件輸出 ====================
 
   /** 頁碼變更事件 */
