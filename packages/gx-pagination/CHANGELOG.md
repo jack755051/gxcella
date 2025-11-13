@@ -1,5 +1,11 @@
 # @sanring/gx-pagination
 
+## 1.0.3
+
+### Patch Changes
+
+- e800309: upgrade pagination
+
 ## 1.0.2
 
 ### Patch Changes
