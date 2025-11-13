@@ -1,5 +1,17 @@
+/* ==================== GxCella 樣式主入口 ====================
+ *
+ * 導入順序：
+ * 1. _variables.css    - 基礎色票和字體
+ * 2. _semantic.css     - Intent 語義系統
+ * 3. _theme-modern.css - 現代化主題增強
+ * 4. _animations.css   - 動畫系統
+ *
+ * =========================================================== */
+
 @import './_variables.css';
 @import "./_semantic.css";
+@import "./_theme-modern.css";
+@import "./_animations.css";
 
 body {
     font-family: system-ui, sans-serif;

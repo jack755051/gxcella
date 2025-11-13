@@ -1,0 +1,149 @@
+/* ==================== GxCella 現代化主題系統 ====================
+ *
+ * 此文件僅包含「新增」的現代化設計變數，不覆寫現有色票
+ * 所有變數均可被使用者在任何層級覆寫
+ *
+ * 設計原則：
+ * 1. 只新增變數，不刪除或覆寫現有變數
+ * 2. 提供合理的預設值和 fallback
+ * 3. 使用語義化命名
+ * 4. 支援深色模式適配
+ *
+ * =============================================================== */
+
+:root {
+    /* ==================== 陰影深度系統 ==================== */
+    /* 提供 6 級陰影深度，適用於不同層級的元素 */
+    --gx-shadow-xs:     0 1px 2px rgba(0, 0, 0, 0.05);
+    --gx-shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --gx-shadow-md:     0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --gx-shadow-lg:     0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --gx-shadow-xl:     0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+    --gx-shadow-2xl:    0 25px 50px rgba(0, 0, 0, 0.25);
+
+    /* ==================== 發光效果 (Glow) ==================== */
+    /* 基於現有色票的發光效果，用於強調和互動狀態 */
+    --gx-glow-primary:  0 0 20px rgba(254, 119, 67, 0.3);   /* 橘紅發光 */
+    --gx-glow-accent:   0 0 20px rgba(68, 125, 155, 0.3);   /* 藍綠發光 */
+    --gx-glow-success:  0 0 20px rgba(48, 152, 152, 0.3);   /* 成功綠發光 */
+    --gx-glow-warning:  0 0 20px rgba(255, 183, 77, 0.3);   /* 警告黃發光 */
+    --gx-glow-error:    0 0 20px rgba(239, 83, 80, 0.3);    /* 錯誤紅發光 */
+
+    /* ==================== 玻璃態效果 (Glass Morphism) ==================== */
+    /* 用於創建半透明、模糊背景的現代化卡片和模態框 */
+    --gx-glass-bg:          rgba(255, 255, 255, 0.1);
+    --gx-glass-bg-strong:   rgba(255, 255, 255, 0.15);
+    --gx-glass-backdrop:    blur(10px);
+    --gx-glass-border:      1px solid rgba(255, 255, 255, 0.2);
+    --gx-glass-border-strong: 1px solid rgba(255, 255, 255, 0.3);
+
+    /* ==================== 漸變效果 ==================== */
+    /* 基於現有色票的漸變，用於按鈕、背景等 */
+    --gx-gradient-primary:  linear-gradient(135deg, var(--gx-color-primary-500) 0%, var(--gx-color-primary-400) 100%);
+    --gx-gradient-accent:   linear-gradient(135deg, var(--gx-color-accent-600) 0%, var(--gx-color-accent-500) 100%);
+    --gx-gradient-dark:     linear-gradient(135deg, var(--gx-color-dark-700) 0%, var(--gx-color-dark-600) 100%);
+    --gx-gradient-info:     linear-gradient(135deg, var(--gx-color-info-500) 0%, var(--gx-color-info-400) 100%);
+    --gx-gradient-success:  linear-gradient(135deg, var(--gx-color-success-500) 0%, var(--gx-color-success-400) 100%);
+    --gx-gradient-warning:  linear-gradient(135deg, var(--gx-color-warning-500) 0%, var(--gx-color-warning-400) 100%);
+    --gx-gradient-error:    linear-gradient(135deg, var(--gx-color-error-500) 0%, var(--gx-color-error-400) 100%);
+
+    /* ==================== 動畫過渡時間 ==================== */
+    /* 統一的過渡時間，確保整體動畫一致性 */
+    --gx-transition-fast:   150ms;
+    --gx-transition-normal: 250ms;
+    --gx-transition-slow:   350ms;
+    --gx-transition-slower: 500ms;
+
+    /* ==================== 緩動函數 ==================== */
+    /* 標準緩動曲線，用於自然的動畫效果 */
+    --gx-ease-linear:       linear;
+    --gx-ease-in:           cubic-bezier(0.4, 0, 1, 1);
+    --gx-ease-out:          cubic-bezier(0, 0, 0.2, 1);
+    --gx-ease-in-out:       cubic-bezier(0.4, 0, 0.2, 1);
+    --gx-ease-elastic:      cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* ==================== 圓角系統 ==================== */
+    /* 擴展的圓角尺寸，用於不同場景 */
+    --gx-radius-xs:     2px;
+    --gx-radius-sm:     4px;
+    --gx-radius-md:     8px;
+    --gx-radius-lg:     12px;
+    --gx-radius-xl:     16px;
+    --gx-radius-2xl:    24px;
+    --gx-radius-full:   9999px;
+
+    /* ==================== 深色主題背景 ==================== */
+    /* 用於深色模式的背景層級 */
+    --gx-dark-bg-primary:   #0a0e27;   /* 最深背景 */
+    --gx-dark-bg-secondary: #1a1f3a;   /* 次級背景 */
+    --gx-dark-bg-tertiary:  #242d4a;   /* 卡片/組件背景 */
+    --gx-dark-bg-elevated:  #2e3a5a;   /* 浮起元素背景 */
+
+    /* ==================== 亮色主題背景 ==================== */
+    /* 用於亮色模式的背景層級 */
+    --gx-light-bg-primary:   #ffffff;
+    --gx-light-bg-secondary: #f8f9fa;
+    --gx-light-bg-tertiary:  #f0f2f5;
+    --gx-light-bg-elevated:  #ffffff;
+
+    /* ==================== 邊框系統 ==================== */
+    /* 統一的邊框樣式 */
+    --gx-border-subtle:     1px solid var(--gx-color-gray-200);
+    --gx-border-normal:     1px solid var(--gx-color-gray-300);
+    --gx-border-strong:     2px solid var(--gx-color-gray-400);
+}
+
+/* ==================== 深色模式適配 ====================
+ * 使用 prefers-color-scheme 媒體查詢自動適配系統主題
+ * 使用者也可以通過 [data-theme="dark"] 手動控制
+ * ======================================================= */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* 玻璃效果在深色模式下更深 */
+        --gx-glass-bg: rgba(26, 31, 58, 0.8);
+        --gx-glass-bg-strong: rgba(26, 31, 58, 0.9);
+        --gx-glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        --gx-glass-border-strong: 1px solid rgba(255, 255, 255, 0.15);
+
+        /* 陰影在深色模式下更深 */
+        --gx-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+        --gx-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+        --gx-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 10px 10px rgba(0, 0, 0, 0.4);
+
+        /* 邊框在深色模式下更淡 */
+        --gx-border-subtle: 1px solid var(--gx-color-gray-700);
+        --gx-border-normal: 1px solid var(--gx-color-gray-600);
+        --gx-border-strong: 2px solid var(--gx-color-gray-500);
+    }
+}
+
+/* 手動深色模式控制 */
+html[data-theme="dark"],
+html.dark {
+    /* 玻璃效果 */
+    --gx-glass-bg: rgba(26, 31, 58, 0.8);
+    --gx-glass-bg-strong: rgba(26, 31, 58, 0.9);
+    --gx-glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --gx-glass-border-strong: 1px solid rgba(255, 255, 255, 0.15);
+
+    /* 陰影 */
+    --gx-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+    --gx-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+    --gx-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 10px 10px rgba(0, 0, 0, 0.4);
+
+    /* 邊框 */
+    --gx-border-subtle: 1px solid var(--gx-color-gray-700);
+    --gx-border-normal: 1px solid var(--gx-color-gray-600);
+    --gx-border-strong: 2px solid var(--gx-color-gray-500);
+}
+
+/* 手動亮色模式控制 */
+html[data-theme="light"],
+html.light {
+    /* 確保使用亮色變數（預設值） */
+    --gx-glass-bg: rgba(255, 255, 255, 0.1);
+    --gx-glass-bg-strong: rgba(255, 255, 255, 0.15);
+    --gx-glass-border: 1px solid rgba(255, 255, 255, 0.2);
+    --gx-glass-border-strong: 1px solid rgba(255, 255, 255, 0.3);
+}

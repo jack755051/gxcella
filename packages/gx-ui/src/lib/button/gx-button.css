@@ -229,3 +229,75 @@
 @keyframes button-spin {
     to { transform: rotate(360deg); }
 }
+
+/* ===============================
+   Glass Variant (玻璃態效果)
+   使用毛玻璃效果，半透明模糊背景
+=============================== */
+.gx-btn.gx-variant-glass {
+    --gx-btn-bg: var(--gx-glass-bg);
+    --gx-btn-fg: var(--intent-bg);
+    --gx-btn-border: var(--gx-glass-border);
+    backdrop-filter: var(--gx-glass-backdrop);
+    -webkit-backdrop-filter: var(--gx-glass-backdrop); /* Safari 支援 */
+    box-shadow: var(--gx-shadow-md);
+}
+.gx-btn.gx-variant-glass:hover:not(:disabled) {
+    --gx-btn-bg: var(--gx-glass-bg-strong);
+    --gx-btn-border: var(--gx-glass-border-strong);
+    box-shadow: var(--gx-shadow-lg);
+}
+.gx-btn.gx-variant-glass:active:not(:disabled) {
+    box-shadow: var(--gx-shadow-sm);
+}
+
+/* ===============================
+   Neon Variant (霓虹發光效果)
+   透明背景，帶發光邊框和文字
+=============================== */
+.gx-btn.gx-variant-neon {
+    --gx-btn-bg: transparent;
+    --gx-btn-fg: var(--intent-bg);
+    --gx-btn-border: 2px solid var(--intent-bg);
+    position: relative;
+    overflow: hidden;
+
+    /* 發光效果 */
+    box-shadow:
+        inset 0 0 10px var(--intent-bg),
+        0 0 15px rgba(254, 119, 67, 0.3);
+    text-shadow: 0 0 8px var(--intent-bg);
+}
+.gx-btn.gx-variant-neon:hover:not(:disabled) {
+    --gx-btn-bg: var(--intent-soft-bg);
+    box-shadow:
+        inset 0 0 15px var(--intent-hover),
+        0 0 25px rgba(254, 119, 67, 0.5);
+    text-shadow: 0 0 12px var(--intent-hover);
+}
+.gx-btn.gx-variant-neon:active:not(:disabled) {
+    box-shadow:
+        inset 0 0 20px var(--intent-active),
+        0 0 30px rgba(254, 119, 67, 0.6);
+}
+
+/* 霓虹按鈕的掃光效果 */
+.gx-btn.gx-variant-neon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left var(--gx-transition-slow, 500ms) var(--gx-ease-out, ease-out);
+}
+
+.gx-btn.gx-variant-neon:hover::before {
+    left: 100%;
+}

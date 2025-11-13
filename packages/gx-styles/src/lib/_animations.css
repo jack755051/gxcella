@@ -1,0 +1,365 @@
+/* ==================== GxCella 動畫系統 ====================
+ *
+ * 統一的動畫庫，包含常用的關鍵幀動畫和實用類別
+ *
+ * 使用方式：
+ * 1. 直接使用動畫名稱：animation: gx-fade-in 0.3s ease-out;
+ * 2. 使用實用類別：<div class="gx-fade-in">...</div>
+ * 3. 結合變數使用：animation: gx-scale-in var(--gx-transition-normal);
+ *
+ * 設計原則：
+ * - 所有動畫可以被覆寫或禁用
+ * - 遵循無障礙設計 (prefers-reduced-motion)
+ * - 使用語義化命名
+ *
+ * =========================================================== */
+
+/* ==================== 淡入動畫 ==================== */
+
+@keyframes gx-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes gx-fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* ==================== 縮放動畫 ==================== */
+
+@keyframes gx-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes gx-scale-out {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+/* ==================== 滑動動畫 ==================== */
+
+@keyframes gx-slide-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gx-slide-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gx-slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes gx-slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ==================== 脈動動畫 ==================== */
+
+@keyframes gx-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes gx-pulse-scale {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* ==================== 旋轉動畫 ==================== */
+
+@keyframes gx-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gx-spin-reverse {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+/* ==================== 閃爍動畫（Shimmer/Skeleton）==================== */
+
+@keyframes gx-shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* ==================== 彈跳動畫 ==================== */
+
+@keyframes gx-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes gx-bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==================== 搖晃動畫 ==================== */
+
+@keyframes gx-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* ==================== 實用動畫類別 ==================== */
+/* 可直接在 HTML 中使用的動畫類別 */
+
+.gx-animate-fade-in {
+    animation: gx-fade-in var(--gx-transition-normal, 250ms) var(--gx-ease-out, ease-out);
+}
+
+.gx-animate-scale-in {
+    animation: gx-scale-in var(--gx-transition-normal, 250ms) var(--gx-ease-out, ease-out);
+}
+
+.gx-animate-slide-in-up {
+    animation: gx-slide-in-up var(--gx-transition-normal, 250ms) var(--gx-ease-out, ease-out);
+}
+
+.gx-animate-pulse {
+    animation: gx-pulse 2s var(--gx-ease-in-out, ease-in-out) infinite;
+}
+
+.gx-animate-spin {
+    animation: gx-spin 1s linear infinite;
+}
+
+.gx-animate-bounce {
+    animation: gx-bounce 1s var(--gx-ease-in-out, ease-in-out) infinite;
+}
+
+.gx-animate-shake {
+    animation: gx-shake 0.5s var(--gx-ease-in-out, ease-in-out);
+}
+
+/* ==================== 過渡實用類別 ==================== */
+/* 用於添加平滑過渡效果的類別 */
+
+.gx-transition-all {
+    transition: all var(--gx-transition-normal, 250ms) var(--gx-ease-in-out, ease-in-out);
+}
+
+.gx-transition-colors {
+    transition:
+        background-color var(--gx-transition-normal, 250ms) var(--gx-ease-in-out, ease-in-out),
+        color var(--gx-transition-normal, 250ms) var(--gx-ease-in-out, ease-in-out),
+        border-color var(--gx-transition-normal, 250ms) var(--gx-ease-in-out, ease-in-out);
+}
+
+.gx-transition-transform {
+    transition: transform var(--gx-transition-normal, 250ms) var(--gx-ease-in-out, ease-in-out);
+}
+
+.gx-transition-opacity {
+    transition: opacity var(--gx-transition-normal, 250ms) var(--gx-ease-in-out, ease-in-out);
+}
+
+.gx-transition-shadow {
+    transition: box-shadow var(--gx-transition-normal, 250ms) var(--gx-ease-in-out, ease-in-out);
+}
+
+.gx-transition-fast {
+    transition-duration: var(--gx-transition-fast, 150ms) !important;
+}
+
+.gx-transition-slow {
+    transition-duration: var(--gx-transition-slow, 350ms) !important;
+}
+
+/* ==================== Skeleton Loading（骨架屏）==================== */
+/* 用於載入狀態的閃爍效果 */
+
+.gx-skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--gx-color-gray-200, #e5e5e5) 0%,
+        var(--gx-color-gray-100, #f5f5f5) 50%,
+        var(--gx-color-gray-200, #e5e5e5) 100%
+    );
+    background-size: 200% 100%;
+    animation: gx-shimmer 2s ease-in-out infinite;
+    border-radius: var(--gx-radius-md, 8px);
+}
+
+/* 深色模式下的骨架屏 */
+@media (prefers-color-scheme: dark) {
+    .gx-skeleton {
+        background: linear-gradient(
+            90deg,
+            var(--gx-color-gray-700, #404040) 0%,
+            var(--gx-color-gray-600, #525252) 50%,
+            var(--gx-color-gray-700, #404040) 100%
+        );
+    }
+}
+
+/* ==================== 無障礙設計：減少動畫 ==================== */
+/* 尊重使用者的系統設定，減少動畫效果 */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .gx-animate-pulse,
+    .gx-animate-spin,
+    .gx-animate-bounce {
+        animation: none !important;
+    }
+
+    .gx-skeleton {
+        animation: none !important;
+        background: var(--gx-color-gray-200, #e5e5e5);
+    }
+}
+
+/* ==================== 懸停效果實用類別 ==================== */
+/* 常用的懸停效果，可直接應用 */
+
+.gx-hover-lift {
+    transition: transform var(--gx-transition-fast, 150ms) var(--gx-ease-out, ease-out);
+}
+
+.gx-hover-lift:hover {
+    transform: translateY(-2px);
+}
+
+.gx-hover-scale {
+    transition: transform var(--gx-transition-fast, 150ms) var(--gx-ease-out, ease-out);
+}
+
+.gx-hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.gx-hover-glow {
+    transition: box-shadow var(--gx-transition-fast, 150ms) var(--gx-ease-out, ease-out);
+}
+
+.gx-hover-glow:hover {
+    box-shadow: var(--gx-glow-primary, 0 0 20px rgba(254, 119, 67, 0.3));
+}
+
+/* ==================== 進場延遲類別 ==================== */
+/* 用於錯開多個元素的動畫時間 */
+
+.gx-delay-100 {
+    animation-delay: 100ms;
+}
+
+.gx-delay-200 {
+    animation-delay: 200ms;
+}
+
+.gx-delay-300 {
+    animation-delay: 300ms;
+}
+
+.gx-delay-400 {
+    animation-delay: 400ms;
+}
+
+.gx-delay-500 {
+    animation-delay: 500ms;
+}

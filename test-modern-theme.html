@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GxCella 現代化主題測試</title>
+
+    <!-- 導入 GxCella 樣式 -->
+    <link rel="stylesheet" href="dist/gx-styles/gx-styles.css">
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--gx-dark-bg-primary);
+            color: #ffffff;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: var(--gx-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--gx-color-gray-400);
+            margin-bottom: 3rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gx-color-accent-300);
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .demo-card {
+            background: var(--gx-dark-bg-tertiary);
+            padding: 24px;
+            border-radius: var(--gx-radius-lg);
+            border: var(--gx-border-subtle);
+        }
+
+        .button-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* 模擬 gx-button 樣式 */
+        .gx-btn {
+            appearance: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: var(--gx-btn-py, 10px) var(--gx-btn-px, 16px);
+            border-radius: var(--gx-btn-radius, 8px);
+            border: 1px solid var(--gx-btn-border, transparent);
+            font: inherit;
+            background: var(--gx-btn-bg, #fff);
+            color: var(--gx-btn-fg, #111);
+            cursor: pointer;
+            transition: all var(--gx-transition-normal) var(--gx-ease-in-out);
+        }
+
+        /* Filled Variant */
+        .gx-btn.filled {
+            --gx-btn-bg: var(--gx-color-primary-500);
+            --gx-btn-fg: white;
+        }
+        .gx-btn.filled:hover {
+            --gx-btn-bg: var(--gx-color-primary-600);
+        }
+
+        /* Glass Variant */
+        .gx-btn.glass {
+            --gx-btn-bg: var(--gx-glass-bg);
+            --gx-btn-fg: var(--gx-color-primary-400);
+            --gx-btn-border: var(--gx-glass-border);
+            backdrop-filter: var(--gx-glass-backdrop);
+            -webkit-backdrop-filter: var(--gx-glass-backdrop);
+            box-shadow: var(--gx-shadow-md);
+        }
+        .gx-btn.glass:hover {
+            --gx-btn-bg: var(--gx-glass-bg-strong);
+            box-shadow: var(--gx-shadow-lg);
+        }
+
+        /* Neon Variant */
+        .gx-btn.neon {
+            --gx-btn-bg: transparent;
+            --gx-btn-fg: var(--gx-color-primary-400);
+            border: 2px solid var(--gx-color-primary-500);
+            box-shadow:
+                inset 0 0 10px var(--gx-color-primary-500),
+                0 0 15px rgba(254, 119, 67, 0.3);
+            text-shadow: 0 0 8px var(--gx-color-primary-500);
+        }
+        .gx-btn.neon:hover {
+            box-shadow:
+                inset 0 0 15px var(--gx-color-primary-600),
+                0 0 25px rgba(254, 119, 67, 0.5);
+        }
+
+        /* Glass Card Demo */
+        .glass-card {
+            background: var(--gx-glass-bg);
+            backdrop-filter: var(--gx-glass-backdrop);
+            -webkit-backdrop-filter: var(--gx-glass-backdrop);
+            border: var(--gx-glass-border);
+            border-radius: var(--gx-radius-xl);
+            padding: 32px;
+            box-shadow: var(--gx-shadow-xl);
+        }
+
+        /* Gradient Card */
+        .gradient-card {
+            background: var(--gx-gradient-primary);
+            border-radius: var(--gx-radius-xl);
+            padding: 32px;
+            color: white;
+        }
+
+        /* Shadow Demo */
+        .shadow-demo {
+            background: var(--gx-dark-bg-tertiary);
+            padding: 20px;
+            border-radius: var(--gx-radius-md);
+            text-align: center;
+            color: var(--gx-color-gray-300);
+        }
+
+        .shadow-xs { box-shadow: var(--gx-shadow-xs); }
+        .shadow-sm { box-shadow: var(--gx-shadow-sm); }
+        .shadow-md { box-shadow: var(--gx-shadow-md); }
+        .shadow-lg { box-shadow: var(--gx-shadow-lg); }
+        .shadow-xl { box-shadow: var(--gx-shadow-xl); }
+        .shadow-2xl { box-shadow: var(--gx-shadow-2xl); }
+
+        /* Animation Demo */
+        .anim-demo {
+            background: var(--gx-dark-bg-secondary);
+            padding: 20px;
+            border-radius: var(--gx-radius-md);
+            text-align: center;
+        }
+
+        .anim-fade { animation: gx-fade-in 1s var(--gx-ease-out); }
+        .anim-scale { animation: gx-scale-in 1s var(--gx-ease-out); }
+        .anim-slide { animation: gx-slide-in-up 1s var(--gx-ease-out); }
+        .anim-pulse { animation: gx-pulse 2s var(--gx-ease-in-out) infinite; }
+        .anim-bounce { animation: gx-bounce 1s var(--gx-ease-in-out) infinite; }
+
+        /* Skeleton */
+        .skeleton-demo {
+            height: 100px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Override Demo */
+        .override-demo {
+            background: var(--gx-dark-bg-tertiary);
+            padding: 24px;
+            border-radius: var(--gx-radius-lg);
+            border: 2px dashed var(--gx-color-accent-500);
+        }
+
+        .override-demo .gx-btn {
+            /* 自訂覆寫示範 */
+            --gx-btn-radius: 20px;
+            --gx-btn-px: 24px;
+            --gx-glass-backdrop: blur(20px);
+        }
+
+        code {
+            background: var(--gx-dark-bg-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--gx-color-primary-400);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button class="gx-btn filled" onclick="toggleTheme()">
+            切換主題
+        </button>
+    </div>
+
+    <div class="container">
+        <h1>GxCella 現代化主題測試 ✨</h1>
+        <p class="subtitle">測試所有新增的現代化變數和效果</p>
+
+        <!-- Button Variants -->
+        <section class="section">
+            <h2 class="section-title">🎨 按鈕變體</h2>
+            <div class="button-demo">
+                <button class="gx-btn filled">Filled 按鈕</button>
+                <button class="gx-btn glass">Glass 玻璃態</button>
+                <button class="gx-btn neon">Neon 霓虹</button>
+            </div>
+            <p style="margin-top: 16px; color: var(--gx-color-gray-400);">
+                <code>variant="glass"</code> 和 <code>variant="neon"</code> 是新增的現代化變體
+            </p>
+        </section>
+
+        <!-- Cards -->
+        <section class="section">
+            <h2 class="section-title">📦 卡片效果</h2>
+            <div class="demo-grid">
+                <div class="glass-card">
+                    <h3>玻璃態卡片</h3>
+                    <p>使用 <code>--gx-glass-bg</code> 和 <code>backdrop-filter</code></p>
+                    <button class="gx-btn glass" style="margin-top: 12px;">操作</button>
+                </div>
+
+                <div class="gradient-card">
+                    <h3>漸變卡片</h3>
+                    <p>使用 <code>--gx-gradient-primary</code></p>
+                    <button class="gx-btn" style="--gx-btn-bg: rgba(255,255,255,0.2); --gx-btn-fg: white; margin-top: 12px;">操作</button>
+                </div>
+
+                <div class="demo-card">
+                    <h3>標準卡片</h3>
+                    <p>使用 <code>--gx-dark-bg-tertiary</code></p>
+                    <button class="gx-btn filled" style="margin-top: 12px;">操作</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shadows -->
+        <section class="section">
+            <h2 class="section-title">🌑 陰影深度系統</h2>
+            <div class="demo-grid">
+                <div class="shadow-demo shadow-xs">xs</div>
+                <div class="shadow-demo shadow-sm">sm</div>
+                <div class="shadow-demo shadow-md">md</div>
+                <div class="shadow-demo shadow-lg">lg</div>
+                <div class="shadow-demo shadow-xl">xl</div>
+                <div class="shadow-demo shadow-2xl">2xl</div>
+            </div>
+        </section>
+
+        <!-- Animations -->
+        <section class="section">
+            <h2 class="section-title">🎬 動畫系統</h2>
+            <div class="demo-grid">
+                <div class="anim-demo anim-fade">Fade In</div>
+                <div class="anim-demo anim-scale">Scale In</div>
+                <div class="anim-demo anim-slide">Slide Up</div>
+                <div class="anim-demo anim-pulse">Pulse</div>
+                <div class="anim-demo anim-bounce">Bounce</div>
+                <div class="anim-demo gx-skeleton skeleton-demo">Skeleton</div>
+            </div>
+        </section>
+
+        <!-- Override Demo -->
+        <section class="section">
+            <h2 class="section-title">🔧 變數覆寫示範</h2>
+            <div class="override-demo">
+                <h3>這個區域的按鈕已被覆寫</h3>
+                <p>使用 CSS Variables 可以輕鬆自訂樣式，不影響其他元素</p>
+                <div class="button-demo" style="margin-top: 16px;">
+                    <button class="gx-btn filled">圓角按鈕</button>
+                    <button class="gx-btn glass">更模糊的玻璃</button>
+                    <button class="gx-btn neon">霓虹效果</button>
+                </div>
+                <details style="margin-top: 16px;">
+                    <summary style="cursor: pointer; color: var(--gx-color-accent-400);">查看 CSS 代碼</summary>
+                    <pre style="background: var(--gx-dark-bg-primary); padding: 16px; border-radius: 8px; overflow-x: auto; margin-top: 12px;"><code>.override-demo .gx-btn {
+    --gx-btn-radius: 20px;        /* 更大的圓角 */
+    --gx-btn-px: 24px;            /* 更寬的padding */
+    --gx-glass-backdrop: blur(20px); /* 更強的模糊 */
+}</code></pre>
+                </details>
+            </div>
+        </section>
+
+        <!-- Variable Reference -->
+        <section class="section">
+            <h2 class="section-title">📚 快速參考</h2>
+            <div class="demo-card">
+                <h3>可用的 CSS 變數</h3>
+                <ul style="line-height: 1.8;">
+                    <li><code>--gx-shadow-{xs|sm|md|lg|xl|2xl}</code> - 陰影系統</li>
+                    <li><code>--gx-glass-{bg|backdrop|border}</code> - 玻璃效果</li>
+                    <li><code>--gx-glow-{primary|accent|success|warning|error}</code> - 發光效果</li>
+                    <li><code>--gx-gradient-{primary|accent|dark}</code> - 漸變背景</li>
+                    <li><code>--gx-transition-{fast|normal|slow|slower}</code> - 過渡時間</li>
+                    <li><code>--gx-ease-{linear|in|out|in-out|elastic}</code> - 緩動函數</li>
+                    <li><code>--gx-radius-{xs|sm|md|lg|xl|2xl|full}</code> - 圓角系統</li>
+                </ul>
+                <a href="packages/gx-styles/VARIABLES.md" style="color: var(--gx-color-primary-400); text-decoration: none;">
+                    查看完整變數文檔 →
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+
+            // 更新背景色
+            if (newTheme === 'light') {
+                document.body.style.background = 'var(--gx-light-bg-primary)';
+                document.body.style.color = '#000';
+            } else {
+                document.body.style.background = 'var(--gx-dark-bg-primary)';
+                document.body.style.color = '#fff';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -9,8 +9,12 @@ export type GxButtonIntent = GxIntent;
 /**
  * Button Variant
  * 注意：移除了 'tag' variant，因為 Tag 現在是獨立組件
+ *
+ * 新增現代化變體：
+ * - 'glass': 玻璃態效果（半透明模糊背景）
+ * - 'neon': 霓虹發光效果（邊框發光）
  */
-export type GxButtonVariant = 'filled' | 'outline' | 'soft' | 'ghost';
+export type GxButtonVariant = 'filled' | 'outline' | 'soft' | 'ghost' | 'glass' | 'neon';
 
 /**
  * Button Style - 向後兼容
