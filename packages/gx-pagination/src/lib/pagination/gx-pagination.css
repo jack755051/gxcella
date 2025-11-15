@@ -60,6 +60,15 @@
   color: #4b5563;
 }
 
+/* Position utilities for center-right layout */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .pagination--per-page {

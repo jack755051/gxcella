@@ -96,8 +96,13 @@ export interface PaginationInputProps {
 
 /**
  * Selector position options
+ * - 'left': 分頁控制器靠左，每頁選擇器靠右
+ * - 'center': 分頁控制器居中，每頁選擇器靠右
+ * - 'right': 分頁控制器和每頁選擇器都靠右
+ * - 'between': 分頁控制器靠左，每頁選擇器靠右（justify-between）
+ * - 'center-right': 分頁控制器居中，每頁選擇器固定右側（新增）
  */
-export type SelectorPosition = 'left' | 'center' | 'right' | 'between';
+export type SelectorPosition = 'left' | 'center' | 'right' | 'between' | 'center-right';
 
 /**
  * Per-page selector configuration

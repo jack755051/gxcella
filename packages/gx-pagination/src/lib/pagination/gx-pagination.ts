@@ -142,6 +142,9 @@ export class GxPagination {
     if (position === 'between') {
       return 'justify-between gap-4';
     }
+    if (position === 'center-right') {
+      return 'relative justify-center gap-4';
+    }
     return 'gap-4';
   });
 
@@ -150,7 +153,7 @@ export class GxPagination {
     if (!this.showPerPageSelector()) {
       return '';
     }
-    if (this.selectorPosition() === 'between') {
+    if (this.selectorPosition() === 'between' || this.selectorPosition() === 'center-right') {
       return '';
     }
     return 'flex';
@@ -164,6 +167,9 @@ export class GxPagination {
     }
     if (position === 'right') {
       return 'ml-4';
+    }
+    if (position === 'center-right') {
+      return 'absolute right-4';
     }
     return '';
   });
