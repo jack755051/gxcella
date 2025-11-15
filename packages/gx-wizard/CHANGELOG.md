@@ -1,5 +1,11 @@
 # @sanring/gx-wizard
 
+## 1.0.4
+
+### Patch Changes
+
+- d9a2792: upgrade pagination
+
 ## 1.0.3
 
 ### Patch Changes
