@@ -169,7 +169,7 @@ export class GxPagination {
       return 'ml-4';
     }
     if (position === 'center-right') {
-      return 'absolute right-4';
+      return 'absolute right-4 top-1/2 -translate-y-1/2';
     }
     return '';
   });

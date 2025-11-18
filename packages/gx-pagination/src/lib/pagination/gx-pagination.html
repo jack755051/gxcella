@@ -1,11 +1,11 @@
 <div class="flex items-center" [class]="containerClass()">
-  <!-- 左側佔位 (當 selectorPosition 為 center 或 right 時使用) -->
-  @if (selectorPosition() === 'center') {
+  <!-- 左側佔位 (當 selectorPosition 為 center 或 center-right 時使用) -->
+  @if (selectorPosition() === 'center' || selectorPosition() === 'center-right') {
     <div class="flex-1"></div>
   }
 
   <!-- 分頁控制列 -->
-  <div class="pagination--selector flex items-center gap-2">
+  <div class="pagination--selector flex gap-2">
     <!-- 上一頁按鈕 -->
     <gx-button
       [action]="{
@@ -67,7 +67,7 @@
   </div>
 
   <!-- 右側彈性空間 -->
-  <div class="flex-1" [class]="perPageContainerClass()">
+  <div class="" [class]="perPageContainerClass()">
     <!-- 每頁筆數選擇 -->
     @if (showPerPageSelector()) {
       <gx-pagination-per-page

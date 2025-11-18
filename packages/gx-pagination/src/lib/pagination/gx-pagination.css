@@ -69,6 +69,14 @@
   position: absolute;
 }
 
+.top-1\/2 {
+  top: 50%;
+}
+
+.-translate-y-1\/2 {
+  transform: translateY(-50%);
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .pagination--per-page {
