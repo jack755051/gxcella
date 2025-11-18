@@ -1,5 +1,11 @@
 # @sanring/gx-table
 
+## 1.0.6
+
+### Patch Changes
+
+- 7a94e31: modify flex
+
 ## 1.0.5
 
 ### Patch Changes
