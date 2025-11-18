@@ -66,7 +66,7 @@
     </gx-button>
   </div>
 
-  <!-- 右側彈性空間 -->
+  <!-- 右側彈性空間與每頁筆數選擇 -->
   <div class="" [class]="perPageContainerClass()">
     <!-- 每頁筆數選擇 -->
     @if (showPerPageSelector()) {
@@ -85,4 +85,9 @@
       />
     }
   </div>
+
+  <!-- 右側佔位 (當 selectorPosition 為 center 時使用，用於平衡左側空間) -->
+  @if (selectorPosition() === 'center') {
+    <div class="flex-1"></div>
+  }
 </div>

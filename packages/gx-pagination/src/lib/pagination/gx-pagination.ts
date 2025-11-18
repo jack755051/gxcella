@@ -142,7 +142,7 @@ export class GxPagination {
     if (position === 'between') {
       return 'justify-between gap-4';
     }
-    if (position === 'center-right') {
+    if (position === 'center' || position === 'center-right') {
       return 'relative justify-center gap-4';
     }
     return 'gap-4';
