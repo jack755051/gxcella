@@ -1,5 +1,11 @@
 # @sanring/gx-pagination
 
+## 1.0.5
+
+### Patch Changes
+
+- 777c1bb: adjust item center
+
 ## 1.0.4
 
 ### Patch Changes
